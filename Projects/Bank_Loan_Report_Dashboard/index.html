@@ -5,24 +5,231 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Loan Report Dashboard - Balaji S</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Enhanced Typography */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .project-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .project-description {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 800px;
+        }
+        
+        /* Enhanced Cards */
+        .enhanced-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enhanced-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #007BFF, #00D4FF, #FFC700);
+        }
+        
+        .enhanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
+            border-color: rgba(0, 123, 255, 0.4);
+        }
+        
+        /* Download Buttons */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+            background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+        }
+        
+        .download-btn i {
+            font-size: 1.1rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* File Download Cards */
+        .file-download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .file-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .file-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 123, 255, 0.2);
+        }
+        
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .file-size {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-list li:hover {
+            transform: translateX(5px);
+            background: var(--card-bg);
+        }
+        
+        .feature-list strong {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .section-header i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <h1><a href="../../index.html">Balaji S</a></h1>
-                </div>
-                <nav class="nav">
-                    <button class="mobile-menu-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+                <div class="logo"><a href="../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a></div>
+                <nav class="nav" id="nav">
                     <ul class="nav-list">
                         <li><a href="../../index.html" class="nav-link">Home</a></li>
                         <li><a href="../../about.html" class="nav-link">About</a></li>
@@ -32,189 +239,255 @@
                         <li><a href="../../contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
             </div>
         </div>
     </header>
 
     <!-- Project Hero -->
-    <section class="section hero-alt">
+    <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="project-hero">
-                <div class="breadcrumb">
-                    <a href="../../projects.html">Projects</a> / Bank Loan Report Dashboard
+            <div style="margin-bottom: 1.5rem;">
+                <a href="../../projects.html" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+            </div>
+            
+            <h1 class="project-title">Bank Loan Report Dashboard</h1>
+            <p class="project-description">
+                A comprehensive Power BI dashboard analyzing 38K+ financial loan records to provide actionable insights 
+                into loan distribution, repayment performance, and risk assessment for data-driven decision making.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0;">
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Power BI</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">DAX</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Financial Analytics</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Data Visualization</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section" style="padding: 3rem 0;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">Power BI</span>
+                    <span class="stat-label">Technology</span>
                 </div>
-                <h1 class="project-title">Bank Loan Report Dashboard 📊</h1>
-                <p class="project-description">
-                    A comprehensive Power BI dashboard built to analyze and visualize financial loan data, 
-                    providing insights into loan distribution, repayment performance, and risk analysis 
-                    to help financial institutions make data-driven decisions.
-                </p>
-                <div class="project-meta">
-                    <span class="tech-tag">Power BI</span>
-                    <span class="tech-tag">Data Analysis</span>
-                    <span class="tech-tag">Financial Analytics</span>
-                    <span class="tech-tag">Dashboard Design</span>
+                <div class="stat-card">
+                    <span class="stat-value">38K+</span>
+                    <span class="stat-label">Records</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">Dashboards</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">Completed</span>
+                    <span class="stat-label">Status</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Project Content -->
-    <section class="section">
+    <!-- Quick Actions -->
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
         <div class="container">
-            <div class="project-content">
-                <div class="project-sidebar">
-                    <div class="project-links">
-                        <h3>Quick Links</h3>
-                        <a href="dashboard/" class="btn btn-primary">
-                            <i class="fas fa-chart-line"></i>
-                            View Dashboard
-                        </a>
-                        <a href="data/" class="btn btn-secondary">
-                            <i class="fas fa-database"></i>
-                            View Data
-                        </a>
-                        <a href="docs/" class="btn btn-secondary">
-                            <i class="fas fa-book"></i>
-                            Documentation
-                        </a>
-                    </div>
-
-                    <div class="project-stats">
-                        <h3>Project Stats</h3>
-                        <div class="stat-item">
-                            <span class="stat-label">Technology</span>
-                            <span class="stat-value">Power BI</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Data Size</span>
-                            <span class="stat-value">38K+ Records</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Domain</span>
-                            <span class="stat-value">Financial Analytics</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Status</span>
-                            <span class="stat-value">Completed</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-main">
-                    <div class="project-section">
-                        <h2>🛠 Features</h2>
-                        <ul class="feature-list">
-                            <li><strong>Overview Dashboard:</strong> Total applications, funded amounts, and received amounts</li>
-                            <li><strong>Loan Status Analysis:</strong> Breakdown of Approved, Rejected, and Charged-Off loans</li>
-                            <li><strong>Key Performance Indicators:</strong> Interest rate, DTI ratio, loan term distribution</li>
-                            <li><strong>Interactive Filters:</strong> Loan purpose, State/Region, Grade/Sub-grade analysis</li>
-                            <li><strong>Risk Assessment:</strong> Visual indicators for high-risk loan categories</li>
-                            <li><strong>Trend Analysis:</strong> Month-over-month and year-over-year comparisons</li>
-                        </ul>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>📂 Project Structure</h2>
-                        <div class="file-structure">
-                            <div class="file-item">
-                                <i class="fas fa-folder"></i>
-                                <span><strong>dashboard/</strong> → Power BI file (.pbix)</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-folder"></i>
-                                <span><strong>data/</strong> → Dataset used for analysis (financial_loan.csv)</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-folder"></i>
-                                <span><strong>docs/</strong> → Documentation and data dictionary</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-file-text"></i>
-                                <span><strong>README.md</strong> → Project overview and setup guide</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>🎯 Key Insights</h2>
-                        <div class="insights-grid">
-                            <div class="insight-card">
-                                <h4>Loan Distribution</h4>
-                                <p>Analyzed patterns across different loan purposes and geographical regions</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>Risk Analysis</h4>
-                                <p>Identified high-risk segments based on DTI ratio and credit grades</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>Performance Metrics</h4>
-                                <p>Tracked repayment performance and default rates across categories</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>� Dashboard Preview</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Interactive Power BI dashboard with three comprehensive views</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                            <div style="background: var(--card-bg); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="dashboard/dashboard_preview/Bank_Loan_Report-Summary.jpg" alt="Summary Dashboard" style="width: 100%; height: 180px; object-fit: cover;">
-                                <div style="padding: 1rem;">
-                                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">📈 Summary</h4>
-                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Key KPIs and metrics</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--card-bg); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="dashboard/dashboard_preview/Bank_Loan_Report-Overview.jpg" alt="Overview Dashboard" style="width: 100%; height: 180px; object-fit: cover;">
-                                <div style="padding: 1rem;">
-                                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">📉 Overview</h4>
-                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Trend analysis & charts</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--card-bg); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="dashboard/dashboard_preview/Bank_Loan_Report-Details.jpg" alt="Details Dashboard" style="width: 100%; height: 180px; object-fit: cover;">
-                                <div style="padding: 1rem;">
-                                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">📋 Details</h4>
-                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Data tables & filters</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center;">
-                            <a href="dashboard/dashboard_preview/" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-expand"></i> View Full Size Gallery
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>�🔧 Technologies Used</h2>
-                        <div class="tech-stack">
-                            <span class="tech-badge">Power BI</span>
-                            <span class="tech-badge">DAX</span>
-                            <span class="tech-badge">Data Modeling</span>
-                            <span class="tech-badge">CSV Data Processing</span>
-                            <span class="tech-badge">Financial Analytics</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="section-header">
+                <i class="fas fa-download"></i>
+                <h2>Download Project Files</h2>
             </div>
-        </div>
-    </section>
+            
+            <div class="file-download-grid">
+                <a href="data/financial_loan.csv" download class="file-card">
+                    <i class="fas fa-file-csv file-icon" style="color: #10b981;"></i>
+                    <div class="file-name">Financial Loan Dataset</div>
+                    <div class="file-size">CSV • financial_loan.csv</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-download"></i> Download CSV
+                        </span>
+                    </div>
+                </a>
 
-    <!-- Back to Projects -->
-    <section class="section section-dark">
-        <div class="container">
-            <div class="back-to-projects">
-                <a href="../../projects.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to All Projects
+                <a href="docs/Domain Knowledge.pdf" target="_blank" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">Domain Knowledge</div>
+                    <div class="file-size">PDF • Banking Concepts</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View PDF
+                        </span>
+                    </div>
+                </a>
+
+                <a href="docs/Problem Statement.pdf" target="_blank" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">Problem Statement</div>
+                    <div class="file-size">PDF • Project Requirements</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View PDF
+                        </span>
+                    </div>
+                </a>
+
+                <a href="docs/Query.pdf" target="_blank" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">SQL & DAX Queries</div>
+                    <div class="file-size">PDF • Data Transformations</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View PDF
+                        </span>
+                    </div>
+                </a>
+
+                <a href="docs/Terminologies in Data.pdf" target="_blank" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">Data Dictionary</div>
+                    <div class="file-size">PDF • Field Definitions</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View PDF
+                        </span>
+                    </div>
+                </a>
+
+                <a href="README.md" target="_blank" class="file-card">
+                    <i class="fas fa-file-alt file-icon" style="color: #007BFF;"></i>
+                    <div class="file-name">README</div>
+                    <div class="file-size">MD • Project Overview</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View File
+                        </span>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- Dashboard Preview -->
+    <section class="section" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-chart-bar"></i>
+                <h2>Dashboard Preview</h2>
+            </div>
+            
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+                Interactive Power BI dashboard with three comprehensive views for complete loan analysis
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard/dashboard_preview/Bank_Loan_Report-Summary.jpg" alt="Summary Dashboard" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-chart-pie" style="color: var(--accent-primary);"></i> Summary Dashboard
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            High-level KPIs, total applications, funded amounts, and overall loan portfolio health metrics
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard/dashboard_preview/Bank_Loan_Report-Overview.jpg" alt="Overview Dashboard" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-chart-line" style="color: var(--accent-secondary);"></i> Overview Dashboard
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            Trend analysis, time-series visualizations, and comprehensive loan status breakdown charts
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='dashboard/dashboard_preview/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard/dashboard_preview/Bank_Loan_Report-Details.jpg" alt="Details Dashboard" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-table" style="color: var(--accent-gold);"></i> Details Dashboard
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            Detailed data tables with interactive filters for deep-dive analysis and granular insights
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="dashboard/dashboard_preview/" class="download-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-expand-alt"></i> View Full Size Gallery
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section enhanced-card" style="margin: 4rem auto; max-width: 1200px;">
+        <div class="section-header">
+            <i class="fas fa-star"></i>
+            <h2>Key Features</h2>
+        </div>
+        
+        <ul class="feature-list">
+            <li><strong>Overview Dashboard:</strong> Comprehensive view of total applications, funded amounts, and received amounts with real-time metrics</li>
+            <li><strong>Loan Status Analysis:</strong> Detailed breakdown of Approved, Rejected, and Charged-Off loans with visual representations</li>
+            <li><strong>Key Performance Indicators:</strong> Track interest rates, DTI ratios, and loan term distributions across the portfolio</li>
+            <li><strong>Interactive Filters:</strong> Dynamic filtering by loan purpose, State/Region, and Grade/Sub-grade for targeted analysis</li>
+            <li><strong>Risk Assessment:</strong> Color-coded visual indicators highlighting high-risk loan categories and segments</li>
+            <li><strong>Trend Analysis:</strong> Month-over-month and year-over-year comparisons with historical data visualization</li>
+        </ul>
+    </section>
+
+    <!-- Technologies -->
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-tools"></i>
+                <h2>Technologies & Tools</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="enhanced-card">
+                    <i class="fas fa-chart-bar" style="font-size: 3rem; color: #F2C811; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Power BI Desktop</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Data visualization and dashboard creation</p>
+                </div>
+                
+                <div class="enhanced-card">
+                    <i class="fas fa-database" style="font-size: 3rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Data Modeling</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Relationship management and data structure</p>
+                </div>
+                
+                <div class="enhanced-card">
+                    <i class="fas fa-code" style="font-size: 3rem; color: #007BFF; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">DAX Formulas</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Advanced calculations and measures</p>
+                </div>
+                
+                <div class="enhanced-card">
+                    <i class="fas fa-file-csv" style="font-size: 3rem; color: #dc2626; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">CSV Processing</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">38K+ records data transformation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Balaji S. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script src="../../assets/js/scripts.js"></script>
 </body>
 </html>

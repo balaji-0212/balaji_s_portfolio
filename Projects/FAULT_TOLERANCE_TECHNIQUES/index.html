@@ -5,9 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fault Tolerant Matrix Computation - Balaji S</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Enhanced Typography */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .project-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .project-description {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 800px;
+        }
+        
+        /* Enhanced Cards */
+        .enhanced-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enhanced-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #007BFF, #00D4FF, #FFC700);
+        }
+        
+        .enhanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
+            border-color: rgba(0, 123, 255, 0.4);
+        }
+        
+        /* Download Buttons */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+            background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* File Download Cards */
+        .file-download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .file-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .file-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 123, 255, 0.2);
+        }
+        
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .file-size {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .section-header i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -39,198 +224,282 @@
     </header>
 
     <!-- Project Hero -->
-    <section class="section hero-alt">
+    <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="project-hero">
-                <div class="breadcrumb">
-                    <a href="../../projects.html">Projects</a>
-                    <span>/</span>
-                    <span>Fault Tolerant Matrix Computation</span>
+            <div style="margin-bottom: 1.5rem;">
+                <a href="../../projects.html" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+            </div>
+            
+            <h1 class="project-title">🛡️ Fault Tolerant Matrix Computation on Systolic Arrays</h1>
+            <p class="project-description">
+                Advanced FPGA implementation combining Algorithm-Based Fault Tolerance (ABFT) and Hamming Code error correction 
+                for reliable matrix computations in safety-critical applications. Published at IEEE ICCCNT 2025, IIT Indore.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0;">
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Verilog HDL</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Xilinx Vivado</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">FPGA</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">ABFT</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Hamming Code</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">IEEE Published</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section" style="padding: 3rem 0;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">Verilog HDL</span>
+                    <span class="stat-label">Language</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">95%</span>
+                    <span class="stat-label">Fault Detection</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">IEEE 2025</span>
+                    <span class="stat-label">Published</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">21 Files</span>
+                    <span class="stat-label">Verilog Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-download"></i>
+                <h2>Project Resources</h2>
+            </div>
+            
+            <div class="file-download-grid">
+                <a href="Paper_Publication/" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">IEEE Publication</div>
+                    <div class="file-size">PDF • ICCCNT 2025</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View Paper
+                        </span>
+                    </div>
+                </a>
+
+                <a href="Code/" class="file-card">
+                    <i class="fas fa-code file-icon" style="color: #007BFF;"></i>
+                    <div class="file-name">Verilog Source Code</div>
+                    <div class="file-size">21 HDL Files • 4 Modules</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-folder-open"></i> Browse Code
+                        </span>
+                    </div>
+                </a>
+
+                <a href="Output/" class="file-card">
+                    <i class="fas fa-images file-icon" style="color: #10b981;"></i>
+                    <div class="file-name">Simulation Results</div>
+                    <div class="file-size">4 Images • FPGA Outputs</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-images"></i> View Gallery
+                        </span>
+                    </div>
+                </a>
+
+                <a href="Contents/" class="file-card">
+                    <i class="fas fa-diagram-project file-icon" style="color: #FFC700;"></i>
+                    <div class="file-name">System Diagrams</div>
+                    <div class="file-size">Block Diagrams • Schematics</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View Diagrams
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="section enhanced-card" style="margin: 4rem auto; max-width: 1200px;">
+        <div class="section-header">
+            <i class="fas fa-clipboard-list"></i>
+            <h2>Project Overview</h2>
+        </div>
+        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; font-size: 1.1rem;">
+            This project presents a novel approach to implementing fault-tolerant matrix multiplication using systolic arrays. 
+            The design incorporates both Algorithm-Based Fault Tolerance (ABFT) and Hamming Code error correction to detect 
+            and correct errors in real-time during matrix computations.
+        </p>
+        <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem;">
+            The system achieves 95% fault detection accuracy while maintaining computational efficiency, making it suitable 
+            for safety-critical applications in aerospace, medical devices, and autonomous systems.
+        </p>
+    </section>
+
+    <!-- Key Features -->
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-star"></i>
+                <h2>Key Features</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="enhanced-card">
+                    <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--accent-primary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">ABFT Integration</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Algorithm-Based Fault Tolerance detects errors by verifying checksum rows and columns in real-time
+                    </p>
                 </div>
                 
-                <h1 class="project-title">🛡️ Fault Tolerant Matrix Computation on Systolic Arrays</h1>
-                <p class="project-description">
-                    Designed and implemented a fault-tolerant systolic array architecture with embedded error detection and correction techniques. 
-                    The system achieves 95% fault detection accuracy while maintaining computational efficiency, making it suitable for safety-critical applications.
-                </p>
-                <div class="project-meta">
-                    <span class="tech-tag">Verilog HDL</span>
-                    <span class="tech-tag">Vivado</span>
-                    <span class="tech-tag">FPGA</span>
-                    <span class="tech-tag">ABFT</span>
-                    <span class="tech-tag">Hamming Code</span>
-                    <span class="tech-tag">Xilinx</span>
-                    <span class="tech-tag" style="background: var(--accent-primary); color: white;">🏆 IEEE Published</span>
+                <div class="enhanced-card">
+                    <i class="fas fa-code-branch" style="font-size: 2.5rem; color: var(--accent-secondary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Hamming Code</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Provides error correction capability for single-bit errors with minimal overhead
+                    </p>
                 </div>
+                
+                <div class="enhanced-card">
+                    <i class="fas fa-microchip" style="font-size: 2.5rem; color: var(--accent-gold); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Systolic Architecture</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Parallel processing with efficient data flow for high-performance matrix operations
+                    </p>
+                </div>
+                
+                <div class="enhanced-card">
+                    <i class="fas fa-check-double" style="font-size: 2.5rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">95% Detection Rate</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Real-time error detection with 95% fault detection accuracy validated through FPGA simulation
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>    <!-- Output Preview -->
+    <section class="section" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <i class="fas fa-chart-bar"></i>
+                <h2>FPGA Simulation Results</h2>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+                Hardware synthesis and simulation results from Xilinx Vivado platform
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/output.jpg" alt="Simulation Output" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-wave-square" style="color: var(--accent-primary);"></i> Simulation Output
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            Complete waveform analysis and timing diagram from testbench execution
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/Run_Synthesis.jpg" alt="Synthesis Run" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-cog" style="color: var(--accent-secondary);"></i> Synthesis Results
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            Vivado synthesis run showing resource utilization and timing constraints
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/Schematic.jpg" alt="System Schematic" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-project-diagram" style="color: var(--accent-gold);"></i> RTL Schematic
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                            Register Transfer Level schematic view of the synthesized design
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="Output/" class="download-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-expand-alt"></i> View Full Size Gallery
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Project Content -->
-    <section class="section">
+    <!-- Project Resources -->
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
         <div class="container">
-            <div class="project-content">
-                <!-- Sidebar -->
-                <div class="project-sidebar">
-                    <!-- Quick Links -->
-                    <div class="sidebar-section">
-                        <h3>Quick Links</h3>
-                        <div class="quick-links">
-                            <a href="Code/" class="btn btn-primary">
-                                <i class="fas fa-code"></i>
-                                Verilog Code
-                            </a>
-                            <a href="Output/" class="btn btn-secondary">
-                                <i class="fas fa-images"></i>
-                                Outputs
-                            </a>
-                            <a href="Contents/" class="btn btn-secondary">
-                                <i class="fas fa-book"></i>
-                                Contents
-                            </a>
-                            <a href="Paper_Publication/" class="btn btn-secondary">
-                                <i class="fas fa-file-pdf"></i>
-                                Publication
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Project Stats -->
-                    <div class="project-stats">
-                        <h3>Project Info</h3>
-                        <div class="stat-item">
-                            <span class="stat-label">Platform</span>
-                            <span class="stat-value">FPGA / Xilinx</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Language</span>
-                            <span class="stat-value">Verilog HDL</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Domain</span>
-                            <span class="stat-value">Hardware Design</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Published</span>
-                            <span class="stat-value">IEEE ICCCNT 2025</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="project-main">
-                    <div class="project-section">
-                        <h2>✨ Key Features</h2>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check-circle"></i> <span><strong>Algorithm-Based Fault Tolerance (ABFT)</strong> → Detects errors by verifying checksum rows and columns</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span><strong>Hamming Code Integration</strong> → Provides error correction capability for single-bit errors</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span><strong>Systolic Array Architecture</strong> → Parallel processing with efficient data flow</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span><strong>FPGA Implementation</strong> → Hardware synthesis and simulation on Xilinx platform</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span><strong>Real-time Error Detection</strong> → 95% fault detection accuracy with low overhead</span></li>
-                            <li><i class="fas fa-check-circle"></i> <span><strong>Scalable Design</strong> → Configurable matrix sizes (4×4 to 8×8 arrays)</span></li>
-                        </ul>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>📁 Project Structure</h2>
-                        <div class="file-structure">
-                            <div class="file-item">
-                                <i class="fas fa-folder" style="color: var(--accent-gold);"></i>
-                                <span><strong>Code/</strong> → 20+ Verilog files with ABFT and Hamming implementations</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-folder" style="color: var(--accent-gold);"></i>
-                                <span><strong>Output/</strong> → FPGA simulation results and synthesis reports</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-folder" style="color: var(--accent-gold);"></i>
-                                <span><strong>Contents/</strong> → System diagrams and architecture schematics</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-file-pdf" style="color: var(--error);"></i>
-                                <span><strong>Paper_Publication/</strong> → IEEE ICCCNT 2025 research paper</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>🎯 Key Insights</h2>
-                        <div class="insights-grid">
-                            <div class="insight-card">
-                                <h4>95% Accuracy</h4>
-                                <p>Achieved 95% fault detection rate with minimal computational overhead</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>Dual Protection</h4>
-                                <p>Combined ABFT and Hamming Code for comprehensive error coverage</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>IEEE Published</h4>
-                                <p>Research accepted at IEEE ICCCNT 2025 conference at IIT Indore</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>📊 FPGA Simulation Results</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Xilinx Vivado synthesis and simulation outputs</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/output.jpg" alt="Simulation Output" style="width: 100%; height: 140px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Main Output</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/Run_Synthesis.jpg" alt="Synthesis Run" style="width: 100%; height: 140px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Synthesis Run</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/Schematic.jpg" alt="System Schematic" style="width: 100%; height: 140px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Schematic</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Contents/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Contents/Block Diagram.jpg" alt="Block Diagram" style="width: 100%; height: 140px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Block Diagram</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 1.5rem;">
-                            <a href="Output/" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-images"></i> View All 4 Images
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>🔧 Technologies Used</h2>
-                        <div class="tech-stack">
-                            <span class="tech-badge">Verilog HDL</span>
-                            <span class="tech-badge">Xilinx Vivado</span>
-                            <span class="tech-badge">FPGA Design</span>
-                            <span class="tech-badge">ABFT Algorithm</span>
-                            <span class="tech-badge">Hamming Code</span>
-                            <span class="tech-badge">Systolic Arrays</span>
-                            <span class="tech-badge">Error Correction</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="section-header">
+                <i class="fas fa-folder-tree"></i>
+                <h2>Explore Project Structure</h2>
             </div>
-        </div>
-    </section>
-
-    <!-- Back to Projects -->
-    <section class="section section-dark">
-        <div class="container">
-            <div class="back-to-projects">
-                <a href="../../projects.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to All Projects
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+                <a href="Code/" class="enhanced-card" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-code" style="font-size: 3rem; color: #007BFF; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Verilog Code</h3>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                        21 HDL files across 4 modules (ABFT, Combined, Light ABFT, MC)
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(0, 123, 255, 0.1); color: var(--accent-primary); border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+                            Browse Files <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="Output/" class="enhanced-card" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-images" style="font-size: 3rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Simulation Outputs</h3>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                        4 high-resolution images showing simulation results and schematics
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.1); color: #10b981; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+                            View Gallery <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="Contents/" class="enhanced-card" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-diagram-project" style="font-size: 3rem; color: #FFC700; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">System Diagrams</h3>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                        Block diagrams and architectural schematics of the fault-tolerant system
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(255, 199, 0, 0.1); color: #FFC700; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+                            View Diagrams <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="Paper_Publication/" class="enhanced-card" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-file-pdf" style="font-size: 3rem; color: #dc2626; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">IEEE Publication</h3>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">
+                        Research paper published at IEEE ICCCNT 2025, IIT Indore
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <span style="display: inline-block; padding: 0.5rem 1rem; background: rgba(220, 38, 38, 0.1); color: #dc2626; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+                            Read Paper <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
                 </a>
             </div>
         </div>

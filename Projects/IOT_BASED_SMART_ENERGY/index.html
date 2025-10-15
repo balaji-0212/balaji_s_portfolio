@@ -5,20 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IoT Smart Energy Meter - Balaji S</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 400; line-height: 1.6; }
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+        .project-title { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1.5rem; line-height: 1.2; }
+        .project-description { font-size: 1.25rem; line-height: 1.8; color: var(--text-secondary); max-width: 800px; }
+        .enhanced-card { background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%); border: 1px solid rgba(0, 123, 255, 0.2); border-radius: 1rem; padding: 2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .enhanced-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #007BFF, #00D4FF, #FFC700); }
+        .enhanced-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15); border-color: rgba(0, 123, 255, 0.4); }
+        .download-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.5rem; background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%); color: white; border: none; border-radius: 0.5rem; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); background: linear-gradient(135deg, #0056b3 0%, #003d82 100%); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .stat-card { background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease; }
+        .stat-card:hover { border-color: var(--accent-primary); transform: translateY(-3px); }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-primary); display: block; margin-bottom: 0.5rem; }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .file-download-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .file-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .file-card:hover { border-color: var(--accent-primary); transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0, 123, 255, 0.2); }
+        .file-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .file-name { font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .file-size { color: var(--text-muted); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+        .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border-color); }
+        .section-header h2 { font-size: 2rem; margin: 0; font-weight: 700; }
+        .section-header i { font-size: 2rem; color: var(--accent-primary); }
+    </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <a href="../../index.html">
-                        <span class="logo-text">Balaji<span class="accent">.</span>S</span>
-                    </a>
-                </div>
+                <div class="logo"><a href="../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a></div>
                 <nav class="nav" id="nav">
                     <ul class="nav-list">
                         <li><a href="../../index.html" class="nav-link">Home</a></li>
@@ -29,188 +49,169 @@
                         <li><a href="../../contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
             </div>
         </div>
     </header>
 
-    <!-- Project Hero -->
-    <section class="section hero-alt">
+    <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="project-hero">
-                <div class="breadcrumb">
-                    <a href="../../projects.html">Projects</a> / IoT Smart Energy Meter
-                </div>
-                <h1 class="project-title">IoT-Based Smart Energy Meter ⚡</h1>
-                <p class="project-description">
-                    An intelligent energy monitoring system using ESP32 microcontroller that tracks real-time energy consumption 
-                    and automatically controls appliances based on occupancy detection. Integrated with Ubidots cloud platform 
-                    for remote monitoring and data visualization, enabling users to optimize electricity consumption from anywhere.
-                </p>
-                <div class="project-meta">
-                    <span class="tech-tag">ESP32</span>
-                    <span class="tech-tag">Arduino IDE</span>
-                    <span class="tech-tag">Ubidots</span>
-                    <span class="tech-tag">PIR Sensor</span>
-                    <span class="tech-tag">IoT</span>
-                    <span class="tech-tag">Cloud Integration</span>
-                </div>
+            <div style="margin-bottom: 1.5rem;">
+                <a href="../../projects.html" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+            </div>
+            
+            <h1 class="project-title">⚡ IoT-Based Smart Energy Meter for Energy Efficiency</h1>
+            <p class="project-description">
+                Intelligent energy monitoring system with ESP32 microcontroller, occupancy-based automation using PIR sensors, 
+                and real-time cloud integration via Ubidots platform for optimized electricity consumption.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0;">
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">ESP32</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Arduino IDE</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Ubidots Cloud</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">PIR Sensor</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">IoT</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Energy Optimization</span>
             </div>
         </div>
     </section>
 
-    <!-- Project Content -->
-    <section class="section">
+    <section class="section" style="padding: 3rem 0;">
         <div class="container">
-            <div class="project-content">
-                <div class="project-sidebar">
-                    <div class="project-links">
-                        <h3>Quick Links</h3>
-                        <a href="Output/" class="btn btn-primary">
-                            <i class="fas fa-image"></i>
-                            Project Outputs
-                        </a>
-                        <a href="Report/" class="btn btn-secondary">
-                            <i class="fas fa-file-alt"></i>
-                            Project Report
-                        </a>
-                    </div>
-
-                    <div class="project-stats">
-                        <h3>Project Stats</h3>
-                        <div class="stat-item">
-                            <span class="stat-label">Platform</span>
-                            <span class="stat-value">ESP32</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Cloud</span>
-                            <span class="stat-value">Ubidots</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Domain</span>
-                            <span class="stat-value">IoT & Energy</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Status</span>
-                            <span class="stat-value">Completed</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-main">
-                    <div class="project-section">
-                        <h2>🛠 Features</h2>
-                        <ul class="feature-list">
-                            <li><strong>Real-time Energy Monitoring:</strong> Track power consumption with live data updates</li>
-                            <li><strong>Occupancy-Based Control:</strong> Automatic appliance switching using PIR motion sensors</li>
-                            <li><strong>Cloud Integration:</strong> Ubidots platform for remote data visualization</li>
-                            <li><strong>Mobile Dashboard:</strong> Access energy data from anywhere via smartphone</li>
-                            <li><strong>Cost Optimization:</strong> Reduce electricity bills through automated control</li>
-                            <li><strong>Alert System:</strong> Notifications for unusual consumption patterns</li>
-                        </ul>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>📂 Project Structure</h2>
-                        <div class="file-structure">
-                            <div class="file-item">
-                                <i class="fas fa-folder"></i>
-                                <span><strong>Output/</strong> → Hardware setup photos and results (5 images)</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-folder"></i>
-                                <span><strong>Report/</strong> → Complete project documentation (PDF)</span>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-file-code"></i>
-                                <span><strong>Source Code</strong> → Arduino sketches and configurations</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>🎯 Key Insights</h2>
-                        <div class="insights-grid">
-                            <div class="insight-card">
-                                <h4>Energy Savings</h4>
-                                <p>Achieved up to 30% reduction in electricity consumption through automated control</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>Real-time Monitoring</h4>
-                                <p>Live energy usage tracking with instant updates via cloud dashboard</p>
-                            </div>
-                            <div class="insight-card">
-                                <h4>Smart Automation</h4>
-                                <p>PIR sensor-based occupancy detection for intelligent appliance control</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>� Dashboard Preview</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 2rem;">ESP32 based energy meter with PIR sensors and cloud connectivity</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/IMG_4674.JPG" alt="Hardware Setup" style="width: 100%; height: 150px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Circuit Setup</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/IMG_4675.JPG" alt="Components" style="width: 100%; height: 150px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">ESP32 Module</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/Pie chart.jpg" alt="Energy Analysis" style="width: 100%; height: 150px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Data Analysis</p>
-                                </div>
-                            </div>
-                            <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                                <img src="Output/Pie chart 1.jpg" alt="Dashboard" style="width: 100%; height: 150px; object-fit: cover;">
-                                <div style="padding: 0.75rem;">
-                                    <p style="color: var(--text-primary); font-size: 0.85rem; margin: 0; text-align: center;">Ubidots Dashboard</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 1.5rem;">
-                            <a href="Output/" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-images"></i> View All 5 Photos
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h2>🔧 Technologies Used</h2>
-                        <div class="tech-stack">
-                            <span class="tech-badge">ESP32 Microcontroller</span>
-                            <span class="tech-badge">Arduino IDE</span>
-                            <span class="tech-badge">Ubidots IoT Platform</span>
-                            <span class="tech-badge">PIR Motion Sensor</span>
-                            <span class="tech-badge">Current Sensor</span>
-                            <span class="tech-badge">MQTT Protocol</span>
-                            <span class="tech-badge">Cloud Integration</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="stats-grid">
+                <div class="stat-card"><span class="stat-value">ESP32</span><span class="stat-label">Microcontroller</span></div>
+                <div class="stat-card"><span class="stat-value">Real-time</span><span class="stat-label">Monitoring</span></div>
+                <div class="stat-card"><span class="stat-value">Cloud</span><span class="stat-label">Integrated</span></div>
+                <div class="stat-card"><span class="stat-value">PIR</span><span class="stat-label">Occupancy Sensor</span></div>
             </div>
         </div>
     </section>
 
-    <!-- Back to Projects -->
-    <section class="section section-dark">
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
         <div class="container">
-            <div class="back-to-projects">
-                <a href="../../projects.html" class="btn btn-outline">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to All Projects
+            <div class="section-header"><i class="fas fa-download"></i><h2>Project Resources</h2></div>
+            <div class="file-download-grid">
+                <a href="Report/" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">Project Report</div>
+                    <div class="file-size">PDF • Complete Documentation</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View Report
+                        </span>
+                    </div>
+                </a>
+                <a href="Output/" class="file-card">
+                    <i class="fas fa-images file-icon" style="color: #10b981;"></i>
+                    <div class="file-name">Hardware Photos</div>
+                    <div class="file-size">5 Images • Circuit & Dashboard</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-images"></i> View Gallery
+                        </span>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
+
+    <section class="section enhanced-card" style="margin: 4rem auto; max-width: 1200px;">
+        <div class="section-header"><i class="fas fa-clipboard-list"></i><h2>Project Overview</h2></div>
+        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; font-size: 1.1rem;">
+            Developed an intelligent energy monitoring system using ESP32 microcontroller that tracks real-time energy consumption 
+            and automatically controls appliances based on occupancy detection using PIR sensors.
+        </p>
+        <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem;">
+            The system integrates with Ubidots cloud platform for remote monitoring and data visualization, enabling users to 
+            track energy usage patterns and optimize electricity consumption from anywhere via mobile dashboard.
+        </p>
+    </section>
+
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-star"></i><h2>Key Features</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="enhanced-card">
+                    <i class="fas fa-bolt" style="font-size: 2.5rem; color: var(--accent-primary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Real-time Monitoring</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Track power consumption with live data updates and instant energy usage feedback</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--accent-secondary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Occupancy Detection</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Automatic appliance switching using PIR motion sensors for energy savings</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-cloud" style="font-size: 2.5rem; color: var(--accent-gold); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Cloud Integration</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Ubidots platform for remote data visualization and mobile dashboard access</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-dollar-sign" style="font-size: 2.5rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Cost Optimization</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Reduce electricity bills through automated control and usage analytics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-images"></i><h2>Hardware Setup & Results</h2></div>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">ESP32 based energy meter with PIR sensors and cloud connectivity</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/IMG_4674.JPG" alt="Hardware Setup" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-microchip" style="color: var(--accent-primary);"></i> Circuit Setup
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Complete hardware assembly with ESP32, PIR sensors, and power monitoring module</p>
+                    </div>
+                </div>
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/IMG_4675.JPG" alt="ESP32 Module" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-chip" style="color: var(--accent-secondary);"></i> ESP32 Module
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">WiFi-enabled ESP32 microcontroller with integrated sensors and connectivity</p>
+                    </div>
+                </div>
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/Pie chart.jpg" alt="Energy Analysis" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-chart-pie" style="color: var(--accent-gold);"></i> Data Analysis
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Energy consumption breakdown and usage pattern visualization</p>
+                    </div>
+                </div>
+                <div style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 32px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Output/Pie chart 1.jpg" alt="Ubidots Dashboard" style="width: 100%; height: 220px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+                            <i class="fas fa-mobile-alt" style="color: #10b981;"></i> Ubidots Dashboard
+                        </h3>
+                        <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Real-time cloud dashboard accessible from anywhere via mobile or web</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="Output/" class="download-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-expand-alt"></i> View Full Gallery (5 Photos)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div>
+    </footer>
+
+    <script src="../../assets/js/scripts.js"></script>
+</body>
+</html>
