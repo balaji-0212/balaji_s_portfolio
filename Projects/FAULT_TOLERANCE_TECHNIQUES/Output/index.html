@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output - Fault Tolerant System</title>
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .gallery-item { background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,123,255,0.3); }
+        .gallery-item img { width: 100%; height: 250px; object-fit: cover; cursor: pointer; }
+        .gallery-item-info { padding: 1rem; }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; }
+        .lightbox-close { position: absolute; top: 20px; right: 40px; color: white; font-size: 3rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a>
+                </div>
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="../../../index.html" class="nav-link">Home</a></li>
+                        <li><a href="../../../about.html" class="nav-link">About</a></li>
+                        <li><a href="../../../resume.html" class="nav-link">Resume</a></li>
+                        <li><a href="../../../certificates.html" class="nav-link">Certificates</a></li>
+                        <li><a href="../../../projects.html" class="nav-link active">Projects</a></li>
+                        <li><a href="../../../contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" style="padding-top: 6rem;">
+        <div class="container">
+            <div class="breadcrumb" style="margin-bottom: 2rem;">
+                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
+                <a href="../index.html" style="color: var(--accent-primary);">Fault Tolerant System</a> / 
+                <span style="color: var(--text-primary);">Output</span>
+            </div>
+
+            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-images"></i> Simulation Results</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">FPGA synthesis results and schematic diagrams</p>
+
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="output.jpg" alt="Simulation Output" onclick="openLightbox(this.src)">
+                    <div class="gallery-item-info">
+                        <h4 style="color: var(--text-primary);">Simulation Output</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Main output results</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="output1.jpg" alt="Output Results" onclick="openLightbox(this.src)">
+                    <div class="gallery-item-info">
+                        <h4 style="color: var(--text-primary);">Output Results</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Additional results</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Run_Synthesis.jpg" alt="Synthesis Run" onclick="openLightbox(this.src)">
+                    <div class="gallery-item-info">
+                        <h4 style="color: var(--text-primary);">Synthesis Run</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Vivado synthesis</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Schematic.jpg" alt="System Schematic" onclick="openLightbox(this.src)">
+                    <div class="gallery-item-info">
+                        <h4 style="color: var(--text-primary);">System Schematic</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Hardware design</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <footer class="footer"><div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div></footer>
+
+    <script src="../../../assets/js/scripts.js"></script>
+    <script>
+        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('active'); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+    </script>
+</body>
+</html>

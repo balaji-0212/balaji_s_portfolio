@@ -1,0 +1,116 @@
+[
+  {
+    "id": "bank-loan-dashboard",
+    "title": "Bank Loan Report Dashboard",
+    "description": "End-to-end Power BI dashboard monitoring bank loan performance metrics including default rates, approval ratios, and borrower demographics with ETL pipelines and interactive visualizations.",
+  "image": "Projects/Bank_Loan_Report_Dashboard/dashboard/dashboard_preview/Bank_Loan_Report-Summary.jpg",
+    "technologies": ["Power BI", "MS SQL Server", "DAX", "Excel", "ETL"],
+    "category": "Data Analytics",
+    "link": "Projects/Bank_Loan_Report_Dashboard/",
+    "github": null,
+    "liveDemo": null,
+    "featured": true,
+    "date": "2024",
+    "highlights": [
+      "Built comprehensive ETL pipeline for loan data processing",
+      "Created 3 interactive dashboards (Summary, Overview, Details)",
+      "Implemented KPI tracking for loan performance metrics",
+      "Designed drill-through functionality for detailed analysis"
+    ]
+  },
+  {
+    "id": "fault-tolerant-system",
+    "title": "Fault Tolerant Matrix Computation on Systolic Arrays",
+    "description": "Designed fault-tolerant systolic array architecture with embedded error detection and correction techniques. Published and presented at IEEE ICCCNT 2025 (IIT Indore).",
+    "image": "assets/images/projects/fault-tolerant-placeholder.jpg",
+    "technologies": ["Verilog HDL", "Vivado", "FPGA", "ABFT", "Hamming Code"],
+    "category": "Embedded Systems",
+    "link": "Projects/FAULT TOLERANCE TECHNIQUES/",
+    "github": null,
+    "liveDemo": null,
+    "featured": true,
+    "date": "2024",
+    "highlights": [
+      "Implemented Algorithm-Based Fault Tolerance (ABFT)",
+      "Integrated Hamming Code for error correction",
+      "Achieved 95% fault detection accuracy",
+      "Published in IEEE ICCCNT 2025 conference"
+    ]
+  },
+  {
+    "id": "openwis-monitoring",
+    "title": "OpenWISP Monitoring: Real-Time Network Health Insights",
+    "description": "Built Python-Django based network health monitoring system with real-time ping/Iperf3/WiFi client checks, integrated with InfluxDB and Redis for performance tracking.",
+    "image": "assets/images/projects/openwis-placeholder.jpg",
+    "technologies": ["Python", "Django", "InfluxDB", "Redis", "Networking"],
+    "category": "Software Development",
+    "link": null,
+    "github": null,
+    "liveDemo": null,
+    "featured": true,
+    "date": "2024",
+    "highlights": [
+      "Real-time network health monitoring",
+      "Integration with InfluxDB for time-series data",
+      "Redis caching for improved performance",
+      "RESTful API for network metrics"
+    ]
+  },
+  {
+    "id": "iot-energy-meter",
+    "title": "IoT-Based Smart Energy Meter for Energy Efficiency",
+    "description": "Created smart energy meter using ESP32 and PIR sensor for live energy consumption tracking with occupancy-based control and cloud integration via Ubidots.",
+    "image": "assets/images/projects/iot-energy-placeholder.jpg",
+    "technologies": ["ESP32", "Arduino IDE", "Ubidots", "IoT", "PIR Sensor"],
+    "category": "IoT",
+    "link": "Projects/Mini project - 2/",
+    "github": null,
+    "liveDemo": null,
+    "featured": true,
+    "date": "2023",
+    "highlights": [
+      "Real-time energy consumption monitoring",
+      "Occupancy-based automated control",
+      "Cloud integration with Ubidots platform",
+      "Mobile app dashboard for remote monitoring"
+    ]
+  },
+  {
+    "id": "emotion-detection",
+    "title": "Video-Based Emotion Detection Using Deep Learning",
+    "description": "Developed CNN-based facial emotion recognition model using FER2013 dataset with real-time OpenCV integration for live video stream analysis.",
+    "image": "assets/images/projects/emotion-detection-placeholder.jpg",
+    "technologies": ["Python", "TensorFlow", "Keras", "OpenCV", "CNN"],
+    "category": "Machine Learning",
+    "link": "Projects/Mini project - 1/",
+    "github": null,
+    "liveDemo": null,
+    "featured": true,
+    "date": "2023",
+    "highlights": [
+      "Trained CNN model on FER2013 dataset",
+      "Achieved 65% accuracy on emotion classification",
+      "Real-time video processing with OpenCV",
+      "Detects 7 emotions: Happy, Sad, Angry, Surprise, Fear, Disgust, Neutral"
+    ]
+  },
+  {
+    "id": "sales-dashboard",
+    "title": "Sales & Profit Dashboard",
+    "description": "Developed interactive executive-level dashboard analyzing sales, profit, and customer performance with Power Query, PivotTables, and automated reporting.",
+    "image": "assets/images/projects/sales-dashboard-placeholder.jpg",
+    "technologies": ["Microsoft Excel", "Power Query", "Power Pivot", "PivotTables", "Charts"],
+    "category": "Data Analytics",
+    "link": "Projects/Sales and Profit Dashboard/",
+    "github": null,
+    "liveDemo": null,
+    "featured": false,
+    "date": "2024",
+    "highlights": [
+      "Interactive executive dashboard with KPIs",
+      "Automated data refresh with Power Query",
+      "Dynamic PivotTables for multi-dimensional analysis",
+      "Custom charts and visualizations"
+    ]
+  }
+]

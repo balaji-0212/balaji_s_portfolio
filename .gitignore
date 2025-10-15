@@ -1,0 +1,81 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if using any build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs (if using any)
+dist/
+build/
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Exclude large files for GitHub (deploy these separately)
+Certificates/*.pdf
+Certificates/*.PDF
+Projects/**/*.pdf
+Projects/**/*.PDF
+Projects/**/*.pbix
+Projects/**/*.zip
+Projects/**/*.docx
+Projects/**/*.pptx
+Projects/**/*.csv
+Projects/**/*.mov
+Projects/**/*.MOV
+Projects/**/*.HEIC
+Projects/**/*.exe
+Projects/**/*.torrent
+Projects/**/*.7z
+Projects/**/*.PUP
+Resume/*.pdf
+Resume/*.PDF
+Details/*.pdf
+Details/*.PDF
+
+# Keep only essential certificate images
+!Certificates/*.png
+!Certificates/*.jpg
+!Certificates/*.PNG
+!Certificates/*.JPG
+
+# Keep project preview images
+!Projects/**/dashboard_preview/*.jpg
+!Projects/**/dashboard_preview/*.png

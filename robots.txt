@@ -1,0 +1,18 @@
+# robots.txt for Balaji S Portfolio
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://balaji-portfolio.netlify.app/sitemap.xml
+
+# Disallow specific directories (if any)
+Disallow: /assets/images/placeholder.svg
+Disallow: /assets/images/profile-placeholder.svg
+
+# Allow all CSS and JS files
+Allow: /assets/css/
+Allow: /assets/js/
+
+# Crawl-delay (optional, adjust as needed)
+Crawl-delay: 1

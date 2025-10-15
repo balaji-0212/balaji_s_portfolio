@@ -1,0 +1,287 @@
+// ===================================
+// Initialize AOS (Animate On Scroll)
+// ===================================
+AOS.init({
+  duration: 1000,
+  easing: 'ease-in-out',
+  once: true,
+  offset: 100,
+  disable: false
+});
+
+// ===================================
+// Mobile Menu Toggle
+// ===================================
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const nav = document.getElementById('nav');
+
+if (mobileMenuToggle) {
+  mobileMenuToggle.addEventListener('click', () => {
+    mobileMenuToggle.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+
+  // Close menu when clicking on a link
+  const navLinks = document.querySelectorAll('.nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenuToggle.classList.remove('active');
+      nav.classList.remove('active');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+      mobileMenuToggle.classList.remove('active');
+      nav.classList.remove('active');
+    }
+  });
+}
+
+// ===================================
+// Active Navigation Link
+// ===================================
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const navLinks = document.querySelectorAll('.nav-link');
+
+navLinks.forEach(link => {
+  const href = link.getAttribute('href');
+  if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+    link.classList.add('active');
+  } else {
+    link.classList.remove('active');
+  }
+});
+
+// ===================================
+// Header Scroll Effect
+// ===================================
+const header = document.querySelector('.header');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+
+  if (currentScroll > 100) {
+    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.5)';
+  } else {
+    header.style.boxShadow = 'none';
+  }
+
+  lastScroll = currentScroll;
+});
+
+// ===================================
+// GSAP Animations - DISABLED FOR DEBUGGING
+// ===================================
+// Temporarily disabled to fix layout issues
+// Will re-enable after confirming basic layout works
+console.log('GSAP animations temporarily disabled for debugging');
+
+// ===================================
+// Smooth Scroll for Anchor Links
+// ===================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    if (href !== '#' && href !== '') {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        const headerOffset = 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+});
+
+// ===================================
+// Form Validation (for contact page)
+// ===================================
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    
+    let isValid = true;
+    
+    // Clear previous errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    
+    // Validate name
+    if (name.value.trim() === '') {
+      showError(name, 'Name is required');
+      isValid = false;
+    }
+    
+    // Validate email
+    if (email.value.trim() === '') {
+      showError(email, 'Email is required');
+      isValid = false;
+    } else if (!isValidEmail(email.value)) {
+      showError(email, 'Please enter a valid email');
+      isValid = false;
+    }
+    
+    // Validate message
+    if (message.value.trim() === '') {
+      showError(message, 'Message is required');
+      isValid = false;
+    } else if (message.value.trim().length < 10) {
+      showError(message, 'Message must be at least 10 characters');
+      isValid = false;
+    }
+    
+    if (isValid) {
+      // Show success message
+      showSuccessMessage();
+      // Submit form (will be handled by Formspree or Netlify Forms)
+      this.submit();
+    }
+  });
+}
+
+function showError(input, message) {
+  input.classList.add('input-error');
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error-message';
+  errorDiv.textContent = message;
+  input.parentElement.appendChild(errorDiv);
+}
+
+function isValidEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+function showSuccessMessage() {
+  const successDiv = document.createElement('div');
+  successDiv.className = 'success-message';
+  successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Message sent successfully!';
+  contactForm.insertBefore(successDiv, contactForm.firstChild);
+  
+  setTimeout(() => {
+    successDiv.remove();
+  }, 5000);
+}
+
+// ===================================
+// Certificate Modal/Lightbox - REMOVED (Replaced with new implementation below)
+// ===================================
+
+// ===================================
+// Dynamic Project Loading - DISABLED
+// ===================================
+// Projects are now hardcoded in HTML, not loaded dynamically
+// This was causing the empty projects page issue
+console.log('Dynamic project loading disabled - using static HTML');
+
+// ===================================
+// Typing Effect for Hero (Optional)
+// ===================================
+function typeWriter(element, text, speed = 100) {
+  let i = 0;
+  element.textContent = '';
+  
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  
+  type();
+}
+
+// Uncomment to enable typing effect
+// const heroSubtitle = document.querySelector('.hero-subtitle');
+// if (heroSubtitle) {
+//   const originalText = heroSubtitle.textContent;
+//   typeWriter(heroSubtitle, originalText, 50);
+// }
+
+// ===================================
+// Back to Top Button
+// ===================================
+const backToTopBtn = document.createElement('button');
+backToTopBtn.className = 'back-to-top';
+backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+backToTopBtn.setAttribute('aria-label', 'Back to top');
+document.body.appendChild(backToTopBtn);
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+});
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// ===================================
+// Console Message
+// ===================================
+console.log('%c👋 Hello! Welcome to my portfolio', 'color: #00d4ff; font-size: 20px; font-weight: bold;');
+console.log('%cInterested in the code? Check out my GitHub: https://github.com/balaji-0212', 'color: #7c3aed; font-size: 14px;');
+
+// ===================================
+// Performance Optimization
+// ===================================
+// Lazy load images
+if ('IntersectionObserver' in window) {
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          observer.unobserve(img);
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('img[data-src]').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
+// ===================================
+// Theme Toggle (Optional - for future enhancement)
+// ===================================
+// const themeToggle = document.getElementById('themeToggle');
+// if (themeToggle) {
+//   const currentTheme = localStorage.getItem('theme') || 'dark';
+//   document.documentElement.setAttribute('data-theme', currentTheme);
+  
+//   themeToggle.addEventListener('click', () => {
+//     const theme = document.documentElement.getAttribute('data-theme');
+//     const newTheme = theme === 'dark' ? 'light' : 'dark';
+//     document.documentElement.setAttribute('data-theme', newTheme);
+//     localStorage.setItem('theme', newTheme);
+//   });
+// }
+
+// ===================================
+// Certificate functionality - Lightbox removed to fix navigation issues
+// View Certificate buttons now work as simple PDF links
