@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data - Bank Loan Report</title>
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a></div>
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="../../../index.html" class="nav-link">Home</a></li>
+                        <li><a href="../../../about.html" class="nav-link">About</a></li>
+                        <li><a href="../../../resume.html" class="nav-link">Resume</a></li>
+                        <li><a href="../../../certificates.html" class="nav-link">Certificates</a></li>
+                        <li><a href="../../../projects.html" class="nav-link active">Projects</a></li>
+                        <li><a href="../../../contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" style="padding-top: 6rem;">
+        <div class="container">
+            <div class="breadcrumb" style="margin-bottom: 2rem;">
+                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
+                <a href="../index.html" style="color: var(--accent-primary);">Bank Loan Report</a> / 
+                <span style="color: var(--text-primary);">Data</span>
+            </div>
+
+            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-database"></i> Dataset</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Raw financial loan data for analysis</p>
+
+            <div class="file-list">
+                <a href="financial_loan.csv" class="file-item" download style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;">
+                    <i class="fas fa-file-csv" style="font-size: 2rem; color: #10b981;"></i>
+                    <div style="flex: 1;">
+                        <h3 style="margin-bottom: 0.5rem;">financial_loan.csv</h3>
+                        <p style="color: var(--text-secondary); margin: 0;">Bank loan records with borrower information, loan amounts, interest rates, payment status, and credit scores</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <i class="fas fa-download" style="color: var(--accent-primary);"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 0.75rem; border: 1px solid var(--border-color); margin-top: 2rem;">
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;"><i class="fas fa-info-circle" style="color: var(--accent-primary);"></i> Dataset Information</h3>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                    Contains comprehensive loan data including customer demographics, loan terms, repayment history, 
+                    and risk indicators. Used for KPI analysis, trend visualization, and performance metrics in the Power BI dashboard.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div></footer>
+    <script src="../../../assets/js/scripts.js"></script>
+</body>
+</html>
