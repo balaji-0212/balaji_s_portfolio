@@ -5,20 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Emotion Detection - Balaji S</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 400; line-height: 1.6; }
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+        .project-title { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1.5rem; line-height: 1.2; }
+        .project-description { font-size: 1.25rem; line-height: 1.8; color: var(--text-secondary); max-width: 800px; }
+        .enhanced-card { background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%); border: 1px solid rgba(0, 123, 255, 0.2); border-radius: 1rem; padding: 2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .enhanced-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #007BFF, #00D4FF, #FFC700); }
+        .enhanced-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15); border-color: rgba(0, 123, 255, 0.4); }
+        .download-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.5rem; background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%); color: white; border: none; border-radius: 0.5rem; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); background: linear-gradient(135deg, #0056b3 0%, #003d82 100%); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .stat-card { background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease; }
+        .stat-card:hover { border-color: var(--accent-primary); transform: translateY(-3px); }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-primary); display: block; margin-bottom: 0.5rem; }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .file-download-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .file-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .file-card:hover { border-color: var(--accent-primary); transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0, 123, 255, 0.2); }
+        .file-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .file-name { font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .file-size { color: var(--text-muted); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
+        .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border-color); }
+        .section-header h2 { font-size: 2rem; margin: 0; font-weight: 700; }
+        .section-header i { font-size: 2rem; color: var(--accent-primary); }
+        .emotion-badge { display: inline-block; padding: 0.5rem 1rem; margin: 0.25rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 0.9rem; transition: all 0.3s ease; }
+        .emotion-badge:hover { border-color: var(--accent-primary); transform: translateY(-2px); }
+    </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <a href="../../index.html">
-                        <span class="logo-text">Balaji<span class="accent">.</span>S</span>
-                    </a>
-                </div>
+                <div class="logo"><a href="../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a></div>
                 <nav class="nav" id="nav">
                     <ul class="nav-list">
                         <li><a href="../../index.html" class="nav-link">Home</a></li>
@@ -29,110 +51,177 @@
                         <li><a href="../../contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
             </div>
         </div>
     </header>
 
-    <!-- Project Hero -->
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../projects.html" style="color: var(--accent-primary);">← Back to Projects</a>
+            <div style="margin-bottom: 1.5rem;">
+                <a href="../../projects.html" style="color: var(--accent-primary); text-decoration: none; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
             </div>
             
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
-                    🧠 Video-Based Emotion Detection Using Deep Learning
-                </h1>
-                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
-                    CNN-based facial emotion recognition system with real-time video processing capabilities
-                </p>
+            <h1 class="project-title">🧠 Video-Based Emotion Detection Using Deep Learning</h1>
+            <p class="project-description">
+                Advanced CNN-based facial emotion recognition system trained on FER2013 dataset, capable of detecting 7 different 
+                emotions from facial expressions in real-time video streams with 65% accuracy.
+            </p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0;">
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Python</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">TensorFlow</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Keras</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">OpenCV</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">CNN</span>
+                <span class="tech-tag" style="padding: 0.75rem 1.25rem; font-weight: 600;">Deep Learning</span>
             </div>
+        </div>
+    </section>
 
-            <!-- Tech Stack -->
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-primary);">Technologies Used</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Python</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">TensorFlow</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Keras</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">OpenCV</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">CNN</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Deep Learning</span>
-                </div>
+    <section class="section" style="padding: 3rem 0;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card"><span class="stat-value">Python</span><span class="stat-label">Language</span></div>
+                <div class="stat-card"><span class="stat-value">7 Emotions</span><span class="stat-label">Classes</span></div>
+                <div class="stat-card"><span class="stat-value">65%</span><span class="stat-label">Accuracy</span></div>
+                <div class="stat-card"><span class="stat-value">Real-time</span><span class="stat-label">Processing</span></div>
             </div>
+        </div>
+    </section>
 
-            <!-- Project Overview -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">📋 Project Overview</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
-                    Developed a Convolutional Neural Network (CNN) based facial emotion recognition system trained on the FER2013 dataset. 
-                    The model can detect 7 different emotions from facial expressions in real-time video streams.
-                </p>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
-                    Integrated with OpenCV for real-time video processing, the system achieves 65% accuracy in emotion classification, 
-                    making it suitable for applications in customer behavior analysis, mental health monitoring, and human-computer interaction.
-                </p>
-            </div>
-
-            <!-- Key Features -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">✨ Key Features</h2>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">7 Emotion Detection:</strong> Happy, Sad, Angry, Surprise, Fear, Disgust, Neutral
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">Real-time Processing:</strong> Live video stream analysis with OpenCV
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">CNN Architecture:</strong> Deep learning model with multiple convolutional layers
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">FER2013 Dataset:</strong> Trained on 35,000+ facial expression images
-                    </li>
-                    <li style="padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">65% Accuracy:</strong> Competitive performance on emotion classification
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Project Resources -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">📁 Project Resources</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                    <a href="Report/" style="display: block; padding: 1.5rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-align: center; transition: all 0.3s; border: 1px solid var(--border-color);">
-                        <i class="fas fa-file-alt" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 0.5rem;"></i>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Project Report</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Detailed Documentation</p>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Back Button -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="../../projects.html" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Back to All Projects
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-download"></i><h2>Project Resources</h2></div>
+            <div class="file-download-grid">
+                <a href="Report/" class="file-card">
+                    <i class="fas fa-file-pdf file-icon" style="color: #dc2626;"></i>
+                    <div class="file-name">Research Report</div>
+                    <div class="file-size">PDF • Complete Documentation</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="download-btn" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-eye"></i> View Report
+                        </span>
+                    </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <section class="section enhanced-card" style="margin: 4rem auto; max-width: 1200px;">
+        <div class="section-header"><i class="fas fa-clipboard-list"></i><h2>Project Overview</h2></div>
+        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; font-size: 1.1rem;">
+            Developed a Convolutional Neural Network (CNN) based facial emotion recognition system trained on the FER2013 dataset. 
+            The model can detect 7 different emotions from facial expressions in real-time video streams.
+        </p>
+        <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem;">
+            Integrated with OpenCV for real-time video processing, the system achieves 65% accuracy in emotion classification, 
+            making it suitable for applications in customer behavior analysis, mental health monitoring, and human-computer interaction.
+        </p>
+    </section>
+
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
         <div class="container">
-            <p>&copy; 2025 Balaji S. All rights reserved.</p>
+            <div class="section-header"><i class="fas fa-smile"></i><h2>7 Emotion Classes Detected</h2></div>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+                The CNN model recognizes these facial expressions in real-time
+            </p>
+            <div style="text-align: center; margin: 2rem 0;">
+                <span class="emotion-badge">😊 Happy</span>
+                <span class="emotion-badge">😢 Sad</span>
+                <span class="emotion-badge">😠 Angry</span>
+                <span class="emotion-badge">😲 Surprise</span>
+                <span class="emotion-badge">😨 Fear</span>
+                <span class="emotion-badge">🤢 Disgust</span>
+                <span class="emotion-badge">😐 Neutral</span>
+            </div>
         </div>
+    </section>
+
+    <section class="section" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-star"></i><h2>Key Features</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="enhanced-card">
+                    <i class="fas fa-brain" style="font-size: 2.5rem; color: var(--accent-primary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">CNN Architecture</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Deep learning model with multiple convolutional layers for accurate emotion classification</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-video" style="font-size: 2.5rem; color: var(--accent-secondary); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">Real-time Processing</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Live video stream analysis with OpenCV for instant emotion detection</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-database" style="font-size: 2.5rem; color: var(--accent-gold); display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">FER2013 Dataset</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">Trained on comprehensive facial expression recognition dataset</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-chart-line" style="font-size: 2.5rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.3rem;">65% Accuracy</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">High accuracy rate suitable for real-world applications and research</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-secondary); padding: 3rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-tools"></i><h2>Technologies & Tools</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="enhanced-card">
+                    <i class="fab fa-python" style="font-size: 3rem; color: #3776ab; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Python 3.x</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Core programming language</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-network-wired" style="font-size: 3rem; color: #ff6f00; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">TensorFlow & Keras</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Deep learning frameworks</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-camera" style="font-size: 3rem; color: #5c8ae6; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">OpenCV</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Computer vision library</p>
+                </div>
+                <div class="enhanced-card">
+                    <i class="fas fa-project-diagram" style="font-size: 3rem; color: #10b981; display: block; margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">CNN Model</h3>
+                    <p style="color: var(--text-secondary); margin: 0;">Convolutional Neural Network</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header"><i class="fas fa-lightbulb"></i><h2>Applications</h2></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--accent-primary); margin-bottom: 0.75rem;"><i class="fas fa-chart-bar"></i> Customer Behavior Analysis</h4>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Analyze customer reactions to products and services</p>
+                </div>
+                <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--accent-secondary); margin-bottom: 0.75rem;"><i class="fas fa-heartbeat"></i> Mental Health Monitoring</h4>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Track emotional states for therapy and counseling</p>
+                </div>
+                <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--accent-gold); margin-bottom: 0.75rem;"><i class="fas fa-desktop"></i> Human-Computer Interaction</h4>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Enhance UI/UX with emotion-aware systems</p>
+                </div>
+                <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color);">
+                    <h4 style="color: #10b981; margin-bottom: 0.75rem;"><i class="fas fa-graduation-cap"></i> Educational Technology</h4>
+                    <p style="color: var(--text-secondary); margin: 0; line-height: 1.6;">Adapt learning content based on student emotions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div>
     </footer>
 
     <script src="../../assets/js/scripts.js"></script>
