@@ -39,25 +39,47 @@
             <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-chart-bar"></i> Power BI Dashboard Files</h1>
             <p style="color: var(--text-secondary); margin-bottom: 2rem;">Interactive Power BI report and dashboard screenshots</p>
 
-            <div class="file-list">
-                <div class="file-item">
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-color); margin-bottom: 3rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
                     <i class="fas fa-file" style="font-size: 2rem; color: #F2C811;"></i>
                     <div>
-                        <h3>Bank_Loan_Report.pbix</h3>
-                        <p>Power BI Desktop file with full dashboard, DAX measures, and data model</p>
+                        <h3 style="margin: 0; color: var(--text-primary);">Bank_Loan_Report.pbix</h3>
+                        <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary);">Power BI Desktop file with full dashboard, DAX measures, and data model</p>
                     </div>
                 </div>
+            </div>
 
-                <a href="dashboard_preview/index.html" class="file-item" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    <i class="fas fa-folder" style="font-size: 2rem; color: #FFC700;"></i>
-                    <div>
-                        <h3>dashboard_preview/</h3>
-                        <p>Screenshots of Summary, Overview, and Details dashboard pages (3 images)</p>
+            <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-primary);"><i class="fas fa-images" style="color: var(--accent-secondary);"></i> Dashboard Preview</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Click on any dashboard to view in full size</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard_preview/Bank_Loan_Report-Summary.jpg" alt="Summary Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-chart-pie" style="color: var(--accent-primary);"></i> Summary Dashboard</h3>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Key metrics and KPIs overview</p>
+                    </div>
+                </a>
+
+                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard_preview/Bank_Loan_Report-Overview.jpg" alt="Overview Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-chart-line" style="color: var(--accent-secondary);"></i> Overview Dashboard</h3>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Trend analysis and visualizations</p>
+                    </div>
+                </a>
+
+                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="dashboard_preview/Bank_Loan_Report-Details.jpg" alt="Details Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
+                    <div style="padding: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-table" style="color: var(--accent-gold);"></i> Details Dashboard</h3>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Detailed data tables and filters</p>
                     </div>
                 </a>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
+                <a href="dashboard_preview/index.html" class="btn btn-primary" style="margin-right: 1rem;"><i class="fas fa-expand"></i> View Full Size Gallery</a>
                 <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>

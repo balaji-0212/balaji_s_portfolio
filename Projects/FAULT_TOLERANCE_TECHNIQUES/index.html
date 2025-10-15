@@ -113,6 +113,40 @@
                 </ul>
             </div>
 
+            <!-- Output Preview -->
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">🖼️ FPGA Simulation Results</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Click on any image to view in gallery</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+                    <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                        <img src="Output/output.jpg" alt="Simulation Output" style="width: 100%; height: 160px; object-fit: cover;">
+                        <div style="padding: 1rem;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.95rem;">🎯 Main Output</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Simulation results</p>
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                        <img src="Output/Run_Synthesis.jpg" alt="Synthesis Run" style="width: 100%; height: 160px; object-fit: cover;">
+                        <div style="padding: 1rem;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.95rem;">⚙️ Synthesis</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Vivado synthesis run</p>
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onclick="window.location.href='Output/'" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                        <img src="Output/Schematic.jpg" alt="System Schematic" style="width: 100%; height: 160px; object-fit: cover;">
+                        <div style="padding: 1rem;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.95rem;">🔧 Schematic</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Hardware design</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="Output/" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-images"></i> View All 4 Images
+                    </a>
+                </div>
+            </div>
+
             <!-- Project Resources -->
             <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">📁 Project Resources</h2>

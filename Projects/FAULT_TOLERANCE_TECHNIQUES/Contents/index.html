@@ -44,36 +44,44 @@
             <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-folder-open"></i> Project Contents</h1>
             <p style="color: var(--text-secondary); margin-bottom: 2rem;">Documentation, diagrams, and base papers</p>
 
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-color);">
-                <a href="Abstract%20.doc" class="file-item" download>
-                    <i class="fas fa-file-word file-icon" style="color: #2b579a;"></i>
-                    <div>
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-color); margin-bottom: 3rem;">
+                <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;"><i class="fas fa-file-alt" style="color: var(--accent-primary);"></i> Documents</h3>
+                <a href="Abstract%20.doc" class="file-item" download style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-decoration: none; color: inherit; margin-bottom: 1rem; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--bg-secondary)'" onmouseout="this.style.backgroundColor='var(--bg-tertiary)'">
+                    <i class="fas fa-file-word file-icon" style="color: #2b579a; font-size: 2rem;"></i>
+                    <div style="flex: 1;">
                         <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Abstract.doc</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Project abstract and summary</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Project abstract and summary</p>
                     </div>
+                    <i class="fas fa-download" style="color: var(--accent-primary);"></i>
                 </a>
 
-                <a href="Basepaper%20.pdf" class="file-item" download>
-                    <i class="fas fa-file-pdf file-icon" style="color: #ef4444;"></i>
-                    <div>
+                <a href="Basepaper%20.pdf" class="file-item" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-decoration: none; color: inherit; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--bg-secondary)'" onmouseout="this.style.backgroundColor='var(--bg-tertiary)'">
+                    <i class="fas fa-file-pdf file-icon" style="color: #ef4444; font-size: 2rem;"></i>
+                    <div style="flex: 1;">
                         <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Basepaper.pdf</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Research base paper reference</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Research base paper reference</p>
+                    </div>
+                    <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                </a>
+            </div>
+
+            <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;"><i class="fas fa-images" style="color: var(--accent-secondary);"></i> System Diagrams</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Click on any diagram to download or view in full size</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <a href="Block_Diagram%20.jpg" download style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Block_Diagram%20.jpg" alt="Block Diagram" style="width: 100%; height: 250px; object-fit: contain; background: white; border-bottom: 1px solid var(--border-color); padding: 1rem;">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-project-diagram" style="color: var(--accent-primary);"></i> Block Diagram</h4>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">System block diagram showing architecture and data flow</p>
                     </div>
                 </a>
 
-                <a href="Block_Diagram%20.jpg" class="file-item" download>
-                    <i class="fas fa-file-image file-icon" style="color: #10b981;"></i>
-                    <div>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Block_Diagram.jpg</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">System block diagram</p>
-                    </div>
-                </a>
-
-                <a href="Schematic_Diagram%20.jpg" class="file-item" download>
-                    <i class="fas fa-file-image file-icon" style="color: #10b981;"></i>
-                    <div>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Schematic_Diagram.jpg</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Circuit schematic diagram</p>
+                <a href="Schematic_Diagram%20.jpg" download style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                    <img src="Schematic_Diagram%20.jpg" alt="Schematic Diagram" style="width: 100%; height: 250px; object-fit: contain; background: white; border-bottom: 1px solid var(--border-color); padding: 1rem;">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-microchip" style="color: var(--accent-secondary);"></i> Schematic Diagram</h4>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Circuit schematic diagram with component details</p>
                     </div>
                 </a>
             </div>
