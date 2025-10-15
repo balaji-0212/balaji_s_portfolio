@@ -357,3 +357,34 @@ filterButtons.forEach(button => {
     });
   });
 });
+
+// ===================================
+// Make Certificate Cards Clickable
+// ===================================
+document.addEventListener('DOMContentLoaded', () => {
+  const certificateCards = document.querySelectorAll('.certificate-card[data-href]');
+  
+  certificateCards.forEach(card => {
+    // Add click handler
+    card.addEventListener('click', (e) => {
+      // Prevent click if clicking on a link inside the card
+      if (e.target.tagName === 'A') return;
+      
+      const href = card.getAttribute('data-href');
+      if (href) {
+        window.open(href, '_blank');
+      }
+    });
+    
+    // Add hover effect
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-8px)';
+      card.style.boxShadow = '0 8px 24px rgba(0, 123, 255, 0.3)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.boxShadow = '';
+    });
+  });
+});
