@@ -49,8 +49,9 @@ package-lock.json
 yarn.lock
 
 # Exclude large files for GitHub (deploy these separately)
-Certificates/*.pdf
-Certificates/*.PDF
+# Note: Certificate PDFs are now INCLUDED for portfolio viewing
+# Certificates/*.pdf - REMOVED to allow certificate uploads
+# Certificates/*.PDF - REMOVED to allow certificate uploads
 Projects/**/*.pdf
 Projects/**/*.PDF
 Projects/**/*.pbix
@@ -65,16 +66,16 @@ Projects/**/*.exe
 Projects/**/*.torrent
 Projects/**/*.7z
 Projects/**/*.PUP
-Resume/*.pdf
-Resume/*.PDF
-Details/*.pdf
-Details/*.PDF
+# Resume/*.pdf - REMOVED to allow resume upload
+# Resume/*.PDF - REMOVED to allow resume upload
 
-# Keep only essential certificate images
+# Keep certificate images AND PDFs
 !Certificates/*.png
 !Certificates/*.jpg
 !Certificates/*.PNG
 !Certificates/*.JPG
+!Certificates/*.pdf
+!Certificates/*.PDF
 
 # Keep project preview images
 !Projects/**/dashboard_preview/*.jpg
