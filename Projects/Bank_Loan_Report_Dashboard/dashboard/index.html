@@ -6,7 +6,190 @@
     <title>Dashboard - Bank Loan Report</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .page-header {
+            padding-top: 6rem;
+        }
+        
+        .page-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .page-subtitle {
+            color: #b0b3b8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #00D4FF;
+        }
+        
+        .breadcrumb span {
+            color: #ffffff;
+        }
+        
+        .enhanced-card {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-top: 3px solid #007BFF;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .enhanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.15);
+            border-top-color: #00D4FF;
+        }
+        
+        .file-icon-large {
+            font-size: 2rem;
+            color: #F2C811;
+        }
+        
+        .file-info h3 {
+            margin: 0;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+        
+        .file-info p {
+            margin: 0.5rem 0 0 0;
+            color: #b0b3b8;
+            line-height: 1.6;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        
+        .section-icon {
+            color: #00D4FF;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-card {
+            text-decoration: none;
+            display: block;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 123, 255, 0.3);
+            border-color: #00D4FF;
+        }
+        
+        .dashboard-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0, 123, 255, 0.2);
+        }
+        
+        .dashboard-card-content {
+            padding: 1.5rem;
+        }
+        
+        .dashboard-card h3 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .dashboard-card p {
+            color: #b0b3b8;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+            color: #ffffff;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -28,59 +211,59 @@
         </div>
     </header>
 
-    <section class="section" style="padding-top: 6rem;">
+    <section class="section page-header">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Bank Loan Report</a> / 
-                <span style="color: var(--text-primary);">Dashboard</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">Bank Loan Report</a> / 
+                <span>Dashboard</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-chart-bar"></i> Power BI Dashboard Files</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Interactive Power BI report and dashboard screenshots</p>
+            <h1 class="page-title"><i class="fas fa-chart-bar"></i> Power BI Dashboard Files</h1>
+            <p class="page-subtitle">Interactive Power BI report and dashboard screenshots</p>
 
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-color); margin-bottom: 3rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                    <i class="fas fa-file" style="font-size: 2rem; color: #F2C811;"></i>
-                    <div>
-                        <h3 style="margin: 0; color: var(--text-primary);">Bank_Loan_Report.pbix</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary);">Power BI Desktop file with full dashboard, DAX measures, and data model</p>
+            <div class="enhanced-card">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-file file-icon-large"></i>
+                    <div class="file-info">
+                        <h3>Bank_Loan_Report.pbix</h3>
+                        <p>Power BI Desktop file with full dashboard, DAX measures, and data model</p>
                     </div>
                 </div>
             </div>
 
-            <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-primary);"><i class="fas fa-images" style="color: var(--accent-secondary);"></i> Dashboard Preview</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Click on any dashboard to view in full size</p>
+            <h2 class="section-header"><i class="fas fa-images section-icon"></i> Dashboard Preview</h2>
+            <p class="page-subtitle">Click on any dashboard to view in full size</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                    <img src="dashboard_preview/Bank_Loan_Report-Summary.jpg" alt="Summary Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
-                    <div style="padding: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-chart-pie" style="color: var(--accent-primary);"></i> Summary Dashboard</h3>
-                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Key metrics and KPIs overview</p>
+            <div class="dashboard-grid">
+                <a href="dashboard_preview/index.html" class="dashboard-card">
+                    <img src="dashboard_preview/Bank_Loan_Report-Summary.jpg" alt="Summary Dashboard">
+                    <div class="dashboard-card-content">
+                        <h3><i class="fas fa-chart-pie" style="color: #007BFF;"></i> Summary Dashboard</h3>
+                        <p>Key metrics and KPIs overview</p>
                     </div>
                 </a>
 
-                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                    <img src="dashboard_preview/Bank_Loan_Report-Overview.jpg" alt="Overview Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
-                    <div style="padding: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-chart-line" style="color: var(--accent-secondary);"></i> Overview Dashboard</h3>
-                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Trend analysis and visualizations</p>
+                <a href="dashboard_preview/index.html" class="dashboard-card">
+                    <img src="dashboard_preview/Bank_Loan_Report-Overview.jpg" alt="Overview Dashboard">
+                    <div class="dashboard-card-content">
+                        <h3><i class="fas fa-chart-line" style="color: #00D4FF;"></i> Overview Dashboard</h3>
+                        <p>Trend analysis and visualizations</p>
                     </div>
                 </a>
 
-                <a href="dashboard_preview/index.html" style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                    <img src="dashboard_preview/Bank_Loan_Report-Details.jpg" alt="Details Dashboard" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color);">
-                    <div style="padding: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-table" style="color: var(--accent-gold);"></i> Details Dashboard</h3>
-                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Detailed data tables and filters</p>
+                <a href="dashboard_preview/index.html" class="dashboard-card">
+                    <img src="dashboard_preview/Bank_Loan_Report-Details.jpg" alt="Details Dashboard">
+                    <div class="dashboard-card-content">
+                        <h3><i class="fas fa-table" style="color: #FFC700;"></i> Details Dashboard</h3>
+                        <p>Detailed data tables and filters</p>
                     </div>
                 </a>
             </div>
 
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="dashboard_preview/index.html" class="btn btn-primary" style="margin-right: 1rem;"><i class="fas fa-expand"></i> View Full Size Gallery</a>
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+            <div class="btn-group">
+                <a href="dashboard_preview/index.html" class="btn-primary"><i class="fas fa-expand"></i> View Full Size Gallery</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>
     </section>

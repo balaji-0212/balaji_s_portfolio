@@ -6,37 +6,99 @@
     <title>Dashboard Preview - Bank Loan Report</title>
     <link rel="stylesheet" href="../../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .page-header {
+            padding-top: 6rem;
+        }
+        
+        .page-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .page-subtitle {
+            color: #b0b3b8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #00D4FF;
+        }
+        
+        .breadcrumb span {
+            color: #ffffff;
+        }
+        
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
+        
         .gallery-item {
-            background: var(--card-bg);
-            border-radius: 0.75rem;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border-radius: 1rem;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
+        
         .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+            border-color: #00D4FF;
         }
+        
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.3s ease;
         }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
         .gallery-item-title {
-            padding: 1rem;
-            color: var(--text-primary);
-            font-weight: 500;
+            padding: 1.25rem;
+            color: #ffffff;
+            font-weight: 600;
             text-align: center;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
+        
         .lightbox {
             display: none;
             position: fixed;
@@ -48,12 +110,16 @@
             background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(10px);
         }
+        
         .lightbox img {
             max-width: 90%;
             max-height: 90%;
             border-radius: 0.5rem;
+            box-shadow: 0 20px 60px rgba(0, 123, 255, 0.4);
         }
+        
         .lightbox-close {
             position: absolute;
             top: 2rem;
@@ -61,6 +127,39 @@
             color: white;
             font-size: 3rem;
             cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .lightbox-close:hover {
+            color: #00D4FF;
+            transform: rotate(90deg);
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+            color: #ffffff;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -84,17 +183,17 @@
         </div>
     </header>
 
-    <section class="section" style="padding-top: 6rem;">
+    <section class="section page-header">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../../index.html" style="color: var(--accent-primary);">Bank Loan Report</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Dashboard</a> / 
-                <span style="color: var(--text-primary);">Preview</span>
+            <div class="breadcrumb">
+                <a href="../../../../projects.html">Projects</a> / 
+                <a href="../../index.html">Bank Loan Report</a> / 
+                <a href="../index.html">Dashboard</a> / 
+                <span>Preview</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-images"></i> Dashboard Screenshots</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Click any image to view full size</p>
+            <h1 class="page-title"><i class="fas fa-images"></i> Dashboard Screenshots</h1>
+            <p class="page-subtitle">Click any image to view full size</p>
 
             <div class="gallery-grid">
                 <div class="gallery-item" onclick="openLightbox('Bank_Loan_Report-Summary.jpg')">
@@ -114,7 +213,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
             </div>
         </div>
     </section>

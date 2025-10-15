@@ -6,7 +6,134 @@
     <title>Documentation - Bank Loan Report</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .page-header {
+            padding-top: 6rem;
+        }
+        
+        .page-title {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .page-subtitle {
+            color: #b0b3b8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #00D4FF;
+        }
+        
+        .breadcrumb span {
+            color: #ffffff;
+        }
+        
+        .file-list {
+            margin-bottom: 2rem;
+        }
+        
+        .file-item {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-left: 4px solid #dc2626;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .file-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+            border-left-color: #00D4FF;
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            color: #dc2626;
+            flex-shrink: 0;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-info h3 {
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .file-info p {
+            color: #b0b3b8;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .file-external-icon {
+            color: #007BFF;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .file-item:hover .file-external-icon {
+            color: #00D4FF;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -28,65 +155,65 @@
         </div>
     </header>
 
-    <section class="section" style="padding-top: 6rem;">
+    <section class="section page-header">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Bank Loan Report</a> / 
-                <span style="color: var(--text-primary);">Documentation</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">Bank Loan Report</a> / 
+                <span>Documentation</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-file-pdf"></i> Project Documentation</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Comprehensive project documentation including requirements, queries, and data definitions</p>
+            <h1 class="page-title"><i class="fas fa-file-pdf"></i> Project Documentation</h1>
+            <p class="page-subtitle">Comprehensive project documentation including requirements, queries, and data definitions</p>
 
             <div class="file-list">
-                <a href="Domain Knowledge.pdf" class="file-item" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;">
-                    <i class="fas fa-file-pdf" style="font-size: 2rem; color: #dc2626;"></i>
-                    <div style="flex: 1;">
-                        <h3 style="margin-bottom: 0.5rem;">Domain Knowledge.pdf</h3>
-                        <p style="color: var(--text-secondary); margin: 0;">Banking and finance domain concepts relevant to loan analysis</p>
+                <a href="Domain Knowledge.pdf" class="file-item" target="_blank">
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <div class="file-info">
+                        <h3>Domain Knowledge.pdf</h3>
+                        <p>Banking and finance domain concepts relevant to loan analysis</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                        <i class="fas fa-external-link-alt file-external-icon"></i>
                     </div>
                 </a>
 
-                <a href="Problem Statement.pdf" class="file-item" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;">
-                    <i class="fas fa-file-pdf" style="font-size: 2rem; color: #dc2626;"></i>
-                    <div style="flex: 1;">
-                        <h3 style="margin-bottom: 0.5rem;">Problem Statement.pdf</h3>
-                        <p style="color: var(--text-secondary); margin: 0;">Business requirements and objectives for the dashboard project</p>
+                <a href="Problem Statement.pdf" class="file-item" target="_blank">
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <div class="file-info">
+                        <h3>Problem Statement.pdf</h3>
+                        <p>Business requirements and objectives for the dashboard project</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                        <i class="fas fa-external-link-alt file-external-icon"></i>
                     </div>
                 </a>
 
-                <a href="Query.pdf" class="file-item" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;">
-                    <i class="fas fa-file-pdf" style="font-size: 2rem; color: #dc2626;"></i>
-                    <div style="flex: 1;">
-                        <h3 style="margin-bottom: 0.5rem;">Query.pdf</h3>
-                        <p style="color: var(--text-secondary); margin: 0;">SQL queries and DAX formulas used for data transformation and KPI calculations</p>
+                <a href="Query.pdf" class="file-item" target="_blank">
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <div class="file-info">
+                        <h3>Query.pdf</h3>
+                        <p>SQL queries and DAX formulas used for data transformation and KPI calculations</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                        <i class="fas fa-external-link-alt file-external-icon"></i>
                     </div>
                 </a>
 
-                <a href="Terminologies in Data.pdf" class="file-item" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; transition: all 0.3s ease; cursor: pointer;">
-                    <i class="fas fa-file-pdf" style="font-size: 2rem; color: #dc2626;"></i>
-                    <div style="flex: 1;">
-                        <h3 style="margin-bottom: 0.5rem;">Terminologies in Data.pdf</h3>
-                        <p style="color: var(--text-secondary); margin: 0;">Data dictionary explaining all fields, metrics, and business terms</p>
+                <a href="Terminologies in Data.pdf" class="file-item" target="_blank">
+                    <i class="fas fa-file-pdf file-icon"></i>
+                    <div class="file-info">
+                        <h3>Terminologies in Data.pdf</h3>
+                        <p>Data dictionary explaining all fields, metrics, and business terms</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                        <i class="fas fa-external-link-alt file-external-icon"></i>
                     </div>
                 </a>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>
     </section>
