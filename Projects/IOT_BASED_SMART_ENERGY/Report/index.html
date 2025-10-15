@@ -6,7 +6,22 @@
     <title>Report - IoT Smart Energy Meter</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .breadcrumb { margin-bottom: 2rem; color: #b0b3b8; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .report-card { background: #1a1f35; padding: 3rem; border-radius: 1rem; border: 1px solid rgba(0, 123, 255, 0.2); border-top: 3px solid #007BFF; text-align: center; max-width: 700px; margin: 0 auto; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .report-card:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(0, 123, 255, 0.3); }
+        .book-icon { font-size: 5rem; color: #00D4FF; margin-bottom: 2rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .report-card h3 { color: #ffffff; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 600; }
+        .report-card p { color: #b0b3b8; margin-bottom: 2rem; line-height: 1.8; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; border: none; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: all 0.3s; margin: 0.5rem; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -30,34 +45,34 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">IoT Smart Energy Meter</a> / 
-                <span style="color: var(--text-primary);">Report</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">IoT Smart Energy Meter</a> / 
+                <span>Report</span>
             </div>
 
             <div style="text-align: center; margin-bottom: 3rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-file-alt" style="color: var(--accent-primary);"></i> Project Report</h1>
+                <h1 class="page-title"><i class="fas fa-file-alt"></i> Project Report</h1>
             </div>
 
-            <div style="background: var(--card-bg); padding: 3rem; border-radius: 1rem; border: 1px solid var(--border-color); text-align: center; max-width: 700px; margin: 0 auto;">
-                <i class="fas fa-book" style="font-size: 5rem; color: var(--accent-secondary); margin-bottom: 2rem;"></i>
-                <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Comprehensive Documentation</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.8;">
+            <div class="report-card">
+                <i class="fas fa-book book-icon"></i>
+                <h3>Comprehensive Documentation</h3>
+                <p>
                     Complete project report including system design, implementation details, hardware specifications, 
                     software architecture, testing results, and future scope.
                 </p>
-                <a href="Final Report for IoT Based Smart Energy Meter for Energy Efficiency.pdf" class="btn btn-primary" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <a href="Final Report for IoT Based Smart Energy Meter for Energy Efficiency.pdf" class="btn-primary" target="_blank">
                     <i class="fas fa-file-pdf"></i> View Report PDF
                 </a>
                 <br>
-                <a href="Final Report for IoT Based Smart Energy Meter for Energy Efficiency.pdf" class="btn btn-primary" download style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                <a href="Final Report for IoT Based Smart Energy Meter for Energy Efficiency.pdf" class="btn-primary" download>
                     <i class="fas fa-download"></i> Download Report PDF
                 </a>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>
     </section>

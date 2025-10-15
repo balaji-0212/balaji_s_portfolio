@@ -6,7 +6,31 @@
     <title>Output - IoT Smart Energy Meter</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .breadcrumb { margin-bottom: 2rem; color: #b0b3b8; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-subtitle { color: #b0b3b8; margin-bottom: 2.5rem; font-size: 1.1rem; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .gallery-item { background: #1a1f35; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(0, 123, 255, 0.2); border-top: 3px solid #007BFF; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(0, 123, 255, 0.3); border-top-color: #00D4FF; }
+        .gallery-item img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item-info { padding: 1.5rem; }
+        .gallery-item-info h4 { color: #ffffff; margin-bottom: 0.5rem; font-weight: 600; }
+        .gallery-item-info p { color: #b0b3b8; font-size: 0.9rem; margin: 0; }
+        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #lightbox img { max-width: 90%; max-height: 90%; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        #lightbox button { position: absolute; top: 30px; right: 50px; background: #1a1f35; color: white; border: 2px solid rgba(0, 123, 255, 0.5); border-radius: 0.5rem; width: 50px; height: 50px; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; transition: all 0.3s; }
+        #lightbox button:hover { transform: rotate(90deg); border-color: #00D4FF; background: #202642; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; border: none; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -30,62 +54,64 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">IoT Smart Energy Meter</a> / 
-                <span style="color: var(--text-primary);">Output</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">IoT Smart Energy Meter</a> / 
+                <span>Output</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-images"></i> Project Outputs</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Hardware setup, circuit diagrams, and implementation results</p>
+            <h1 class="page-title"><i class="fas fa-images"></i> Project Outputs</h1>
+            <p class="page-subtitle">Hardware setup, circuit diagrams, and implementation results</p>
 
-            <!-- Image Gallery -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                <div class="gallery-item" style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); cursor: pointer;" onclick="openLightbox('IMG_4674.JPG')">
-                    <img src="IMG_4674.JPG" alt="Hardware Setup 1" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 1rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Hardware Setup 1</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">ESP32 and sensor configuration</p>
+            <div class="gallery">
+                <div class="gallery-item" onclick="openLightbox('IMG_4674.JPG')">
+                    <img src="IMG_4674.JPG" alt="Hardware Setup 1">
+                    <div class="gallery-item-info">
+                        <h4><i class="fas fa-microchip" style="color: #007BFF;"></i> Hardware Setup 1</h4>
+                        <p>ESP32 and sensor configuration</p>
                     </div>
                 </div>
 
-                <div class="gallery-item" style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); cursor: pointer;" onclick="openLightbox('IMG_4675.JPG')">
-                    <img src="IMG_4675.JPG" alt="Hardware Setup 2" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 1rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Hardware Setup 2</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Circuit connections and wiring</p>
+                <div class="gallery-item" onclick="openLightbox('IMG_4675.JPG')">
+                    <img src="IMG_4675.JPG" alt="Hardware Setup 2">
+                    <div class="gallery-item-info">
+                        <h4><i class="fas fa-plug" style="color: #00D4FF;"></i> Hardware Setup 2</h4>
+                        <p>Circuit connections and wiring</p>
                     </div>
                 </div>
 
-                <div class="gallery-item" style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); cursor: pointer;" onclick="openLightbox('IMG_4676.JPG')">
-                    <img src="IMG_4676.JPG" alt="Hardware Setup 3" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 1rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Hardware Setup 3</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Complete system assembly</p>
+                <div class="gallery-item" onclick="openLightbox('IMG_4676.JPG')">
+                    <img src="IMG_4676.JPG" alt="Hardware Setup 3">
+                    <div class="gallery-item-info">
+                        <h4><i class="fas fa-cogs" style="color: #FFC700;"></i> Hardware Setup 3</h4>
+                        <p>Complete system assembly</p>
                     </div>
                 </div>
 
-                <div class="gallery-item" style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); cursor: pointer;" onclick="openLightbox('Pie chart.jpg')">
-                    <img src="Pie chart.jpg" alt="Energy Distribution Chart" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 1rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Energy Distribution</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Pie chart showing energy usage</p>
+                <div class="gallery-item" onclick="openLightbox('Pie chart.jpg')">
+                    <img src="Pie chart.jpg" alt="Energy Distribution Chart">
+                    <div class="gallery-item-info">
+                        <h4><i class="fas fa-chart-pie" style="color: #10b981;"></i> Energy Distribution</h4>
+                        <p>Pie chart showing energy usage</p>
                     </div>
                 </div>
 
-                <div class="gallery-item" style="background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); cursor: pointer;" onclick="openLightbox('Pie chart 1.jpg')">
-                    <img src="Pie chart 1.jpg" alt="Usage Analysis Chart" style="width: 100%; height: 250px; object-fit: cover;">
-                    <div style="padding: 1rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Usage Analysis</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Energy consumption breakdown</p>
+                <div class="gallery-item" onclick="openLightbox('Pie chart 1.jpg')">
+                    <img src="Pie chart 1.jpg" alt="Usage Analysis Chart">
+                    <div class="gallery-item-info">
+                        <h4><i class="fas fa-chart-line" style="color: #f59e0b;"></i> Usage Analysis</h4>
+                        <p>Energy consumption breakdown</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Lightbox -->
-            <div id="lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center;">
-                <button onclick="closeLightbox()" style="position: absolute; top: 2rem; right: 2rem; background: var(--card-bg); color: var(--text-primary); border: 2px solid var(--border-color); border-radius: 0.5rem; width: 3rem; height: 3rem; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000;">&times;</button>
-                <img id="lightbox-img" src="" alt="Full size image" style="max-width: 90%; max-height: 90%; border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <div id="lightbox">
+                <button onclick="closeLightbox()">&times;</button>
+                <img id="lightbox-img" src="" alt="Full size image">
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
 
             <script>
@@ -93,11 +119,16 @@
                     const lightbox = document.getElementById('lightbox');
                     const lightboxImg = document.getElementById('lightbox-img');
                     lightboxImg.src = imgSrc;
-                    lightbox.style.display = 'flex';
+                    lightbox.classList.add('active');
                     document.body.style.overflow = 'hidden';
                 }
 
                 function closeLightbox() {
+                    const lightbox = document.getElementById('lightbox');
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            </script>
                     const lightbox = document.getElementById('lightbox');
                     lightbox.style.display = 'none';
                     document.body.style.overflow = '';
