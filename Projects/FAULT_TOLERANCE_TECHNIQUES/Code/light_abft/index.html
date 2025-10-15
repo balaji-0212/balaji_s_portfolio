@@ -6,7 +6,22 @@
     <title>Light ABFT Implementation - Fault Tolerance</title>
     <link rel="stylesheet" href="../../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .breadcrumb { margin-bottom: 2rem; color: #b0b3b8; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .file-item { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: #1a1f35; border-radius: 0.75rem; text-decoration: none; color: inherit; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(0, 123, 255, 0.2); border-left: 3px solid #007BFF; }
+        .file-item:hover { transform: translateX(8px); background: #202642; box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2); border-left-color: #00D4FF; }
+        .file-item i { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .file-item:hover i { transform: scale(1.1); }
+        .file-item h3 { color: #ffffff; margin-bottom: 0.5rem; font-weight: 600; }
+        .file-item p { color: #b0b3b8; margin: 0; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; border: none; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -30,20 +45,20 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../../index.html" style="color: var(--accent-primary);">Fault Tolerance</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Code</a> / 
-                <span style="color: var(--text-primary);">Light ABFT</span>
+            <div class="breadcrumb">
+                <a href="../../../../projects.html">Projects</a> / 
+                <a href="../../index.html">Fault Tolerance</a> / 
+                <a href="../index.html">Code</a> / 
+                <span>Light ABFT</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-folder-open"></i> Light ABFT Implementation</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Navigate to lightweight ABFT Verilog code</p>
+            <h1 class="page-title"><i class="fas fa-folder-open"></i> Light ABFT Implementation</h1>
+            <p style="color: #b0b3b8; margin-bottom: 2rem; font-size: 1.1rem;">Navigate to lightweight ABFT Verilog code</p>
 
             <div class="file-list">
-                <a href="light_abft/index.html" class="file-item" style="text-decoration: none; color: inherit; cursor: pointer;">
+                <a href="light_abft/index.html" class="file-item">
                     <i class="fas fa-folder" style="font-size: 2rem; color: #FFC700;"></i>
-                    <div>
+                    <div style="flex: 1;">
                         <h3>light_abft/</h3>
                         <p>Optimized lightweight ABFT modules with reduced overhead (7 files)</p>
                     </div>
@@ -51,7 +66,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Code</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Code</a>
             </div>
         </div>
     </section>

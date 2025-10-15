@@ -6,7 +6,23 @@
     <title>Light ABFT Code - Fault Tolerance</title>
     <link rel="stylesheet" href="../../../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        code, .file-name { font-family: 'JetBrains Mono', monospace; }
+        .breadcrumb { margin-bottom: 2rem; color: #b0b3b8; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .file-item { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: #1a1f35; border-radius: 0.75rem; margin-bottom: 1rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(0, 123, 255, 0.2); border-left: 3px solid #007BFF; }
+        .file-item:hover { transform: translateX(8px); background: #202642; box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2); border-left-color: #00D4FF; }
+        .file-item i { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .file-item:hover i { transform: scale(1.1); }
+        .file-item h3 { color: #ffffff; margin-bottom: 0.5rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .file-item p { color: #b0b3b8; margin: 0; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; border: none; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -30,28 +46,28 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../../../index.html" style="color: var(--accent-primary);">Fault Tolerance</a> / 
-                <a href="../../index.html" style="color: var(--accent-primary);">Code</a> / 
-                <span style="color: var(--text-primary);">Light ABFT</span>
+            <div class="breadcrumb">
+                <a href="../../../../../projects.html">Projects</a> / 
+                <a href="../../../index.html">Fault Tolerance</a> / 
+                <a href="../../index.html">Code</a> / 
+                <span>Light ABFT</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-feather-alt"></i> Lightweight ABFT Implementation</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Optimized ABFT with reduced area and power overhead for resource-constrained systems</p>
+            <h1 class="page-title"><i class="fas fa-feather-alt"></i> Lightweight ABFT Implementation</h1>
+            <p style="color: #b0b3b8; margin-bottom: 2.5rem; font-size: 1.1rem;">Optimized ABFT with reduced area and power overhead for resource-constrained systems</p>
 
             <div class="file-list">
                 <div class="file-item">
-                    <i class="fas fa-code" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    <div>
+                    <i class="fas fa-code" style="font-size: 2rem; color: #007BFF;"></i>
+                    <div style="flex: 1;">
                         <h3>acc_16.v</h3>
                         <p>16-bit accumulator module for checksum calculations</p>
                     </div>
                 </div>
 
                 <div class="file-item">
-                    <i class="fas fa-code" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    <div>
+                    <i class="fas fa-code" style="font-size: 2rem; color: #007BFF;"></i>
+                    <div style="flex: 1;">
                         <h3>acc_8.v</h3>
                         <p>8-bit accumulator for low-power partial sum operations</p>
                     </div>
@@ -59,31 +75,31 @@
 
                 <div class="file-item">
                     <i class="fas fa-code" style="font-size: 2rem; color: #FFC700;"></i>
-                    <div>
+                    <div style="flex: 1;">
                         <h3>light_abft.v</h3>
                         <p>Core lightweight ABFT module with simplified checksum encoding</p>
                     </div>
                 </div>
 
                 <div class="file-item">
-                    <i class="fas fa-code" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    <div>
+                    <i class="fas fa-code" style="font-size: 2rem; color: #007BFF;"></i>
+                    <div style="flex: 1;">
                         <h3>mac_8.v</h3>
                         <p>8-bit multiply-accumulate unit for efficient matrix operations</p>
                     </div>
                 </div>
 
                 <div class="file-item">
-                    <i class="fas fa-code" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    <div>
+                    <i class="fas fa-code" style="font-size: 2rem; color: #007BFF;"></i>
+                    <div style="flex: 1;">
                         <h3>mux_41_16.v</h3>
                         <p>16-bit 4-to-1 multiplexer for data routing</p>
                     </div>
                 </div>
 
                 <div class="file-item">
-                    <i class="fas fa-code" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    <div>
+                    <i class="fas fa-code" style="font-size: 2rem; color: #007BFF;"></i>
+                    <div style="flex: 1;">
                         <h3>mux_41_8.v</h3>
                         <p>8-bit 4-to-1 multiplexer for control signal selection</p>
                     </div>
@@ -91,7 +107,7 @@
 
                 <div class="file-item">
                     <i class="fas fa-vial" style="font-size: 2rem; color: #10b981;"></i>
-                    <div>
+                    <div style="flex: 1;">
                         <h3>tb_light_abft.v</h3>
                         <p>Testbench for simulation and verification of light ABFT design</p>
                     </div>
@@ -99,7 +115,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Code</a>
+                <a href="../../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Code</a>
             </div>
         </div>
     </section>
