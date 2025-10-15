@@ -6,11 +6,32 @@
     <title>Contents - Fault Tolerant System</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        .file-item { display: flex; align-items: center; padding: 1.5rem; margin-bottom: 1rem; background: var(--bg-tertiary); border-radius: 0.75rem; transition: all 0.3s; border: 1px solid var(--border-color); }
-        .file-item:hover { background: var(--hover-bg); transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,123,255,0.2); }
-        .file-icon { font-size: 2rem; margin-right: 1.5rem; min-width: 40px; }
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .page-title { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-flex; align-items: center; gap: 0.75rem; }
+        .page-subtitle { color: #b0b3b8; margin-bottom: 2rem; font-size: 1.05rem; }
+        .breadcrumb { margin-bottom: 2rem; font-size: 0.95rem; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s ease; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .breadcrumb span { color: #ffffff; }
+        .file-item { display: flex; align-items: center; padding: 1.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%); border-radius: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(0, 123, 255, 0.2); text-decoration: none; color: inherit; }
+        .file-item:hover { background: rgba(0, 123, 255, 0.08); transform: translateX(8px); box-shadow: 0 5px 15px rgba(0,123,255,0.2); border-color: #007BFF; }
+        .file-icon { font-size: 2rem; margin-right: 1.5rem; min-width: 40px; transition: transform 0.3s ease; }
+        .file-item:hover .file-icon { transform: scale(1.1); }
+        .file-item h4 { color: #ffffff; margin-bottom: 0.5rem; font-weight: 600; }
+        .file-item p { color: #b0b3b8; font-size: 0.9rem; margin: 0; }
+        .diagram-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .diagram-card { text-decoration: none; display: block; background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%); border-radius: 1rem; overflow: hidden; border: 1px solid rgba(0, 123, 255, 0.2); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .diagram-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(0, 123, 255, 0.3); border-color: #00D4FF; }
+        .diagram-card img { width: 100%; height: 250px; object-fit: contain; background: white; border-bottom: 1px solid rgba(0, 123, 255, 0.2); padding: 1rem; }
+        .diagram-card-content { padding: 1.5rem; }
+        .diagram-card h4 { color: #ffffff; margin-bottom: 0.5rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .diagram-card p { color: #b0b3b8; margin: 0; font-size: 0.9rem; }
+        .section-card { background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%); padding: 2rem; border-radius: 1rem; border: 1px solid rgba(0, 123, 255, 0.2); border-top: 3px solid #007BFF; margin-bottom: 3rem; }
+        .section-card h3 { color: #ffffff; margin-bottom: 1.5rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: #ffffff; text-decoration: none; border-radius: 0.5rem; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4); color: #ffffff; }
     </style>
 </head>
 <body>
@@ -35,59 +56,59 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Fault Tolerant System</a> / 
-                <span style="color: var(--text-primary);">Contents</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">Fault Tolerant System</a> / 
+                <span>Contents</span>
             </div>
 
-            <h1 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-folder-open"></i> Project Contents</h1>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Documentation, diagrams, and base papers</p>
+            <h1 class="page-title"><i class="fas fa-folder-open"></i> Project Contents</h1>
+            <p class="page-subtitle">Documentation, diagrams, and base papers</p>
 
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-color); margin-bottom: 3rem;">
-                <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;"><i class="fas fa-file-alt" style="color: var(--accent-primary);"></i> Documents</h3>
-                <a href="Abstract%20.doc" class="file-item" download style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-decoration: none; color: inherit; margin-bottom: 1rem; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--bg-secondary)'" onmouseout="this.style.backgroundColor='var(--bg-tertiary)'">
-                    <i class="fas fa-file-word file-icon" style="color: #2b579a; font-size: 2rem;"></i>
+            <div class="section-card">
+                <h3><i class="fas fa-file-alt" style="color: #007BFF;"></i> Documents</h3>
+                <a href="Abstract%20.doc" class="file-item" download>
+                    <i class="fas fa-file-word file-icon" style="color: #2b579a;"></i>
                     <div style="flex: 1;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Abstract.doc</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Project abstract and summary</p>
+                        <h4>Abstract.doc</h4>
+                        <p>Project abstract and summary</p>
                     </div>
-                    <i class="fas fa-download" style="color: var(--accent-primary);"></i>
+                    <i class="fas fa-download" style="color: #007BFF;"></i>
                 </a>
 
-                <a href="Basepaper%20.pdf" class="file-item" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-decoration: none; color: inherit; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--bg-secondary)'" onmouseout="this.style.backgroundColor='var(--bg-tertiary)'">
-                    <i class="fas fa-file-pdf file-icon" style="color: #ef4444; font-size: 2rem;"></i>
+                <a href="Basepaper%20.pdf" class="file-item" target="_blank">
+                    <i class="fas fa-file-pdf file-icon" style="color: #ef4444;"></i>
                     <div style="flex: 1;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Basepaper.pdf</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Research base paper reference</p>
+                        <h4>Basepaper.pdf</h4>
+                        <p>Research base paper reference</p>
                     </div>
-                    <i class="fas fa-external-link-alt" style="color: var(--accent-primary);"></i>
+                    <i class="fas fa-external-link-alt" style="color: #007BFF;"></i>
                 </a>
             </div>
 
-            <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;"><i class="fas fa-images" style="color: var(--accent-secondary);"></i> System Diagrams</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Click on any diagram to download or view in full size</p>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem; font-weight: 600;"><i class="fas fa-images" style="color: #00D4FF;"></i> System Diagrams</h3>
+            <p class="page-subtitle">Click on any diagram to download or view in full size</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                <a href="Block_Diagram%20.jpg" download style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                    <img src="Block_Diagram%20.jpg" alt="Block Diagram" style="width: 100%; height: 250px; object-fit: contain; background: white; border-bottom: 1px solid var(--border-color); padding: 1rem;">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-project-diagram" style="color: var(--accent-primary);"></i> Block Diagram</h4>
-                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">System block diagram showing architecture and data flow</p>
+            <div class="diagram-grid">
+                <a href="Block_Diagram%20.jpg" download class="diagram-card">
+                    <img src="Block_Diagram%20.jpg" alt="Block Diagram">
+                    <div class="diagram-card-content">
+                        <h4><i class="fas fa-project-diagram" style="color: #007BFF;"></i> Block Diagram</h4>
+                        <p>System block diagram showing architecture and data flow</p>
                     </div>
                 </a>
 
-                <a href="Schematic_Diagram%20.jpg" download style="text-decoration: none; display: block; background: var(--card-bg); border-radius: 1rem; overflow: hidden; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 8px 24px rgba(0, 123, 255, 0.3)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
-                    <img src="Schematic_Diagram%20.jpg" alt="Schematic Diagram" style="width: 100%; height: 250px; object-fit: contain; background: white; border-bottom: 1px solid var(--border-color); padding: 1rem;">
-                    <div style="padding: 1.5rem;">
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-microchip" style="color: var(--accent-secondary);"></i> Schematic Diagram</h4>
-                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.9rem;">Circuit schematic diagram with component details</p>
+                <a href="Schematic_Diagram%20.jpg" download class="diagram-card">
+                    <img src="Schematic_Diagram%20.jpg" alt="Schematic Diagram">
+                    <div class="diagram-card-content">
+                        <h4><i class="fas fa-microchip" style="color: #00D4FF;"></i> Schematic Diagram</h4>
+                        <p>Circuit schematic diagram with component details</p>
                     </div>
                 </a>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>
     </section>

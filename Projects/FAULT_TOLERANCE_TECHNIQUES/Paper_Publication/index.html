@@ -6,7 +6,23 @@
     <title>Paper Publication - Fault Tolerant System</title>
     <link rel="stylesheet" href="../../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .breadcrumb { margin-bottom: 2rem; color: #b0b3b8; }
+        .breadcrumb a { color: #007BFF; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #00D4FF; }
+        .page-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .ieee-badge { display: inline-block; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 25px; font-weight: 600; margin-top: 1rem; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); }
+        .publication-card { background: #1a1f35; padding: 3rem; border-radius: 1rem; border: 1px solid rgba(0, 123, 255, 0.2); border-top: 3px solid #007BFF; text-align: center; max-width: 650px; margin: 0 auto; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .publication-card:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(0, 123, 255, 0.3); }
+        .pdf-icon { font-size: 5rem; color: #ef4444; margin-bottom: 2rem; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .publication-title { color: #ffffff; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 600; }
+        .publication-description { color: #b0b3b8; margin-bottom: 2rem; line-height: 1.8; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #007BFF 0%, #00D4FF 100%); color: white; border: none; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4); }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -30,33 +46,33 @@
 
     <section class="section" style="padding-top: 6rem;">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../../projects.html" style="color: var(--accent-primary);">Projects</a> / 
-                <a href="../index.html" style="color: var(--accent-primary);">Fault Tolerant System</a> / 
-                <span style="color: var(--text-primary);">Publication</span>
+            <div class="breadcrumb">
+                <a href="../../../projects.html">Projects</a> / 
+                <a href="../index.html">Fault Tolerant System</a> / 
+                <span>Publication</span>
             </div>
 
             <div style="text-align: center; margin-bottom: 3rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary);"><i class="fas fa-file-pdf" style="color: var(--accent-primary);"></i> IEEE Publication</h1>
-                <div style="display: inline-block; background: var(--accent-primary); color: white; padding: 0.75rem 1.5rem; border-radius: 25px; font-weight: 600; margin-top: 1rem;">
+                <h1 class="page-title"><i class="fas fa-file-pdf" style="color: #ef4444;"></i> IEEE Publication</h1>
+                <div class="ieee-badge">
                     🏆 Published at IEEE ICCCNT 2025 (IIT Indore)
                 </div>
             </div>
 
-            <div style="background: var(--card-bg); padding: 3rem; border-radius: 1rem; border: 1px solid var(--border-color); text-align: center; max-width: 600px; margin: 0 auto;">
-                <i class="fas fa-file-pdf" style="font-size: 5rem; color: #ef4444; margin-bottom: 2rem;"></i>
-                <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Final Year Project Paper</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.8;">
+            <div class="publication-card">
+                <i class="fas fa-file-pdf pdf-icon"></i>
+                <h3 class="publication-title">Final Year Project Paper</h3>
+                <p class="publication-description">
                     Research paper on fault-tolerant matrix computation using systolic arrays, presented and published at the 
                     IEEE International Conference on Computer, Communication and Control Technology (ICCCNT) 2025.
                 </p>
-                <a href="Final_Year_Project_Paper_Publication.pdf" class="btn btn-primary" download style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                <a href="Final_Year_Project_Paper_Publication.pdf" class="btn-primary" download>
                     <i class="fas fa-download"></i> Download Publication PDF
                 </a>
             </div>
 
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="../index.html" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
+                <a href="../index.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Project</a>
             </div>
         </div>
     </section>
