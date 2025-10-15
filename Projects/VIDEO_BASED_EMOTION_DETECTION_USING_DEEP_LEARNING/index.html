@@ -39,90 +39,170 @@
     </header>
 
     <!-- Project Hero -->
-    <section class="section" style="padding-top: 6rem;">
+    <section class="section hero-alt">
         <div class="container">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="../../projects.html" style="color: var(--accent-primary);">← Back to Projects</a>
-            </div>
-            
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
-                    🧠 Video-Based Emotion Detection Using Deep Learning
-                </h1>
-                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
-                    CNN-based facial emotion recognition system with real-time video processing capabilities
-                </p>
-            </div>
-
-            <!-- Tech Stack -->
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-primary);">Technologies Used</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Python</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">TensorFlow</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Keras</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">OpenCV</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">CNN</span>
-                    <span class="tech-badge" style="padding: 0.5rem 1rem;">Deep Learning</span>
+            <div class="project-hero">
+                <div class="breadcrumb">
+                    <a href="../../projects.html">Projects</a>
+                    <span>/</span>
+                    <span>Video Emotion Detection</span>
                 </div>
-            </div>
-
-            <!-- Project Overview -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">📋 Project Overview</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                
+                <h1 class="project-title">🧠 Video-Based Emotion Detection Using Deep Learning</h1>
+                <p class="project-description">
                     Developed a Convolutional Neural Network (CNN) based facial emotion recognition system trained on the FER2013 dataset. 
-                    The model can detect 7 different emotions from facial expressions in real-time video streams.
+                    The model can detect 7 different emotions from facial expressions in real-time video streams with 65% accuracy.
                 </p>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
-                    Integrated with OpenCV for real-time video processing, the system achieves 65% accuracy in emotion classification, 
-                    making it suitable for applications in customer behavior analysis, mental health monitoring, and human-computer interaction.
-                </p>
-            </div>
-
-            <!-- Key Features -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">✨ Key Features</h2>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">7 Emotion Detection:</strong> Happy, Sad, Angry, Surprise, Fear, Disgust, Neutral
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">Real-time Processing:</strong> Live video stream analysis with OpenCV
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">CNN Architecture:</strong> Deep learning model with multiple convolutional layers
-                    </li>
-                    <li style="margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">FER2013 Dataset:</strong> Trained on 35,000+ facial expression images
-                    </li>
-                    <li style="padding-left: 2rem; position: relative; color: var(--text-secondary); line-height: 1.8;">
-                        <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--success); font-size: 1.2rem;"></i>
-                        <strong style="color: var(--text-primary);">65% Accuracy:</strong> Competitive performance on emotion classification
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Project Resources -->
-            <div style="background: var(--card-bg); padding: 2rem; border-radius: 1rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-primary);">📁 Project Resources</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                    <a href="Report/" style="display: block; padding: 1.5rem; background: var(--bg-tertiary); border-radius: 0.5rem; text-align: center; transition: all 0.3s; border: 1px solid var(--border-color);">
-                        <i class="fas fa-file-alt" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 0.5rem;"></i>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Project Report</h4>
-                        <p style="color: var(--text-muted); font-size: 0.9rem;">Detailed Documentation</p>
-                    </a>
+                <div class="project-meta">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">TensorFlow</span>
+                    <span class="tech-tag">Keras</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">CNN</span>
+                    <span class="tech-tag">Deep Learning</span>
+                    <span class="tech-tag">Computer Vision</span>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Back Button -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="../../projects.html" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Back to All Projects
+    <!-- Project Content -->
+    <section class="section">
+        <div class="container">
+            <div class="project-content">
+                <!-- Sidebar -->
+                <div class="project-sidebar">
+                    <!-- Quick Links -->
+                    <div class="sidebar-section">
+                        <h3>Quick Links</h3>
+                        <div class="quick-links">
+                            <a href="Report/" class="btn btn-primary">
+                                <i class="fas fa-file-alt"></i>
+                                Project Report
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Stats -->
+                    <div class="project-stats">
+                        <h3>Project Info</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Framework</span>
+                            <span class="stat-value">TensorFlow/Keras</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Language</span>
+                            <span class="stat-value">Python</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Domain</span>
+                            <span class="stat-value">Computer Vision</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Dataset</span>
+                            <span class="stat-value">FER2013</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-value">65%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="project-main">
+                    <div class="project-section">
+                        <h2>✨ Key Features</h2>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> <span><strong>7 Emotion Detection</strong> → Happy, Sad, Angry, Surprise, Fear, Disgust, Neutral</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span><strong>Real-time Processing</strong> → Live video stream analysis with OpenCV integration</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span><strong>CNN Architecture</strong> → Deep learning model with multiple convolutional layers</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span><strong>FER2013 Dataset</strong> → Trained on 35,000+ facial expression images</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span><strong>Face Detection</strong> → Haar Cascade classifier for face localization</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span><strong>Model Optimization</strong> → Data augmentation and dropout for better generalization</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="project-section">
+                        <h2>📁 Project Structure</h2>
+                        <div class="file-structure">
+                            <div class="file-item">
+                                <i class="fas fa-file-code" style="color: var(--accent-primary);"></i>
+                                <span><strong>emotion_model.py</strong> → CNN model architecture and training script</span>
+                            </div>
+                            <div class="file-item">
+                                <i class="fas fa-file-code" style="color: var(--accent-primary);"></i>
+                                <span><strong>video_detection.py</strong> → Real-time emotion detection from webcam</span>
+                            </div>
+                            <div class="file-item">
+                                <i class="fas fa-database" style="color: var(--success);"></i>
+                                <span><strong>FER2013 Dataset</strong> → 35,887 images across 7 emotion categories</span>
+                            </div>
+                            <div class="file-item">
+                                <i class="fas fa-file-pdf" style="color: var(--error);"></i>
+                                <span><strong>Report/</strong> → Comprehensive project documentation and research findings</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-section">
+                        <h2>🎯 Key Insights</h2>
+                        <div class="insights-grid">
+                            <div class="insight-card">
+                                <h4>65% Accuracy</h4>
+                                <p>Achieved competitive performance on FER2013 dataset across all 7 emotion classes</p>
+                            </div>
+                            <div class="insight-card">
+                                <h4>Real-time Processing</h4>
+                                <p>Successfully implemented live video emotion detection with OpenCV</p>
+                            </div>
+                            <div class="insight-card">
+                                <h4>CNN Architecture</h4>
+                                <p>Multi-layer convolutional network with dropout and batch normalization</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-section">
+                        <h2>🔬 Model Architecture</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Convolutional Neural Network with the following layers:</p>
+                        <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-layer-group"></i> <span><strong>Input Layer</strong> → 48×48 grayscale images</span></li>
+                                <li><i class="fas fa-layer-group"></i> <span><strong>Conv2D Layers</strong> → Multiple convolutional layers with ReLU activation</span></li>
+                                <li><i class="fas fa-layer-group"></i> <span><strong>MaxPooling2D</strong> → Spatial dimension reduction</span></li>
+                                <li><i class="fas fa-layer-group"></i> <span><strong>Dropout Layers</strong> → Prevent overfitting (rate: 0.5)</span></li>
+                                <li><i class="fas fa-layer-group"></i> <span><strong>Dense Layers</strong> → Fully connected layers with 128 units</span></li>
+                                <li><i class="fas fa-layer-group"></i> <span><strong>Output Layer</strong> → Softmax activation for 7 emotion classes</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="project-section">
+                        <h2>🔧 Technologies Used</h2>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Python 3.x</span>
+                            <span class="tech-badge">TensorFlow</span>
+                            <span class="tech-badge">Keras</span>
+                            <span class="tech-badge">OpenCV</span>
+                            <span class="tech-badge">NumPy</span>
+                            <span class="tech-badge">Matplotlib</span>
+                            <span class="tech-badge">CNN</span>
+                            <span class="tech-badge">FER2013 Dataset</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Projects -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="back-to-projects">
+                <a href="../../projects.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to All Projects
                 </a>
             </div>
         </div>
