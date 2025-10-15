@@ -3300,6 +3300,97 @@ button {
 }
 
 /* ===================================
+   Certificate Lightbox Styles
+   =================================== */
+
+.certificate-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.certificate-lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  animation: zoomIn 0.3s ease;
+}
+
+.lightbox-iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: var(--transition-base);
+  z-index: 10001;
+}
+
+.lightbox-close:hover {
+  background-color: var(--error);
+  color: white;
+  border-color: var(--error);
+  transform: scale(1.1);
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .lightbox-content {
+    width: 95%;
+    height: 85%;
+  }
+  
+  .lightbox-close {
+    top: -2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+/* ===================================
    Project Page Styles
    =================================== */
 

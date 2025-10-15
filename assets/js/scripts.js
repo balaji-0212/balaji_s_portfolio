@@ -283,5 +283,77 @@ if ('IntersectionObserver' in window) {
 // }
 
 // ===================================
-// Certificate functionality - Lightbox removed to fix navigation issues
-// View Certificate buttons now work as simple PDF links
+// Certificate Lightbox Functionality
+// ===================================
+const certificateLinks = document.querySelectorAll('.view-certificate');
+const lightbox = document.createElement('div');
+lightbox.className = 'certificate-lightbox';
+lightbox.innerHTML = `
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <iframe class="lightbox-iframe" frameborder="0"></iframe>
+  </div>
+`;
+document.body.appendChild(lightbox);
+
+const lightboxIframe = lightbox.querySelector('.lightbox-iframe');
+const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+certificateLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const certificatePath = link.getAttribute('href');
+    lightboxIframe.src = certificatePath;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+lightboxClose.addEventListener('click', () => {
+  closeLightbox();
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+    closeLightbox();
+  }
+});
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  lightboxIframe.src = '';
+  document.body.style.overflow = '';
+}
+
+// ===================================
+// Certificate Filter Functionality
+// ===================================
+const filterButtons = document.querySelectorAll('.filter-btn');
+const certificateCards = document.querySelectorAll('.certificate-card');
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove active class from all buttons
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    // Add active class to clicked button
+    button.classList.add('active');
+    
+    const filterValue = button.getAttribute('data-filter');
+    
+    certificateCards.forEach(card => {
+      if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+        card.style.display = 'block';
+        // Re-trigger AOS animation
+        card.classList.add('aos-animate');
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
