@@ -441,12 +441,17 @@ function initializeInlineViewer() {
     </div>
   `;
   
-  // Insert viewer after header (slides into page flow)
-  const mainElement = document.querySelector('main');
-  if (mainElement) {
-    mainElement.insertAdjacentHTML('afterbegin', viewerHTML);
+  // Prefer inserting viewer right after the site header (so it's near the top)
+  const siteHeader = document.querySelector('header.header') || document.querySelector('header');
+  const anchorContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container, main');
+  if (siteHeader) {
+    siteHeader.insertAdjacentHTML('afterend', viewerHTML);
+  } else if (anchorContent) {
+    // Insert before the main content so hiding it leaves the viewer in place
+    anchorContent.insertAdjacentHTML('beforebegin', viewerHTML);
   } else {
-    document.body.insertAdjacentHTML('beforeend', viewerHTML);
+    // Fallback: insert at top of body to ensure visibility when scrolling to top
+    document.body.insertAdjacentHTML('afterbegin', viewerHTML);
   }
   
   const viewer = document.getElementById('documentViewer');
@@ -483,7 +488,7 @@ function initializeInlineViewer() {
     // Decide renderer based on file extension
     try {
       const cleanUrl = (url || '').split('#')[0].split('?')[0].toLowerCase();
-      const isPDF = cleanUrl.endsWith('.pdf');
+  const isPDF = cleanUrl.endsWith('.pdf');
       const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
 
       // Set links
@@ -495,14 +500,14 @@ function initializeInlineViewer() {
         if (viewerIframe) viewerIframe.style.display = 'none';
         viewerEmbed.style.display = 'block';
         viewerEmbed.setAttribute('type', 'application/pdf');
-        viewerEmbed.setAttribute('src', url);
+        viewerEmbed.setAttribute('src', encodeURI(url));
         console.log('📄 Rendering as PDF via <embed>');
       } else if (isTextLike) {
         // Use <iframe> for text-like files (md/txt/csv)
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', url);
+          viewerIframe.setAttribute('src', encodeURI(url));
           console.log('📝 Rendering as text via <iframe>');
         }
       } else {
@@ -510,7 +515,7 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', url);
+          viewerIframe.setAttribute('src', encodeURI(url));
           console.log('🧩 Rendering as generic via <iframe>');
         }
       }
@@ -535,8 +540,12 @@ function initializeInlineViewer() {
     
     console.log('Viewer display set to:', viewer.style.display);
     
-    // Smooth scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Smooth scroll to the viewer to ensure visibility regardless of placement
+    try {
+      viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch(_) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     
     // Trigger slide-in animation
     setTimeout(() => {
