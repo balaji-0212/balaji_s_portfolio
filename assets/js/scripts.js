@@ -709,6 +709,39 @@ function initializeInlineViewer() {
   const btnPrint = viewer.querySelector('.viewer-print');
   const btnCopy = viewer.querySelector('.viewer-copy');
   const btnFocus = viewer.querySelector('.viewer-focus-toggle');
+  // Helper: detect site base path (prefix like '/repo-name/' on GitHub Pages)
+  function getSiteBase() {
+    try {
+      const scripts = Array.from(document.getElementsByTagName('script'));
+      const self = scripts.find(s => ((s.getAttribute('src') || '').split('?')[0] || '').endsWith('assets/js/scripts.js'));
+      if (self) {
+        const u = new URL(self.src, window.location.href);
+        return u.pathname.replace(/assets\/js\/scripts\.js.*$/, '');
+      }
+    } catch(_) {}
+    // Fallback: first path segment
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    return parts.length ? `/${parts[0]}/` : '/';
+  }
+
+  function resolveSitePath(p) {
+    try {
+      if (!p) return p;
+      if (/^https?:\/\//i.test(p)) return new URL(p, window.location.href).href;
+      if (p.startsWith('/')) {
+        const base = getSiteBase();
+        // If already includes base, keep as-is
+        if (p.startsWith(base)) return new URL(p, window.location.origin).href;
+        // Otherwise, prefix with detected base
+        const joined = base.replace(/\/$/, '/') + p.replace(/^\/+/, '');
+        return new URL(joined, window.location.origin).href;
+      }
+      return new URL(p, window.location.href).href;
+    } catch(_) {
+      return p;
+    }
+  }
+
 
   // State for zoom and url handling
   let __activeUrlBase = '';
@@ -771,16 +804,21 @@ function initializeInlineViewer() {
     try {
     const rawUrl = (url || '');
       const baseNoHash = rawUrl.split('#')[0];
-      const cleanUrl = baseNoHash.split('?')[0].toLowerCase();
+      // Resolve against site base (supports GitHub Pages subpath)
+      const resolvedHref = resolveSitePath(baseNoHash);
+      let resolvedAbs;
+      try { resolvedAbs = new URL(resolvedHref, window.location.href); } catch(_) { resolvedAbs = null; }
+      const resolvedPathname = resolvedAbs ? resolvedAbs.pathname : baseNoHash.split('?')[0];
+      const cleanUrl = (resolvedPathname || '').toLowerCase();
     const isPDF = cleanUrl.endsWith('.pdf');
     const isImage = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(cleanUrl);
-      __activeUrlBase = baseNoHash;
+  __activeUrlBase = resolvedHref;
       __activeIsPdf = isPDF;
   const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
 
       // Set links
-      viewerDownload.href = url;
-      viewerNewTab.href = url;
+      viewerDownload.href = resolvedHref;
+      viewerNewTab.href = resolvedHref;
 
       // Show loading overlay
       if (viewerLoading) viewerLoading.style.display = 'flex';
@@ -799,7 +837,7 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) viewerIframe.style.display = 'block';
         // Use an HTML wrapper to show a responsive image
-        const html = `<html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>body,html{margin:0;padding:0;background:#111;color:#fff} .wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px} img{max-width:100%;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:12px}</style></head><body><div class="wrap"><img src="${encodeURI(url)}" alt="Document image"></div></body></html>`;
+  const html = `<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body,html{margin:0;padding:0;background:#111;color:#fff} .wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px} img{max-width:100%;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:12px}</style></head><body><div class=\"wrap\"><img src=\"${encodeURI(resolvedHref)}\" alt=\"Document image\"></div></body></html>`;
         const blob = new Blob([html], { type: 'text/html' });
         const iframeUrl = URL.createObjectURL(blob);
         viewerIframe.setAttribute('src', iframeUrl);
@@ -809,7 +847,7 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', encodeURI(url));
+          viewerIframe.setAttribute('src', encodeURI(resolvedHref));
           console.log('📝 Rendering as text via <iframe>');
         }
       } else {
@@ -817,7 +855,7 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', encodeURI(url));
+          viewerIframe.setAttribute('src', encodeURI(resolvedHref));
           console.log('🧩 Rendering as generic via <iframe>');
         }
       }
@@ -909,13 +947,19 @@ function initializeInlineViewer() {
       }
     }
     try {
-      if (viewerEmbed) viewerEmbed.onload = hideLoaderSoon;
-      if (viewerIframe) viewerIframe.onload = hideLoaderSoon;
+      let __loaded = false;
+      const markLoaded = () => { __loaded = true; hideLoaderSoon(); };
+      if (viewerEmbed) viewerEmbed.onload = markLoaded;
+      if (viewerIframe) viewerIframe.onload = markLoaded;
+      // Fallback: hide loader after a grace period even if onload doesn't fire (some browsers/plugins)
+      setTimeout(() => { if (!__loaded) hideLoaderSoon(); }, 3000);
     } catch(_) {}
 
     // Update URL hash for deep-linking and push state
     try {
-      const encoded = encodeURIComponent(url.split('/').pop() || url);
+  // Persist absolute pathname (including GitHub Pages base) for reliable deep-linking
+  const absForHash = (function() { try { return new URL(resolvedHref, window.location.href).pathname; } catch(_) { return (resolvedHref.split('#')[0] || ''); } })();
+      const encoded = encodeURIComponent(absForHash || '');
       __prevHash = window.location.hash || '';
       const newHash = `#cert=${encoded}`;
       const newUrl = window.location.pathname + window.location.search + newHash;
@@ -1060,8 +1104,9 @@ function initializeInlineViewer() {
   btnPrint?.addEventListener('click', triggerPrint);
   btnCopy?.addEventListener('click', async () => {
     try {
-      // Copy deep-link to this page including hash
-      const encoded = encodeURIComponent((__activeUrlBase || '').split('/').pop() || '');
+      // Copy deep-link to this page including hash with absolute pathname for reliability on nested pages
+      const pathname = (function(){ try { return new URL(__activeUrlBase || '', window.location.href).pathname; } catch(_) { return (__activeUrlBase || '').split('#')[0]; } })();
+      const encoded = encodeURIComponent(pathname || '');
       const toCopy = window.location.origin + window.location.pathname + window.location.search + (encoded ? `#cert=${encoded}` : '');
       if (!toCopy) return;
       await navigator.clipboard.writeText(toCopy);
@@ -1253,7 +1298,32 @@ window.initializeInlineViewer = initializeInlineViewer;
     const hash = window.location.hash || '';
     const m = hash.match(/#cert=([^&]+)/i);
     if (!m) return;
-    const fileName = decodeURIComponent(m[1]);
+    const fileToken = decodeURIComponent(m[1]);
+    // If the token looks like an absolute or root-relative path, use it as-is; else treat as filename
+    let targetPathname = '';
+    try {
+      if (/^https?:\/\//i.test(fileToken)) {
+        targetPathname = new URL(fileToken).pathname;
+      } else if (fileToken.startsWith('/')) {
+        // Normalize against site base so comparisons match what openViewer uses
+        const base = (function(){
+          try {
+            const scripts = Array.from(document.getElementsByTagName('script'));
+            const self = scripts.find(s => ((s.getAttribute('src') || '').split('?')[0] || '').endsWith('assets/js/scripts.js'));
+            if (self) {
+              const u = new URL(self.src, window.location.href);
+              return u.pathname.replace(/assets\/js\/scripts\.js.*$/, '');
+            }
+          } catch(_) {}
+          const parts = window.location.pathname.split('/').filter(Boolean);
+          return parts.length ? `/${parts[0]}/` : '/';
+        })();
+        targetPathname = fileToken.startsWith(base) ? fileToken : (base.replace(/\/$/, '/') + fileToken.replace(/^\/+/, ''));
+      } else {
+        // It's a bare filename; keep for endsWith matching below
+        targetPathname = '';
+      }
+    } catch(_) { targetPathname = ''; }
     // Try matching any known doc source on the page (cert cards, file links, gallery items)
     const certCards = Array.from(document.querySelectorAll('.certificate-card[data-href]'));
     const anchors = Array.from(document.querySelectorAll('a[href]'));
@@ -1261,14 +1331,26 @@ window.initializeInlineViewer = initializeInlineViewer;
     let matchUrl = '';
     let matchTitle = '';
     // 1) certificate cards by data-href
-    const card = certCards.find(c => (c.getAttribute('data-href') || '').endsWith('/' + fileName) || (c.getAttribute('data-href') || '').endsWith(fileName));
+    const card = certCards.find(c => {
+      const href = c.getAttribute('data-href') || '';
+      if (targetPathname) {
+        try { return new URL(href, window.location.href).pathname === targetPathname; } catch(_) { return href.endsWith(targetPathname); }
+      }
+      return href.endsWith('/' + fileToken) || href.endsWith(fileToken);
+    });
     if (card) {
       matchUrl = card.getAttribute('data-href') || '';
       matchTitle = card.querySelector('.certificate-title')?.textContent?.trim() || '';
     }
     // 2) anchors pointing to docs/images
     if (!matchUrl) {
-      const a = anchors.find(a => (a.getAttribute('href') || '').endsWith('/' + fileName) || (a.getAttribute('href') || '').endsWith(fileName));
+      const a = anchors.find(a => {
+        const href = a.getAttribute('href') || '';
+        if (targetPathname) {
+          try { return new URL(href, window.location.href).pathname === targetPathname; } catch(_) { return href.endsWith(targetPathname); }
+        }
+        return href.endsWith('/' + fileToken) || href.endsWith(fileToken);
+      });
       if (a) {
         matchUrl = a.getAttribute('href') || '';
         matchTitle = a.querySelector('.file-name')?.textContent?.trim() || a.querySelector('h3')?.textContent?.trim() || a.textContent.trim();
@@ -1276,7 +1358,13 @@ window.initializeInlineViewer = initializeInlineViewer;
     }
     // 3) gallery images with matching src
     if (!matchUrl) {
-      const img = galleryImgs.find(i => (i.getAttribute('src') || '').endsWith('/' + fileName) || (i.getAttribute('src') || '').endsWith(fileName));
+      const img = galleryImgs.find(i => {
+        const src = i.getAttribute('src') || '';
+        if (targetPathname) {
+          try { return new URL(src, window.location.href).pathname === targetPathname; } catch(_) { return src.endsWith(targetPathname); }
+        }
+        return src.endsWith('/' + fileToken) || src.endsWith(fileToken);
+      });
       if (img) {
         matchUrl = img.getAttribute('src') || '';
         const titleEl = img.closest('.gallery-item')?.querySelector('.gallery-item-title');
@@ -1284,10 +1372,17 @@ window.initializeInlineViewer = initializeInlineViewer;
       }
     }
     let url = matchUrl;
-    let title = matchTitle || fileName.replace(/[_-]/g, ' ');
-    // If still not found, resolve to current page folder
+    let title = matchTitle || (fileToken || '').split('/').pop().replace(/[_-]/g, ' ');
+    // If still not found, resolve relative to origin using token/path
     if (!url) {
-      try { url = new URL(fileName, window.location.href).toString(); } catch(_) { url = fileName; }
+      try {
+        // If we have a normalized targetPathname, use it as root-relative under origin
+        if (targetPathname) {
+          url = new URL(targetPathname, window.location.origin).toString();
+        } else {
+          url = new URL(fileToken, window.location.href).toString();
+        }
+      } catch(_) { url = fileToken; }
     }
     if (typeof window.openViewer === 'function') {
       window.openViewer(url, title);
