@@ -382,8 +382,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleElement = card.querySelector('.certificate-title');
         const title = titleElement ? titleElement.textContent.trim() : 'Certificate';
         
-        // Open in inline viewer
-        openViewer(href, title);
+        // Open in inline viewer using global function
+        window.openViewer(href, title);
       }
     });
     
@@ -450,27 +450,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
   
   // Get the main content area to hide when viewing
-  const mainContent = document.querySelector('.certificates-section, .page-content, section.section');
+  let mainContent = document.querySelector('.certificates-section, .page-content, section.section');
   
   // Function to open inline viewer
-  function openViewer(url, title) {
+  window.openViewer = function(url, title) {
+    console.log('📂 openViewer called:', { url, title });
+    
     if (!viewer) {
-      console.error('Viewer element not found');
+      console.error('❌ Viewer element not found');
       return;
     }
+    
+    // Re-query main content in case page structure is different
+    mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
+    console.log('Main content found:', !!mainContent);
     
     viewerTitle.textContent = title;
     viewerEmbed.setAttribute('src', url);
     viewerDownload.href = url;
     viewerNewTab.href = url;
     
+    console.log('✅ Viewer configured');
+    
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
+      console.log('Main content hidden');
     }
     
     viewer.classList.add('active');
     viewer.style.display = 'block';
+    
+    console.log('Viewer display set to:', viewer.style.display);
     
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -479,11 +490,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       viewer.style.opacity = '1';
       viewer.style.transform = 'translateY(0)';
+      console.log('✅ Animation triggered');
     }, 10);
   }
   
   // Function to close inline viewer
-  function closeViewer() {
+  window.closeViewer = function() {
     // Slide out animation
     viewer.style.opacity = '0';
     viewer.style.transform = 'translateY(-20px)';
@@ -494,6 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
       viewerEmbed.setAttribute('src', '');
       
       // Show main content again
+      const mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
       if (mainContent) {
         mainContent.style.display = '';
       }
@@ -504,12 +517,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Back button click
-  viewerBack.addEventListener('click', closeViewer);
+  viewerBack.addEventListener('click', window.closeViewer);
   
   // ESC key to close
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && viewer.classList.contains('active')) {
-      closeViewer();
+      window.closeViewer();
     }
   });
   
@@ -519,15 +532,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
     
     if (link) {
+      console.log('🔗 Link clicked:', link.href);
+      
       const href = link.getAttribute('href');
       
       // Check if it's a CSV file with download attribute - allow direct download
       if (href && (href.toLowerCase().endsWith('.csv')) && link.hasAttribute('download')) {
+        console.log('CSV download - allowing default behavior');
         return; // Let CSV files download directly
       }
       
       // Check if it's a relative URL (not external http/https)
       if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('//')) {
+        console.log('✅ Intercepting link:', href);
         e.preventDefault();
         e.stopPropagation();
         
@@ -539,7 +556,10 @@ document.addEventListener('DOMContentLoaded', () => {
                       link.textContent.trim().replace(/\s+/g, ' ') || 
                       href.split('/').pop().replace(/%20/g, ' ');
         
-        openViewer(href, title);
+        console.log('Calling window.openViewer with:', { href, title });
+        window.openViewer(href, title);
+      } else {
+        console.log('External link - not intercepting');
       }
     }
   }, true); // Use capture phase to catch events early
