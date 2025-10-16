@@ -441,16 +441,23 @@ function initializeInlineViewer() {
     </div>
   `;
   
-  // Prefer inserting viewer right after the site header (so it's near the top)
+  // Choose best insertion point for viewer to mimic certificate section placement
   const siteHeader = document.querySelector('header.header') || document.querySelector('header');
-  const anchorContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container, main');
-  if (siteHeader) {
+  const projectFileGrid = document.querySelector('.file-download-grid, .file-list, .gallery-grid');
+  const certSection = document.querySelector('.certificates-section');
+  const anchorContent = document.querySelector('.page-content, section.section, main > section, .container, main');
+
+  if (projectFileGrid) {
+    // Place viewer right above the project file grid
+    projectFileGrid.insertAdjacentHTML('beforebegin', viewerHTML);
+  } else if (certSection) {
+    // Place viewer above certificates block
+    certSection.insertAdjacentHTML('beforebegin', viewerHTML);
+  } else if (siteHeader) {
     siteHeader.insertAdjacentHTML('afterend', viewerHTML);
   } else if (anchorContent) {
-    // Insert before the main content so hiding it leaves the viewer in place
     anchorContent.insertAdjacentHTML('beforebegin', viewerHTML);
   } else {
-    // Fallback: insert at top of body to ensure visibility when scrolling to top
     document.body.insertAdjacentHTML('afterbegin', viewerHTML);
   }
   
@@ -468,8 +475,10 @@ function initializeInlineViewer() {
   const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
   
-  // Get the main content area to hide when viewing
-  let mainContent = document.querySelector('.certificates-section, .page-content, section.section');
+  // Track last clicked document link for context-aware behavior
+  window.__lastDocLink = null;
+  // Default main content (fallback)
+  let mainContent = document.querySelector('.certificates-section, .file-download-grid, .page-content, section.section');
   
   // Function to open inline viewer
   window.openViewer = function(url, title) {
@@ -480,9 +489,22 @@ function initializeInlineViewer() {
       return;
     }
     
-    // Re-query main content in case page structure is different
-    mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
-    console.log('Main content found:', !!mainContent);
+    // Resolve the most relevant content block to hide based on the last clicked link
+    const linkCtx = window.__lastDocLink;
+    const preferredSelectors = ['.file-download-grid', '.file-list', '.gallery-grid', '.certificates-section'];
+    let resolvedContent = null;
+    if (linkCtx && linkCtx.closest) {
+      for (const sel of preferredSelectors) {
+        const candidate = linkCtx.closest(sel);
+        if (candidate) { resolvedContent = candidate; break; }
+      }
+      if (!resolvedContent) {
+        resolvedContent = linkCtx.closest('section, .container, main > section');
+      }
+    }
+    // Fallback to previous broad query if nothing found
+    mainContent = resolvedContent || document.querySelector('.certificates-section, .file-download-grid, .page-content, section.section, main > section, .container');
+    console.log('Main content found:', !!mainContent, '| selector matched:', mainContent && mainContent.className);
     
     viewerTitle.textContent = title;
     // Decide renderer based on file extension
@@ -602,10 +624,13 @@ function initializeInlineViewer() {
       return;
     }
 
-    console.log(`${eventType} on link:`, link.href);
+  console.log(`${eventType} on link:`, link.href);
     const href = link.getAttribute('href');
     console.log('📄 href attribute:', href);
     if (!href) return;
+
+  // Remember the link for context-aware placement/hide logic
+  try { window.__lastDocLink = link; } catch(_) {}
 
     // Allow CSV with explicit download attribute to proceed
     if (href.toLowerCase().endsWith('.csv') && link.hasAttribute('download')) {
