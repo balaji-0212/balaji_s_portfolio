@@ -1,13 +1,15 @@
 // ===================================
 // Initialize AOS (Animate On Scroll)
 // ===================================
-AOS.init({
-  duration: 1000,
-  easing: 'ease-in-out',
-  once: true,
-  offset: 100,
-  disable: false
-});
+if (typeof AOS !== 'undefined') {
+  AOS.init({
+    duration: 1000,
+    easing: 'ease-in-out',
+    once: true,
+    offset: 100,
+    disable: false
+  });
+}
 
 // ===================================
 // Mobile Menu Toggle
