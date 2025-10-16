@@ -433,6 +433,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Function to open viewer
   function openViewer(url, title) {
+    console.log('openViewer called with:', url, title); // Debug
+    console.log('Viewer element:', viewer); // Debug
+    console.log('Viewer classes before:', viewer.className); // Debug
+    
     viewerTitle.textContent = title;
     viewerIframe.src = url;
     viewerDownload.href = url;
@@ -441,10 +445,14 @@ document.addEventListener('DOMContentLoaded', () => {
     viewer.classList.add('active');
     document.body.style.overflow = 'hidden';
     
+    console.log('Viewer classes after:', viewer.className); // Debug
+    console.log('Viewer display:', window.getComputedStyle(viewer).display); // Debug
+    
     // Animate container
     setTimeout(() => {
       viewerContainer.style.transform = 'translateY(0)';
       viewerContainer.style.opacity = '1';
+      console.log('Animation applied'); // Debug
     }, 10);
   }
   
