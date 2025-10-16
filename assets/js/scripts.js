@@ -363,9 +363,21 @@ filterButtons.forEach(button => {
 // ===================================
 // Make Certificate Cards Clickable & Document Viewer
 // ===================================
-document.addEventListener('DOMContentLoaded', () => {
+
+// Function to initialize the inline viewer (can be called multiple times safely)
+function initializeInlineViewer() {
+  console.log('🔧 Initializing inline viewer...');
+  
+  // Check if viewer already exists
+  if (document.getElementById('documentViewer')) {
+    console.log('✅ Viewer already exists, skipping creation');
+    return;
+  }
+
   // Certificate Cards (clickable with data-href)
   const clickableCertificateCards = document.querySelectorAll('.certificate-card[data-href]');
+  
+  console.log('📋 Found certificate cards:', clickableCertificateCards.length);
   
   clickableCertificateCards.forEach(card => {
     // Add click handler
@@ -578,4 +590,17 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('❌ Not a PDF/document link');
     }
   }, true); // Use capture phase to catch events early
-});
+  
+  console.log('✅ Inline viewer initialization complete');
+}
+
+// Initialize on DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeInlineViewer);
+} else {
+  // DOM already loaded, initialize immediately
+  initializeInlineViewer();
+}
+
+// Also expose initialization function globally for manual calls if needed
+window.initializeInlineViewer = initializeInlineViewer;
