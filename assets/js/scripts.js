@@ -466,10 +466,14 @@ function initializeInlineViewer() {
   
   // Function to open inline viewer
   window.openViewer = function(url, title) {
+    alert('🚀 openViewer CALLED! URL: ' + url);
     console.log('📂 openViewer called:', { url, title });
+    console.log('🔍 Viewer element:', viewer);
+    console.log('🔍 Viewer exists in DOM:', document.getElementById('documentViewer'));
     
     if (!viewer) {
       console.error('❌ Viewer element not found');
+      alert('ERROR: Viewer element not found!');
       return;
     }
     
@@ -477,33 +481,51 @@ function initializeInlineViewer() {
     mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
     console.log('Main content found:', !!mainContent);
     
+    // Log all elements before setting
+    console.log('🔍 viewerTitle:', viewerTitle);
+    console.log('🔍 viewerEmbed:', viewerEmbed);
+    console.log('🔍 viewerDownload:', viewerDownload);
+    console.log('🔍 viewerNewTab:', viewerNewTab);
+    
     viewerTitle.textContent = title;
     viewerEmbed.setAttribute('src', url);
     viewerDownload.href = url;
     viewerNewTab.href = url;
     
-    console.log('✅ Viewer configured');
+    console.log('✅ Viewer configured with URL:', url);
     
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
-      console.log('Main content hidden');
+      console.log('✅ Main content hidden');
+    } else {
+      console.warn('⚠️ No main content found to hide');
     }
     
+    // Force visibility with multiple methods
     viewer.classList.add('active');
     viewer.style.display = 'block';
+    viewer.style.visibility = 'visible';
+    viewer.style.opacity = '1';
+    viewer.style.transform = 'translateY(0)';
+    viewer.style.zIndex = '9999';
     
-    console.log('Viewer display set to:', viewer.style.display);
+    console.log('✅ Viewer display set to:', viewer.style.display);
+    console.log('✅ Viewer classList:', viewer.classList);
+    console.log('✅ Computed display:', window.getComputedStyle(viewer).display);
+    console.log('✅ Computed opacity:', window.getComputedStyle(viewer).opacity);
+    console.log('✅ Computed z-index:', window.getComputedStyle(viewer).zIndex);
+    console.log('✅ Viewer offsetHeight:', viewer.offsetHeight);
+    console.log('✅ Viewer offsetWidth:', viewer.offsetWidth);
     
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Trigger slide-in animation
+    // Alert to confirm viewer should be visible
     setTimeout(() => {
-      viewer.style.opacity = '1';
-      viewer.style.transform = 'translateY(0)';
-      console.log('✅ Animation triggered');
-    }, 10);
+      console.log('🎉 Viewer should now be visible at the top of the page!');
+      console.log('🔍 Final viewer position:', viewer.getBoundingClientRect());
+    }, 100);
   }
   
   // Function to close inline viewer
