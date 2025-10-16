@@ -535,6 +535,9 @@ function initializeInlineViewer() {
           <button class="viewer-btn viewer-fit-page" title="Fit page (W)" aria-label="Fit page">
             <i class="fas fa-arrows-alt-v"></i>
           </button>
+          <button class="viewer-btn viewer-focus-toggle" title="Focus mode (X)" aria-label="Toggle focus mode" aria-pressed="false">
+            <i class="fas fa-expand"></i>
+          </button>
           <a class="document-viewer-download-inline" download>
             <i class="fas fa-download"></i> Download
           </a>
@@ -610,6 +613,7 @@ function initializeInlineViewer() {
   const btnFitPage = viewer.querySelector('.viewer-fit-page');
   const btnPrint = viewer.querySelector('.viewer-print');
   const btnCopy = viewer.querySelector('.viewer-copy');
+  const btnFocus = viewer.querySelector('.viewer-focus-toggle');
 
   // State for zoom and url handling
   let __activeUrlBase = '';
@@ -803,6 +807,15 @@ function initializeInlineViewer() {
       console.log('✅ Animation triggered');
     }, 10);
 
+    // Default to Focus Mode when opening from the Certificates page
+    try {
+      const isFromCertificates = !!(window.__lastHiddenSection && window.__lastHiddenSection.classList && window.__lastHiddenSection.classList.contains('certificates-section'))
+        || !!document.querySelector('.certificates-section');
+      if (isFromCertificates) {
+        enterFocusMode();
+      }
+    } catch(_) {}
+
     // Attach load handlers to hide spinner
     function hideLoaderSoon() {
       if (viewerLoading) {
@@ -835,6 +848,8 @@ function initializeInlineViewer() {
     
     setTimeout(() => {
       viewer.classList.remove('active');
+      // Ensure focus mode reset on close
+      exitFocusMode();
       viewer.style.display = 'none';
       if (viewerEmbed) viewerEmbed.setAttribute('src', '');
       if (viewerIframe) viewerIframe.setAttribute('src', '');
@@ -908,6 +923,7 @@ function initializeInlineViewer() {
     if (key === 't') { viewerNewTab?.click(); }
     if (key === 'p') { triggerPrint(); }
     if (key === 'c') { btnCopy?.click(); }
+    if (key === 'x') { toggleFocusMode(); }
   });
 
   // Utility: remember prior scroll Y when opening
@@ -955,6 +971,34 @@ function initializeInlineViewer() {
       setTimeout(() => btnCopy.setAttribute('title', 'Copy link (C)'), 1200);
     } catch(err) { console.warn('Copy failed', err); }
   });
+
+  // Focus Mode utilities
+  function enterFocusMode() {
+    try {
+      viewer.classList.add('focus-mode');
+      if (btnFocus) {
+        btnFocus.setAttribute('aria-pressed', 'true');
+        const ic = btnFocus.querySelector('i');
+        if (ic) { ic.classList.remove('fa-expand'); ic.classList.add('fa-compress'); }
+      }
+      if (viewer.__sizerHandler) viewer.__sizerHandler();
+    } catch(_) {}
+  }
+  function exitFocusMode() {
+    try {
+      viewer.classList.remove('focus-mode');
+      if (btnFocus) {
+        btnFocus.setAttribute('aria-pressed', 'false');
+        const ic = btnFocus.querySelector('i');
+        if (ic) { ic.classList.remove('fa-compress'); ic.classList.add('fa-expand'); }
+      }
+      if (viewer.__sizerHandler) viewer.__sizerHandler();
+    } catch(_) {}
+  }
+  function toggleFocusMode() {
+    if (viewer.classList.contains('focus-mode')) { exitFocusMode(); } else { enterFocusMode(); }
+  }
+  btnFocus?.addEventListener('click', toggleFocusMode);
   
   // Shared handler to intercept doc links (click and auxclick)
   function handleDocLinkEvent(e) {
