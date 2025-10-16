@@ -528,13 +528,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Intercept PDF/document links
   document.addEventListener('click', (e) => {
+    console.log('🖱️ Click detected on:', e.target);
+    
     // Check if clicked element or any parent is a PDF link
     const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
+    
+    console.log('📎 Found link:', link);
     
     if (link) {
       console.log('🔗 Link clicked:', link.href);
       
       const href = link.getAttribute('href');
+      console.log('📄 href attribute:', href);
       
       // Check if it's a CSV file with download attribute - allow direct download
       if (href && (href.toLowerCase().endsWith('.csv')) && link.hasAttribute('download')) {
@@ -556,11 +561,21 @@ document.addEventListener('DOMContentLoaded', () => {
                       link.textContent.trim().replace(/\s+/g, ' ') || 
                       href.split('/').pop().replace(/%20/g, ' ');
         
-        console.log('Calling window.openViewer with:', { href, title });
-        window.openViewer(href, title);
+        console.log('📝 Title extracted:', title);
+        console.log('🚀 Calling window.openViewer...');
+        
+        // Check if openViewer exists
+        if (typeof window.openViewer === 'function') {
+          console.log('✅ window.openViewer is available');
+          window.openViewer(href, title);
+        } else {
+          console.error('❌ window.openViewer is NOT defined!');
+        }
       } else {
-        console.log('External link - not intercepting');
+        console.log('External link - not intercepting:', href);
       }
+    } else {
+      console.log('❌ Not a PDF/document link');
     }
   }, true); // Use capture phase to catch events early
 });
