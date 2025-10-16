@@ -436,6 +436,7 @@ function initializeInlineViewer() {
       </div>
       <div class="document-viewer-content-inline">
         <embed class="document-viewer-embed" type="application/pdf">
+        <iframe class="document-viewer-iframe" style="display:none;" loading="eager"></iframe>
       </div>
     </div>
   `;
@@ -457,6 +458,7 @@ function initializeInlineViewer() {
   
   const viewerTitle = viewer.querySelector('.document-viewer-title-inline');
   const viewerEmbed = viewer.querySelector('.document-viewer-embed');
+  const viewerIframe = viewer.querySelector('.document-viewer-iframe');
   const viewerBack = viewer.querySelector('.document-viewer-back');
   const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
@@ -466,14 +468,10 @@ function initializeInlineViewer() {
   
   // Function to open inline viewer
   window.openViewer = function(url, title) {
-    alert('🚀 openViewer CALLED! URL: ' + url);
     console.log('📂 openViewer called:', { url, title });
-    console.log('🔍 Viewer element:', viewer);
-    console.log('🔍 Viewer exists in DOM:', document.getElementById('documentViewer'));
     
     if (!viewer) {
       console.error('❌ Viewer element not found');
-      alert('ERROR: Viewer element not found!');
       return;
     }
     
@@ -481,51 +479,71 @@ function initializeInlineViewer() {
     mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
     console.log('Main content found:', !!mainContent);
     
-    // Log all elements before setting
-    console.log('🔍 viewerTitle:', viewerTitle);
-    console.log('🔍 viewerEmbed:', viewerEmbed);
-    console.log('🔍 viewerDownload:', viewerDownload);
-    console.log('🔍 viewerNewTab:', viewerNewTab);
-    
     viewerTitle.textContent = title;
-    viewerEmbed.setAttribute('src', url);
-    viewerDownload.href = url;
-    viewerNewTab.href = url;
+    // Decide renderer based on file extension
+    try {
+      const cleanUrl = (url || '').split('#')[0].split('?')[0].toLowerCase();
+      const isPDF = cleanUrl.endsWith('.pdf');
+      const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
+
+      // Set links
+      viewerDownload.href = url;
+      viewerNewTab.href = url;
+
+      if (isPDF) {
+        // Use <embed> for PDF
+        if (viewerIframe) viewerIframe.style.display = 'none';
+        viewerEmbed.style.display = 'block';
+        viewerEmbed.setAttribute('type', 'application/pdf');
+        viewerEmbed.setAttribute('src', url);
+        console.log('📄 Rendering as PDF via <embed>');
+      } else if (isTextLike) {
+        // Use <iframe> for text-like files (md/txt/csv)
+        if (viewerEmbed) viewerEmbed.style.display = 'none';
+        if (viewerIframe) {
+          viewerIframe.style.display = 'block';
+          viewerIframe.setAttribute('src', url);
+          console.log('📝 Rendering as text via <iframe>');
+        }
+      } else {
+        // Fallback to iframe for unknown types
+        if (viewerEmbed) viewerEmbed.style.display = 'none';
+        if (viewerIframe) {
+          viewerIframe.style.display = 'block';
+          viewerIframe.setAttribute('src', url);
+          console.log('🧩 Rendering as generic via <iframe>');
+        }
+      }
+    } catch(err) {
+      console.warn('⚠️ Renderer decision failed, defaulting to <embed>', err);
+      viewerEmbed.style.display = 'block';
+      viewerEmbed.setAttribute('src', url);
+      viewerDownload.href = url;
+      viewerNewTab.href = url;
+    }
     
-    console.log('✅ Viewer configured with URL:', url);
+    console.log('✅ Viewer configured');
     
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
-      console.log('✅ Main content hidden');
-    } else {
-      console.warn('⚠️ No main content found to hide');
+      console.log('Main content hidden');
     }
     
-    // Force visibility with multiple methods
     viewer.classList.add('active');
     viewer.style.display = 'block';
-    viewer.style.visibility = 'visible';
-    viewer.style.opacity = '1';
-    viewer.style.transform = 'translateY(0)';
-    viewer.style.zIndex = '9999';
     
-    console.log('✅ Viewer display set to:', viewer.style.display);
-    console.log('✅ Viewer classList:', viewer.classList);
-    console.log('✅ Computed display:', window.getComputedStyle(viewer).display);
-    console.log('✅ Computed opacity:', window.getComputedStyle(viewer).opacity);
-    console.log('✅ Computed z-index:', window.getComputedStyle(viewer).zIndex);
-    console.log('✅ Viewer offsetHeight:', viewer.offsetHeight);
-    console.log('✅ Viewer offsetWidth:', viewer.offsetWidth);
+    console.log('Viewer display set to:', viewer.style.display);
     
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Alert to confirm viewer should be visible
+    // Trigger slide-in animation
     setTimeout(() => {
-      console.log('🎉 Viewer should now be visible at the top of the page!');
-      console.log('🔍 Final viewer position:', viewer.getBoundingClientRect());
-    }, 100);
+      viewer.style.opacity = '1';
+      viewer.style.transform = 'translateY(0)';
+      console.log('✅ Animation triggered');
+    }, 10);
   }
   
   // Function to close inline viewer
@@ -537,7 +555,10 @@ function initializeInlineViewer() {
     setTimeout(() => {
       viewer.classList.remove('active');
       viewer.style.display = 'none';
-      viewerEmbed.setAttribute('src', '');
+      if (viewerEmbed) viewerEmbed.setAttribute('src', '');
+      if (viewerIframe) viewerIframe.setAttribute('src', '');
+      if (viewerEmbed) viewerEmbed.style.display = 'block';
+      if (viewerIframe) viewerIframe.style.display = 'none';
       
       // Show main content again
       const mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
@@ -581,8 +602,25 @@ function initializeInlineViewer() {
         return; // Let CSV files download directly
       }
       
-      // Check if it's a relative URL (not external http/https)
-      if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('//')) {
+      // Intercept if same-origin (handles both relative and absolute to this site)
+      if (href) {
+        // Skip anchors and special schemes
+        if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+          console.log('Special link - not intercepting:', href);
+          return;
+        }
+
+        let absoluteUrl;
+        try {
+          absoluteUrl = new URL(href, window.location.href);
+        } catch (err) {
+          console.warn('Invalid URL, skipping interception:', href, err);
+          return;
+        }
+
+        const sameOrigin = absoluteUrl.origin === window.location.origin;
+        // Only intercept same-origin links so resources load correctly
+        if (sameOrigin) {
         console.log('✅ Intercepting link:', href);
         e.preventDefault();
         e.stopPropagation();
@@ -605,8 +643,9 @@ function initializeInlineViewer() {
         } else {
           console.error('❌ window.openViewer is NOT defined!');
         }
-      } else {
-        console.log('External link - not intercepting:', href);
+        } else {
+          console.log('External link - not intercepting:', href);
+        }
       }
     } else {
       console.log('❌ Not a PDF/document link');

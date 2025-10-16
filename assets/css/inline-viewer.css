@@ -144,6 +144,16 @@
   min-height: 600px;
 }
 
+.document-viewer-iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(0, 212, 255, 0.2);
+  min-height: 600px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .document-viewer-header-inline {
