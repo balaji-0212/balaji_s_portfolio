@@ -590,76 +590,79 @@ function initializeInlineViewer() {
     }
   });
   
-  // Intercept PDF/document links
-  document.addEventListener('click', (e) => {
-    console.log('🖱️ Click detected on:', e.target);
-    
-    // Check if clicked element or any parent is a PDF link
-    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
-    
+  // Shared handler to intercept doc links (click and auxclick)
+  function handleDocLinkEvent(e) {
+    const eventType = e.type;
+    console.log(`🖱️ ${eventType} detected on:`, e.target);
+
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]`);
     console.log('📎 Found link:', link);
-    
-    if (link) {
-      console.log('🔗 Link clicked:', link.href);
-      
-      const href = link.getAttribute('href');
-      console.log('📄 href attribute:', href);
-      
-      // Check if it's a CSV file with download attribute - allow direct download
-      if (href && (href.toLowerCase().endsWith('.csv')) && link.hasAttribute('download')) {
-        console.log('CSV download - allowing default behavior');
-        return; // Let CSV files download directly
-      }
-      
-      // Intercept if same-origin (handles both relative and absolute to this site)
-      if (href) {
-        // Skip anchors and special schemes
-        if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-          console.log('Special link - not intercepting:', href);
-          return;
-        }
-
-        let absoluteUrl;
-        try {
-          absoluteUrl = new URL(href, window.location.href);
-        } catch (err) {
-          console.warn('Invalid URL, skipping interception:', href, err);
-          return;
-        }
-
-        const sameOrigin = absoluteUrl.origin === window.location.origin;
-        // Only intercept same-origin links so resources load correctly
-        if (sameOrigin) {
-        console.log('✅ Intercepting link:', href);
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Get title from various possible sources
-        const title = link.querySelector('.file-name')?.textContent || 
-                      link.querySelector('h3')?.textContent || 
-                      link.querySelector('.file-info h3')?.textContent ||
-                      link.querySelector('.certificate-title')?.textContent ||
-                      link.textContent.trim().replace(/\s+/g, ' ') || 
-                      href.split('/').pop().replace(/%20/g, ' ');
-        
-        console.log('📝 Title extracted:', title);
-        console.log('🚀 Calling window.openViewer...');
-        
-        // Check if openViewer exists
-        if (typeof window.openViewer === 'function') {
-          console.log('✅ window.openViewer is available');
-          window.openViewer(href, title);
-        } else {
-          console.error('❌ window.openViewer is NOT defined!');
-        }
-        } else {
-          console.log('External link - not intercepting:', href);
-        }
-      }
-    } else {
-      console.log('❌ Not a PDF/document link');
+    if (!link) {
+      if (eventType === 'click') console.log('❌ Not a PDF/document link');
+      return;
     }
-  }, true); // Use capture phase to catch events early
+
+    console.log(`${eventType} on link:`, link.href);
+    const href = link.getAttribute('href');
+    console.log('📄 href attribute:', href);
+    if (!href) return;
+
+    // Allow CSV with explicit download attribute to proceed
+    if (href.toLowerCase().endsWith('.csv') && link.hasAttribute('download')) {
+      console.log('CSV download - allowing default behavior');
+      return;
+    }
+
+    // Skip anchors and special schemes
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+      console.log('Special link - not intercepting:', href);
+      return;
+    }
+
+    // Same-origin check (works with relative and absolute)
+    let absoluteUrl;
+    try {
+      absoluteUrl = new URL(href, window.location.href);
+    } catch (err) {
+      console.warn('Invalid URL, skipping interception:', href, err);
+      return;
+    }
+    const sameOrigin = absoluteUrl.origin === window.location.origin;
+    if (!sameOrigin) {
+      console.log('External link - not intercepting:', href);
+      return;
+    }
+
+    // Always intercept left, middle, ctrl/meta clicks to keep inline behavior
+    const isMiddleClick = e.type === 'auxclick' && e.button === 1;
+    const isModified = !!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey);
+
+    if (e.type === 'click' || isMiddleClick) {
+      console.log('✅ Intercepting link:', href, '| modified:', isModified, '| button:', e.button);
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+
+      const title = link.querySelector('.file-name')?.textContent ||
+                    link.querySelector('h3')?.textContent ||
+                    link.querySelector('.file-info h3')?.textContent ||
+                    link.querySelector('.certificate-title')?.textContent ||
+                    link.textContent.trim().replace(/\s+/g, ' ') ||
+                    href.split('/').pop().replace(/%20/g, ' ');
+      console.log('📝 Title extracted:', title);
+
+      if (typeof window.openViewer === 'function') {
+        console.log('🚀 Calling window.openViewer...');
+        window.openViewer(href, title);
+      } else {
+        console.error('❌ window.openViewer is NOT defined!');
+      }
+    }
+  }
+
+  // Intercept PDF/document links
+  document.addEventListener('click', handleDocLinkEvent, true);
+  document.addEventListener('auxclick', handleDocLinkEvent, true);
   
   console.log('✅ Inline viewer initialization complete');
 }
