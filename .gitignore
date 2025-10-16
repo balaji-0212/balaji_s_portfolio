@@ -80,3 +80,8 @@ Projects/**/*.PUP
 # Keep project preview images
 !Projects/**/dashboard_preview/*.jpg
 !Projects/**/dashboard_preview/*.png
+# Allow important project PDFs to be included (reports and publications)
+!Projects/**/Report/*.pdf
+!Projects/**/Report/*.PDF
+!Projects/**/Paper_Publication/*.pdf
+!Projects/**/Paper_Publication/*.PDF
