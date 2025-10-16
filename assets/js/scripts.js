@@ -1120,11 +1120,41 @@ window.initializeInlineViewer = initializeInlineViewer;
     const m = hash.match(/#cert=([^&]+)/i);
     if (!m) return;
     const fileName = decodeURIComponent(m[1]);
-    // Find matching certificate card by data-href ending with this filename
-    const cards = Array.from(document.querySelectorAll('.certificate-card[data-href]'));
-    let card = cards.find(c => (c.getAttribute('data-href') || '').endsWith('/' + fileName) || (c.getAttribute('data-href') || '').endsWith(fileName));
-    const url = card?.getAttribute('data-href') || ('Certificates/' + fileName);
-    const title = card?.querySelector('.certificate-title')?.textContent || fileName.replace(/[_-]/g, ' ');
+    // Try matching any known doc source on the page (cert cards, file links, gallery items)
+    const certCards = Array.from(document.querySelectorAll('.certificate-card[data-href]'));
+    const anchors = Array.from(document.querySelectorAll('a[href]'));
+    const galleryImgs = Array.from(document.querySelectorAll('.gallery-item img[src]'));
+    let matchUrl = '';
+    let matchTitle = '';
+    // 1) certificate cards by data-href
+    const card = certCards.find(c => (c.getAttribute('data-href') || '').endsWith('/' + fileName) || (c.getAttribute('data-href') || '').endsWith(fileName));
+    if (card) {
+      matchUrl = card.getAttribute('data-href') || '';
+      matchTitle = card.querySelector('.certificate-title')?.textContent?.trim() || '';
+    }
+    // 2) anchors pointing to docs/images
+    if (!matchUrl) {
+      const a = anchors.find(a => (a.getAttribute('href') || '').endsWith('/' + fileName) || (a.getAttribute('href') || '').endsWith(fileName));
+      if (a) {
+        matchUrl = a.getAttribute('href') || '';
+        matchTitle = a.querySelector('.file-name')?.textContent?.trim() || a.querySelector('h3')?.textContent?.trim() || a.textContent.trim();
+      }
+    }
+    // 3) gallery images with matching src
+    if (!matchUrl) {
+      const img = galleryImgs.find(i => (i.getAttribute('src') || '').endsWith('/' + fileName) || (i.getAttribute('src') || '').endsWith(fileName));
+      if (img) {
+        matchUrl = img.getAttribute('src') || '';
+        const titleEl = img.closest('.gallery-item')?.querySelector('.gallery-item-title');
+        matchTitle = titleEl?.textContent?.trim() || img.getAttribute('alt') || '';
+      }
+    }
+    let url = matchUrl;
+    let title = matchTitle || fileName.replace(/[_-]/g, ' ');
+    // If still not found, resolve to current page folder
+    if (!url) {
+      try { url = new URL(fileName, window.location.href).toString(); } catch(_) { url = fileName; }
+    }
     if (typeof window.openViewer === 'function') {
       window.openViewer(url, title);
     }
