@@ -370,17 +370,28 @@ document.addEventListener('DOMContentLoaded', () => {
   certificateCards.forEach(card => {
     // Add click handler
     card.addEventListener('click', (e) => {
+      console.log('📄 Certificate card clicked');
+      
       // Prevent click if clicking on a link inside the card
-      if (e.target.tagName === 'A') return;
+      if (e.target.tagName === 'A') {
+        console.log('Ignoring - clicked on link inside card');
+        return;
+      }
       
       const href = card.getAttribute('data-href');
+      console.log('Certificate href:', href);
+      
       if (href) {
         // Extract certificate title from the card
         const titleElement = card.querySelector('.certificate-title');
         const title = titleElement ? titleElement.textContent.trim() : 'Certificate';
         
+        console.log('Calling openViewer with:', { href, title });
+        
         // Open in modal viewer (defined below)
         openViewer(href, title);
+      } else {
+        console.error('❌ No href found on certificate card');
       }
     });
     
@@ -428,35 +439,68 @@ document.addEventListener('DOMContentLoaded', () => {
   // Insert viewer after header (slides into page flow)
   const mainElement = document.querySelector('main');
   if (mainElement) {
+    console.log('✅ Main element found, inserting viewer');
     mainElement.insertAdjacentHTML('afterbegin', viewerHTML);
   } else {
+    console.log('⚠️ No main element, inserting into body');
     document.body.insertAdjacentHTML('beforeend', viewerHTML);
   }
   
   const viewer = document.getElementById('documentViewer');
+  console.log('Viewer element after insertion:', viewer);
+  
+  if (!viewer) {
+    console.error('❌ CRITICAL: Viewer element not created!');
+    return;
+  }
+  
   const viewerTitle = viewer.querySelector('.document-viewer-title-inline');
   const viewerEmbed = viewer.querySelector('.document-viewer-embed');
   const viewerBack = viewer.querySelector('.document-viewer-back');
   const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
   
+  console.log('Viewer components:', {
+    viewerTitle: !!viewerTitle,
+    viewerEmbed: !!viewerEmbed,
+    viewerBack: !!viewerBack,
+    viewerDownload: !!viewerDownload,
+    viewerNewTab: !!viewerNewTab
+  });
+  
   // Get the main content area to hide when viewing
   const mainContent = document.querySelector('.certificates-section, .page-content, section.section');
+  console.log('Main content element found:', !!mainContent);
   
   // Function to open inline viewer
   function openViewer(url, title) {
+    console.log('🚀 openViewer called:', { url, title });
+    console.log('Viewer element exists:', !!viewer);
+    console.log('Main content element:', mainContent);
+    
+    if (!viewer) {
+      console.error('❌ Viewer element not found!');
+      return;
+    }
+    
     viewerTitle.textContent = title;
     viewerEmbed.setAttribute('src', url);
     viewerDownload.href = url;
     viewerNewTab.href = url;
     
+    console.log('✅ Viewer configured, hiding main content...');
+    
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
+      console.log('Main content hidden');
     }
     
     viewer.classList.add('active');
     viewer.style.display = 'block';
+    
+    console.log('Viewer display:', viewer.style.display);
+    console.log('Viewer classes:', viewer.className);
     
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -465,6 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       viewer.style.opacity = '1';
       viewer.style.transform = 'translateY(0)';
+      console.log('✅ Animation triggered');
     }, 10);
   }
   
