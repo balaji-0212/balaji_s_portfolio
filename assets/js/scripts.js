@@ -433,10 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Function to open viewer
   function openViewer(url, title) {
-    console.log('openViewer called with:', url, title); // Debug
-    console.log('Viewer element:', viewer); // Debug
-    console.log('Viewer classes before:', viewer.className); // Debug
-    
     viewerTitle.textContent = title;
     viewerIframe.src = url;
     viewerDownload.href = url;
@@ -444,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     viewer.classList.add('active');
     
-    // FORCE all styles inline
+    // FORCE all styles inline to override CSS conflicts
     viewer.style.cssText = `
       display: flex !important;
       position: fixed !important;
@@ -455,10 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
       z-index: 999999 !important;
       align-items: center !important;
       justify-content: center !important;
-      background: rgba(0, 0, 0, 0.95) !important;
+      background: rgba(0, 0, 0, 0.9) !important;
+      backdrop-filter: blur(10px) !important;
     `;
     
-    // Force container styles
+    // Force container styles with proper design
     viewerContainer.style.cssText = `
       position: relative !important;
       width: 95% !important;
@@ -470,23 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
       flex-direction: column !important;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      transform: translateY(0) !important;
-      opacity: 1 !important;
+      overflow: hidden !important;
     `;
     
     document.body.style.overflow = 'hidden';
-    
-    console.log('Viewer classes after:', viewer.className); // Debug
-    console.log('Viewer display:', window.getComputedStyle(viewer).display); // Debug
-    console.log('Viewer z-index:', window.getComputedStyle(viewer).zIndex); // Debug
-    console.log('Viewer position:', window.getComputedStyle(viewer).position); // Debug
-    
-    // Animate container
-    setTimeout(() => {
-      viewerContainer.style.transform = 'translateY(0)';
-      viewerContainer.style.opacity = '1';
-      console.log('Animation applied'); // Debug
-    }, 10);
   }
   
   // Function to close viewer
@@ -522,10 +506,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (link && !link.hasAttribute('download')) {
       // Check if it's a relative URL (not external http/https)
       const href = link.getAttribute('href');
-      console.log('PDF link clicked:', href); // Debug
       
       if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('//')) {
-        console.log('Intercepting PDF:', href); // Debug
         e.preventDefault();
         e.stopPropagation();
         
@@ -535,7 +517,6 @@ document.addEventListener('DOMContentLoaded', () => {
                       link.textContent.trim().replace(/\s+/g, ' ') || 
                       href.split('/').pop().replace(/%20/g, ' ').replace('.pdf', '');
         
-        console.log('Opening viewer with title:', title); // Debug
         openViewer(href, title);
       }
     }
