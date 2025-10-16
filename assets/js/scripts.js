@@ -437,22 +437,33 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Viewer element:', viewer); // Debug
     console.log('Viewer classes before:', viewer.className); // Debug
     
-    // Force visibility test
-    alert('Modal should open now! Check if you see a dark overlay.');
-    
     viewerTitle.textContent = title;
     viewerIframe.src = url;
     viewerDownload.href = url;
     viewerOpen.href = url;
     
     viewer.classList.add('active');
-    viewer.style.display = 'flex'; // Force display
-    viewer.style.zIndex = '999999'; // Force z-index
+    
+    // FORCE all styles inline
+    viewer.style.cssText = `
+      display: flex !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 999999 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: rgba(0, 0, 0, 0.95) !important;
+    `;
+    
     document.body.style.overflow = 'hidden';
     
     console.log('Viewer classes after:', viewer.className); // Debug
     console.log('Viewer display:', window.getComputedStyle(viewer).display); // Debug
     console.log('Viewer z-index:', window.getComputedStyle(viewer).zIndex); // Debug
+    console.log('Viewer position:', window.getComputedStyle(viewer).position); // Debug
     
     // Animate container
     setTimeout(() => {
