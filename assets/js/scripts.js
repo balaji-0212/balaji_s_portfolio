@@ -334,31 +334,128 @@ function closeLightbox() {
 }
 
 // ===================================
-// Certificate Filter Functionality
+// Certificate Grid: Search + Filter + Counts
 // ===================================
-const filterButtons = document.querySelectorAll('.filter-btn');
-const certificateCards = document.querySelectorAll('.certificate-card');
+(function setupCertificateFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const certificateCards = Array.from(document.querySelectorAll('.certificate-card'));
+  const searchInput = document.querySelector('#certificateSearch');
+  const grid = document.querySelector('.certificates-grid');
 
-filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // Remove active class from all buttons
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    // Add active class to clicked button
-    button.classList.add('active');
-    
-    const filterValue = button.getAttribute('data-filter');
-    
-    certificateCards.forEach(card => {
-      if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-        card.style.display = 'block';
-        // Re-trigger AOS animation
-        card.classList.add('aos-animate');
-      } else {
-        card.style.display = 'none';
+  if (!certificateCards.length) return; // not on certificates page
+
+  // Ensure cards are keyboard focusable and open on Enter/Space
+  certificateCards.forEach(card => {
+    if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', (card.querySelector('.certificate-title')?.textContent || 'Certificate').trim());
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
       }
     });
   });
-});
+
+  function getActiveFilter() {
+    const active = Array.from(filterButtons).find(b => b.classList.contains('active'));
+    return active ? active.getAttribute('data-filter') : 'all';
+  }
+
+  // Ensure certificate thumbnails are lazy-loaded
+  document.querySelectorAll('.certificate-card img').forEach(img => {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+  });
+
+  function updateCounts() {
+    const q = (searchInput?.value || '').trim().toLowerCase();
+    const categories = ['all','data-analytics','programming','cloud-ai','simulations','academic'];
+    const counts = { all: 0 };
+    categories.slice(1).forEach(c => counts[c] = 0);
+    certificateCards.forEach(card => {
+      const title = (card.querySelector('.certificate-title')?.textContent || '').toLowerCase();
+      const issuer = (card.querySelector('.certificate-issuer')?.textContent || '').toLowerCase();
+      const matchSearch = !q || title.includes(q) || issuer.includes(q);
+      if (!matchSearch) return;
+      const cat = card.getAttribute('data-category');
+      counts.all++;
+      if (cat && counts.hasOwnProperty(cat)) counts[cat]++;
+    });
+    filterButtons.forEach(btn => {
+      const cat = btn.getAttribute('data-filter') || 'all';
+      const badge = btn.querySelector('.filter-count');
+      if (badge) badge.textContent = (counts[cat] ?? 0);
+    });
+  }
+
+  function applyFilterAndSearch() {
+    const filterValue = getActiveFilter();
+    const q = (searchInput?.value || '').trim().toLowerCase();
+    certificateCards.forEach(card => {
+      const catOk = (filterValue === 'all') || (card.getAttribute('data-category') === filterValue);
+      const title = (card.querySelector('.certificate-title')?.textContent || '').toLowerCase();
+      const issuer = (card.querySelector('.certificate-issuer')?.textContent || '').toLowerCase();
+      const searchOk = !q || title.includes(q) || issuer.includes(q);
+      const show = catOk && searchOk;
+      card.style.display = show ? 'block' : 'none';
+      if (show) card.classList.add('aos-animate');
+    });
+    updateCounts();
+    try { if (typeof AOS !== 'undefined') AOS.refresh(); } catch(_) {}
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      applyFilterAndSearch();
+      // Preserve active filter in state
+      try { sessionStorage.setItem('certActiveFilter', getActiveFilter()); } catch(_) {}
+    });
+  });
+
+  searchInput?.addEventListener('input', () => {
+    applyFilterAndSearch();
+    try { sessionStorage.setItem('certSearchQuery', searchInput.value); } catch(_) {}
+  });
+
+  // Restore persisted state
+  try {
+    const savedFilter = sessionStorage.getItem('certActiveFilter');
+    const savedQuery = sessionStorage.getItem('certSearchQuery');
+    if (savedFilter) {
+      const btn = Array.from(filterButtons).find(b => b.getAttribute('data-filter') === savedFilter);
+      if (btn) {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+    if (savedQuery && searchInput) searchInput.value = savedQuery;
+  } catch(_) {}
+
+  // Initial render
+  applyFilterAndSearch();
+
+  // Prefetch PDF on hover (same-origin only) with small delay
+  let hoverTimer;
+  function prefetch(url) {
+    try {
+      const u = new URL(url, window.location.href);
+      if (u.origin !== window.location.origin) return;
+      // Use fetch with cache to let browser prefetch
+      fetch(u.toString(), { method: 'GET', mode: 'same-origin', cache: 'force-cache' }).catch(()=>{});
+    } catch(_) {}
+  }
+  certificateCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimer);
+      const href = card.getAttribute('data-href');
+      if (!href) return;
+      hoverTimer = setTimeout(() => prefetch(href), 400);
+    });
+    card.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+  });
+})();
 
 // ===================================
 // Make Certificate Cards Clickable & Document Viewer
@@ -426,15 +523,37 @@ function initializeInlineViewer() {
           <h3 class="document-viewer-title-inline"></h3>
         </div>
         <div class="document-viewer-actions">
+          <button class="viewer-btn viewer-zoom-out" title="Zoom out (-)" aria-label="Zoom out">
+            <i class="fas fa-search-minus"></i>
+          </button>
+          <button class="viewer-btn viewer-zoom-in" title="Zoom in (+)" aria-label="Zoom in">
+            <i class="fas fa-search-plus"></i>
+          </button>
+          <button class="viewer-btn viewer-fit-width" title="Fit width (F)" aria-label="Fit width">
+            <i class="fas fa-arrows-alt-h"></i>
+          </button>
+          <button class="viewer-btn viewer-fit-page" title="Fit page (W)" aria-label="Fit page">
+            <i class="fas fa-arrows-alt-v"></i>
+          </button>
           <a class="document-viewer-download-inline" download>
             <i class="fas fa-download"></i> Download
           </a>
           <a class="document-viewer-newtab-inline" target="_blank">
             <i class="fas fa-external-link-alt"></i> New Tab
           </a>
+          <button class="viewer-btn viewer-print" title="Print (P)" aria-label="Print">
+            <i class="fas fa-print"></i>
+          </button>
+          <button class="viewer-btn viewer-copy" title="Copy link (C)" aria-label="Copy link">
+            <i class="fas fa-link"></i>
+          </button>
         </div>
       </div>
       <div class="document-viewer-content-inline">
+        <div class="viewer-loading" aria-live="polite">
+          <div class="viewer-spinner"></div>
+          <span class="viewer-loading-text">Loading document…</span>
+        </div>
         <embed class="document-viewer-embed" type="application/pdf">
         <iframe class="document-viewer-iframe" style="display:none;" loading="eager"></iframe>
       </div>
@@ -469,16 +588,54 @@ function initializeInlineViewer() {
   }
   
   const viewerTitle = viewer.querySelector('.document-viewer-title-inline');
+  // Accessibility semantics
+  try {
+    viewer.setAttribute('role', 'dialog');
+    viewer.setAttribute('aria-modal', 'false');
+    viewer.setAttribute('aria-live', 'polite');
+    viewerTitle.setAttribute('id', 'document-viewer-title');
+    viewer.setAttribute('aria-labelledby', 'document-viewer-title');
+  } catch(_) {}
   const viewerEmbed = viewer.querySelector('.document-viewer-embed');
   const viewerIframe = viewer.querySelector('.document-viewer-iframe');
   const viewerBack = viewer.querySelector('.document-viewer-back');
   const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
+  const viewerHeaderEl = viewer.querySelector('.document-viewer-header-inline');
+  const viewerContentEl = viewer.querySelector('.document-viewer-content-inline');
+  const viewerLoading = viewer.querySelector('.viewer-loading');
+  const btnZoomIn = viewer.querySelector('.viewer-zoom-in');
+  const btnZoomOut = viewer.querySelector('.viewer-zoom-out');
+  const btnFitWidth = viewer.querySelector('.viewer-fit-width');
+  const btnFitPage = viewer.querySelector('.viewer-fit-page');
+  const btnPrint = viewer.querySelector('.viewer-print');
+  const btnCopy = viewer.querySelector('.viewer-copy');
+
+  // State for zoom and url handling
+  let __activeUrlBase = '';
+  let __activeIsPdf = false;
+  let __activeZoom = null; // number or special: 'page-width' | 'page-fit'
+  let __prevFocusedEl = null; // focus restoration
+  let __prevHash = window.location.hash || '';
   
   // Track last clicked document link for context-aware behavior
   window.__lastDocLink = null;
-  // Default main content (fallback)
-  let mainContent = document.querySelector('.certificates-section, .file-download-grid, .page-content, section.section');
+  // Track the exact section we hide so we can restore precisely that one
+  window.__lastHiddenSection = null;
+  // Helper: find preferred content section near a context element
+  function resolveTargetSection(ctxEl) {
+    const preferredSelectors = ['.file-download-grid', '.file-list', '.gallery-grid', '.certificates-section'];
+    if (ctxEl && ctxEl.closest) {
+      for (const sel of preferredSelectors) {
+        const candidate = ctxEl.closest(sel);
+        if (candidate) return candidate;
+      }
+      // Generic fallbacks
+      return ctxEl.closest('section, .container, main > section, main');
+    }
+    // Broad page-level fallback
+    return document.querySelector('.file-download-grid, .file-list, .gallery-grid, .certificates-section, section.section, .container, main > section, main');
+  }
   
   // Function to open inline viewer
   window.openViewer = function(url, title) {
@@ -491,39 +648,63 @@ function initializeInlineViewer() {
     
     // Resolve the most relevant content block to hide based on the last clicked link
     const linkCtx = window.__lastDocLink;
-    const preferredSelectors = ['.file-download-grid', '.file-list', '.gallery-grid', '.certificates-section'];
-    let resolvedContent = null;
-    if (linkCtx && linkCtx.closest) {
-      for (const sel of preferredSelectors) {
-        const candidate = linkCtx.closest(sel);
-        if (candidate) { resolvedContent = candidate; break; }
+    const mainContent = resolveTargetSection(linkCtx);
+    window.__lastHiddenSection = mainContent || null;
+    console.log('🎯 Target section resolved:', !!mainContent, '| class:', mainContent && mainContent.className);
+
+    // Reposition viewer directly above the target section if possible
+    try {
+      if (mainContent && viewer && mainContent.parentNode) {
+        if (viewer.previousElementSibling !== mainContent && viewer.nextElementSibling !== mainContent) {
+          mainContent.parentNode.insertBefore(viewer, mainContent);
+          console.log('📦 Viewer moved before target section');
+        }
       }
-      if (!resolvedContent) {
-        resolvedContent = linkCtx.closest('section, .container, main > section');
-      }
+    } catch (moveErr) {
+      console.warn('⚠️ Could not reposition viewer:', moveErr);
     }
-    // Fallback to previous broad query if nothing found
-    mainContent = resolvedContent || document.querySelector('.certificates-section, .file-download-grid, .page-content, section.section, main > section, .container');
-    console.log('Main content found:', !!mainContent, '| selector matched:', mainContent && mainContent.className);
     
-    viewerTitle.textContent = title;
+  viewerTitle.textContent = title;
+
+  // Remember previous focus and move focus to Back button for a11y
+  try { __prevFocusedEl = document.activeElement; } catch(_) { __prevFocusedEl = null; }
     // Decide renderer based on file extension
     try {
-      const cleanUrl = (url || '').split('#')[0].split('?')[0].toLowerCase();
-  const isPDF = cleanUrl.endsWith('.pdf');
-      const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
+    const rawUrl = (url || '');
+      const baseNoHash = rawUrl.split('#')[0];
+      const cleanUrl = baseNoHash.split('?')[0].toLowerCase();
+    const isPDF = cleanUrl.endsWith('.pdf');
+    const isImage = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(cleanUrl);
+      __activeUrlBase = baseNoHash;
+      __activeIsPdf = isPDF;
+  const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
 
       // Set links
       viewerDownload.href = url;
       viewerNewTab.href = url;
+
+      // Show loading overlay
+      if (viewerLoading) viewerLoading.style.display = 'flex';
 
       if (isPDF) {
         // Use <embed> for PDF
         if (viewerIframe) viewerIframe.style.display = 'none';
         viewerEmbed.style.display = 'block';
         viewerEmbed.setAttribute('type', 'application/pdf');
-        viewerEmbed.setAttribute('src', encodeURI(url));
+        // Default fit width for better readability
+        __activeZoom = 'page-width';
+        const pdfSrc = encodeURI(__activeUrlBase) + '#zoom=page-width';
+        viewerEmbed.setAttribute('src', pdfSrc);
         console.log('📄 Rendering as PDF via <embed>');
+      } else if (isImage) {
+        if (viewerEmbed) viewerEmbed.style.display = 'none';
+        if (viewerIframe) viewerIframe.style.display = 'block';
+        // Use an HTML wrapper to show a responsive image
+        const html = `<html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>body,html{margin:0;padding:0;background:#111;color:#fff} .wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px} img{max-width:100%;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:12px}</style></head><body><div class="wrap"><img src="${encodeURI(url)}" alt="Document image"></div></body></html>`;
+        const blob = new Blob([html], { type: 'text/html' });
+        const iframeUrl = URL.createObjectURL(blob);
+        viewerIframe.setAttribute('src', iframeUrl);
+        console.log('🖼️ Rendering image via <iframe> wrapper');
       } else if (isTextLike) {
         // Use <iframe> for text-like files (md/txt/csv)
         if (viewerEmbed) viewerEmbed.style.display = 'none';
@@ -554,11 +735,57 @@ function initializeInlineViewer() {
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
-      console.log('Main content hidden');
+      console.log('🙈 Target section hidden');
     }
     
-    viewer.classList.add('active');
+  // Remember scroll position of grid/page to restore later
+  try { window.__prevScrollY = window.scrollY; } catch(_) {}
+
+  viewer.classList.add('active');
     viewer.style.display = 'block';
+
+    // Update CSS var for site header height for layout calculations only
+    try {
+      const siteHeader = document.querySelector('.header');
+      const siteHeaderH = siteHeader ? siteHeader.offsetHeight : 80;
+      document.documentElement.style.setProperty('--site-header-offset', siteHeaderH + 'px');
+    } catch(err) { console.warn('Could not compute header size:', err); }
+
+    // Size the content area to fill remaining viewport below both headers
+    function sizeViewerContent() {
+      try {
+        const siteHeader = document.querySelector('.header');
+        const siteHeaderH = siteHeader ? siteHeader.offsetHeight : 80;
+        const hdrH = viewerHeaderEl ? viewerHeaderEl.offsetHeight : 80;
+        const vH = window.innerHeight;
+        const targetH = Math.max(360, vH - siteHeaderH - hdrH);
+        if (viewerContentEl) {
+          viewerContentEl.style.height = targetH + 'px';
+          viewerContentEl.style.overflow = 'auto';
+        }
+        // Expose header height so CSS can offset content padding under sticky header
+        document.documentElement.style.setProperty('--viewer-header-height', hdrH + 'px');
+      } catch(err) { console.warn('Sizing viewer content failed:', err); }
+    }
+
+    sizeViewerContent();
+    // Recalculate on resize while viewer is open
+  window.addEventListener('resize', sizeViewerContent);
+    viewer.__sizerHandler = sizeViewerContent;
+
+    // Smooth scroll to align viewer just below the fixed site header (precise positioning)
+    try {
+      const siteHeader = document.querySelector('.header');
+      const siteHeaderH = siteHeader ? siteHeader.offsetHeight : 80;
+      const y = viewer.getBoundingClientRect().top + window.pageYOffset - siteHeaderH - 8; // small cushion
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    } catch(_) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Lock body scroll to avoid page-level scroll jitter; use inner content scroll instead
+    try { document.body.dataset.prevOverflow = document.body.style.overflow || ''; } catch(_) {}
+    document.body.style.overflow = 'hidden';
     
     console.log('Viewer display set to:', viewer.style.display);
     
@@ -575,6 +802,29 @@ function initializeInlineViewer() {
       viewer.style.transform = 'translateY(0)';
       console.log('✅ Animation triggered');
     }, 10);
+
+    // Attach load handlers to hide spinner
+    function hideLoaderSoon() {
+      if (viewerLoading) {
+        setTimeout(() => { viewerLoading.style.display = 'none'; }, 150);
+      }
+    }
+    try {
+      if (viewerEmbed) viewerEmbed.onload = hideLoaderSoon;
+      if (viewerIframe) viewerIframe.onload = hideLoaderSoon;
+    } catch(_) {}
+
+    // Update URL hash for deep-linking and push state
+    try {
+      const encoded = encodeURIComponent(url.split('/').pop() || url);
+      __prevHash = window.location.hash || '';
+      const newHash = `#cert=${encoded}`;
+      const newUrl = window.location.pathname + window.location.search + newHash;
+      window.history.pushState({ viewerOpen: true, cert: encoded }, '', newUrl);
+    } catch(_) {}
+
+    // Focus the Back button for accessibility
+    try { viewerBack?.focus(); } catch(_) {}
   }
   
   // Function to close inline viewer
@@ -590,13 +840,48 @@ function initializeInlineViewer() {
       if (viewerIframe) viewerIframe.setAttribute('src', '');
       if (viewerEmbed) viewerEmbed.style.display = 'block';
       if (viewerIframe) viewerIframe.style.display = 'none';
+
+      // Restore body scroll
+      try {
+        document.body.style.overflow = document.body.dataset.prevOverflow || '';
+        delete document.body.dataset.prevOverflow;
+      } catch(_) {}
+
+      // Clean dynamic sizing and listeners
+      if (viewerContentEl) {
+        viewerContentEl.style.height = '';
+        viewerContentEl.style.overflow = '';
+      }
+      try {
+        if (viewer.__sizerHandler) {
+          window.removeEventListener('resize', viewer.__sizerHandler);
+          viewer.__sizerHandler = null;
+        }
+      } catch(_) {}
       
-      // Show main content again
-      const mainContent = document.querySelector('.certificates-section, .page-content, section.section, main > section, .container');
-      if (mainContent) {
-        mainContent.style.display = '';
+      // Show the exact section we previously hid
+      const target = window.__lastHiddenSection || resolveTargetSection(window.__lastDocLink);
+      if (target) {
+        target.style.display = '';
+        // Restore previous scroll if available, else align to section
+        if (typeof window.__prevScrollY === 'number') {
+          try { window.scrollTo({ top: window.__prevScrollY, behavior: 'smooth' }); } catch(_) { window.scrollTo(0, window.__prevScrollY); }
+          window.__prevScrollY = undefined;
+        } else {
+          try { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(_) {}
+        }
+        console.log('👀 Target section restored');
       }
       
+      // Restore URL hash/state without reload
+      try {
+        const base = window.location.pathname + window.location.search + (__prevHash || '');
+        window.history.replaceState({}, '', base);
+      } catch(_) {}
+
+      // Restore focus to previously focused certificate
+      try { __prevFocusedEl?.focus(); } catch(_) {}
+
       // Reset transform for next time
       viewer.style.transform = 'translateY(-20px)';
     }, 300);
@@ -610,6 +895,65 @@ function initializeInlineViewer() {
     if (e.key === 'Escape' && viewer.classList.contains('active')) {
       window.closeViewer();
     }
+    if (!viewer.classList.contains('active')) return;
+    // Keyboard shortcuts
+    const key = e.key.toLowerCase();
+    if (__activeIsPdf) {
+      if (key === '+' || key === '=') { adjustPdfZoom(10); }
+      if (key === '-') { adjustPdfZoom(-10); }
+      if (key === 'f') { setPdfFit('page-width'); }
+      if (key === 'w') { setPdfFit('page-fit'); }
+    }
+    if (key === 'd') { viewerDownload?.click(); }
+    if (key === 't') { viewerNewTab?.click(); }
+    if (key === 'p') { triggerPrint(); }
+    if (key === 'c') { btnCopy?.click(); }
+  });
+
+  // Utility: remember prior scroll Y when opening
+  try { window.__prevScrollY = window.scrollY; } catch(_) {}
+
+  // PDF zoom utilities
+  function setPdfFit(mode) {
+    if (!__activeIsPdf || !viewerEmbed) return;
+    __activeZoom = mode === 'page-fit' ? 'page-fit' : 'page-width';
+    const hash = __activeZoom === 'page-fit' ? '#view=FitV' : '#zoom=page-width';
+    viewerEmbed.setAttribute('src', encodeURI(__activeUrlBase) + hash);
+  }
+  function adjustPdfZoom(delta) {
+    if (!__activeIsPdf || !viewerEmbed) return;
+    let current = 100;
+    if (typeof __activeZoom === 'number') current = __activeZoom;
+    // If coming from a fit mode, start at 100
+    let next = Math.min(500, Math.max(25, current + delta));
+    __activeZoom = next;
+    viewerEmbed.setAttribute('src', encodeURI(__activeUrlBase) + '#zoom=' + next);
+  }
+
+  // Print utility
+  function triggerPrint() {
+    const url = __activeUrlBase || viewerNewTab?.href;
+    if (!url) return;
+    // Best-effort: open in new tab; user prints from there
+    window.open(url, '_blank');
+  }
+
+  // Button events
+  btnZoomIn?.addEventListener('click', () => adjustPdfZoom(10));
+  btnZoomOut?.addEventListener('click', () => adjustPdfZoom(-10));
+  btnFitWidth?.addEventListener('click', () => setPdfFit('page-width'));
+  btnFitPage?.addEventListener('click', () => setPdfFit('page-fit'));
+  btnPrint?.addEventListener('click', triggerPrint);
+  btnCopy?.addEventListener('click', async () => {
+    try {
+      // Copy deep-link to this page including hash
+      const encoded = encodeURIComponent((__activeUrlBase || '').split('/').pop() || '');
+      const toCopy = window.location.origin + window.location.pathname + window.location.search + (encoded ? `#cert=${encoded}` : '');
+      if (!toCopy) return;
+      await navigator.clipboard.writeText(toCopy);
+      btnCopy.setAttribute('title', 'Copied!');
+      setTimeout(() => btnCopy.setAttribute('title', 'Copy link (C)'), 1200);
+    } catch(err) { console.warn('Copy failed', err); }
   });
   
   // Shared handler to intercept doc links (click and auxclick)
@@ -617,7 +961,7 @@ function initializeInlineViewer() {
     const eventType = e.type;
     console.log(`🖱️ ${eventType} detected on:`, e.target);
 
-    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]`);
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"], a[href$=".txt"], a[href$=".TXT"]');
     console.log('📎 Found link:', link);
     if (!link) {
       if (eventType === 'click') console.log('❌ Not a PDF/document link');
@@ -691,11 +1035,16 @@ function initializeInlineViewer() {
 
   // Preemptive prevention: stop default new-tab behavior early (middle/ctrl clicks)
   function preemptDocLinkDefault(e) {
-    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"], a[href$=".txt"], a[href$=".TXT"]');
     if (!link) return;
 
     const href = link.getAttribute('href');
     if (!href) return;
+
+    // Allow CSV with explicit download attribute to proceed (no interception at preempt stage)
+    if ((/\.csv$/i).test(href) && link.hasAttribute('download')) {
+      return;
+    }
 
     // Skip special protocols
     if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
@@ -711,10 +1060,8 @@ function initializeInlineViewer() {
     }
 
     // For middle-click or modified clicks, prevent default early so browser doesn't open a new tab
-    const isMiddle = (e.button === 1);
-    const isModified = !!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey);
+    // Always prevent default for same-origin doc links; click handler will open inline
     if (e.type === 'pointerdown' || e.type === 'mousedown') {
-      // Always prevent default for same-origin doc links; click handler will open inline
       e.preventDefault();
       e.stopPropagation();
       if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
@@ -738,3 +1085,38 @@ if (document.readyState === 'loading') {
 
 // Also expose initialization function globally for manual calls if needed
 window.initializeInlineViewer = initializeInlineViewer;
+
+// ===================================
+// Deep-link support: open #cert=<encoded> on load, handle back
+// ===================================
+(function setupCertificateDeepLink() {
+  function parseAndOpenFromHash() {
+    const hash = window.location.hash || '';
+    const m = hash.match(/#cert=([^&]+)/i);
+    if (!m) return;
+    const fileName = decodeURIComponent(m[1]);
+    // Find matching certificate card by data-href ending with this filename
+    const cards = Array.from(document.querySelectorAll('.certificate-card[data-href]'));
+    let card = cards.find(c => (c.getAttribute('data-href') || '').endsWith('/' + fileName) || (c.getAttribute('data-href') || '').endsWith(fileName));
+    const url = card?.getAttribute('data-href') || ('Certificates/' + fileName);
+    const title = card?.querySelector('.certificate-title')?.textContent || fileName.replace(/[_-]/g, ' ');
+    if (typeof window.openViewer === 'function') {
+      window.openViewer(url, title);
+    }
+  }
+  // On initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', parseAndOpenFromHash);
+  } else {
+    parseAndOpenFromHash();
+  }
+  // Handle back/forward: if state pops and hash has cert, open; if not, close if open
+  window.addEventListener('popstate', () => {
+    const hash = window.location.hash || '';
+    if (/#cert=/.test(hash)) {
+      parseAndOpenFromHash();
+    } else {
+      try { if (document.getElementById('documentViewer')?.classList.contains('active')) window.closeViewer(); } catch(_) {}
+    }
+  });
+})();

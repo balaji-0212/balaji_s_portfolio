@@ -46,6 +46,7 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
   --shadow-glow: 0 0 20px rgba(0, 123, 255, 0.4);
   --shadow-gold-glow: 0 0 30px rgba(255, 215, 0, 0.5);
+  --focus-ring: #00D4FF;
   
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -92,6 +93,22 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+/* Accessibility helpers */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+:focus:not(:focus-visible) { outline: none; }
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
 }
  
 a {
@@ -2023,6 +2040,18 @@ button {
   font-weight: 500;
 }
 
+.filter-btn .filter-count {
+  display: inline-block;
+  min-width: 1.5rem;
+  padding: 0.1rem 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 999px;
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--accent-secondary);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .filter-btn:hover,
 .filter-btn.active {
   background: var(--accent-gradient);
@@ -2043,6 +2072,11 @@ button {
   border: 1px solid var(--border-color);
   transition: var(--transition-base);
   cursor: pointer;
+}
+
+.certificate-card:focus-visible {
+  outline: 3px solid var(--accent-secondary);
+  outline-offset: 3px;
 }
 
 .certificate-card:hover {

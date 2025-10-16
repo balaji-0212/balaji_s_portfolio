@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Viewer Test</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/inline-viewer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: Arial, sans-serif;
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+        }
+        .test-link {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        #console-output {
+            background: #000;
+            color: #0f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Inline Viewer Comprehensive Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Direct PDF Links</h2>
+        <a href="Resume/Balaji_S_Resume.pdf" class="test-link">
+            <i class="fas fa-file-pdf"></i> Test Resume PDF
+        </a>
+        <a href="Certificates/Data_Analytics_Essentials_Certificate.pdf" class="test-link">
+            <i class="fas fa-certificate"></i> Test Certificate PDF
+        </a>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Nested Span (Like Project Files)</h2>
+        <a href="Resume/Balaji_S_Resume.pdf" class="test-link">
+            <span class="file-name">
+                <i class="fas fa-file-pdf"></i> Resume with Nested Span
+            </span>
+        </a>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: File Card Pattern (Bank Loan Style)</h2>
+        <a href="Certificates/Data_Analytics_Essentials_Certificate.pdf" style="display: block; padding: 1.5rem; border: 1px solid #ddd; border-radius: 8px; text-decoration: none; color: inherit; margin: 1rem 0;">
+            <i class="fas fa-file-pdf" style="font-size: 3rem; color: #dc2626; display: block; margin-bottom: 1rem;"></i>
+            <div class="file-name" style="font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem;">Test Certificate</div>
+            <div style="color: #666; font-size: 0.9rem;">PDF • Test Document</div>
+            <div style="margin-top: 1rem;">
+                <span style="display: inline-block; padding: 0.75rem 1.5rem; background: #007BFF; color: white; border-radius: 8px;">
+                    <i class="fas fa-eye"></i> View PDF
+                </span>
+            </div>
+        </a>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 4: Manual Function Call</h2>
+        <button onclick="testOpenViewer()" style="padding: 1rem 2rem; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+            <i class="fas fa-play"></i> Manually Call window.openViewer()
+        </button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 5: Check Global Functions</h2>
+        <button onclick="checkGlobals()" style="padding: 1rem 2rem; background: #f59e0b; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+            <i class="fas fa-check-circle"></i> Check if Functions Exist
+        </button>
+    </div>
+    
+    <div id="console-output">
+        <h3 style="color: #0f0; margin-top: 0;">📋 Console Output:</h3>
+        <div id="output-content">Waiting for interactions...</div>
+    </div>
+    
+    <script>
+        // Intercept console.log to display in page
+        const outputDiv = document.getElementById('output-content');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function addOutput(message, isError = false) {
+            const line = document.createElement('div');
+            line.style.color = isError ? '#f00' : '#0f0';
+            line.style.padding = '0.25rem 0';
+            line.textContent = message;
+            outputDiv.appendChild(line);
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addOutput(args.join(' '));
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addOutput(args.join(' '), true);
+        };
+        
+        // Test functions
+        function testOpenViewer() {
+            console.log('🧪 Manual test: Calling window.openViewer()');
+            if (typeof window.openViewer === 'function') {
+                window.openViewer('Resume/Balaji_S_Resume.pdf', 'Manual Test - Resume');
+            } else {
+                console.error('❌ window.openViewer is NOT defined!');
+            }
+        }
+        
+        function checkGlobals() {
+            console.log('🔍 Checking global functions...');
+            console.log('window.openViewer exists:', typeof window.openViewer === 'function');
+            console.log('window.closeViewer exists:', typeof window.closeViewer === 'function');
+            console.log('window.initializeInlineViewer exists:', typeof window.initializeInlineViewer === 'function');
+            
+            const viewer = document.getElementById('documentViewer');
+            console.log('Viewer element exists:', !!viewer);
+            
+            if (viewer) {
+                console.log('Viewer display:', window.getComputedStyle(viewer).display);
+                console.log('Viewer opacity:', window.getComputedStyle(viewer).opacity);
+            }
+        }
+        
+        // Log page load
+        console.log('✅ Test page loaded');
+        console.log('Document ready state:', document.readyState);
+        
+        // Check on load
+        window.addEventListener('load', () => {
+            console.log('🎉 Window load event fired');
+            setTimeout(checkGlobals, 500);
+        });
+    </script>
+    
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>
