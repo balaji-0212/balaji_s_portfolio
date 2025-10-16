@@ -475,21 +475,28 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Intercept PDF/document links
   document.addEventListener('click', (e) => {
+    // Check if clicked element or any parent is a PDF link
     const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"]');
     
     if (link && !link.hasAttribute('download')) {
       // Check if it's a relative URL (not external http/https)
       const href = link.getAttribute('href');
-      if (!href.startsWith('http://') && !href.startsWith('https://')) {
+      console.log('PDF link clicked:', href); // Debug
+      
+      if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('//')) {
+        console.log('Intercepting PDF:', href); // Debug
         e.preventDefault();
+        e.stopPropagation();
         
         const title = link.querySelector('.file-name')?.textContent || 
                       link.querySelector('h3')?.textContent || 
-                      link.textContent.trim() || 
-                      href.split('/').pop();
+                      link.querySelector('.file-info h3')?.textContent ||
+                      link.textContent.trim().replace(/\s+/g, ' ') || 
+                      href.split('/').pop().replace(/%20/g, ' ').replace('.pdf', '');
         
+        console.log('Opening viewer with title:', title); // Debug
         openViewer(href, title);
       }
     }
-  });
+  }, true); // Use capture phase to catch events early
 });
