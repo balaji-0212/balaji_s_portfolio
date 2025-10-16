@@ -477,16 +477,19 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"]');
     
-    if (link && !link.hasAttribute('download') && !link.href.includes('http://') && !link.href.includes('https://')) {
-      e.preventDefault();
-      
-      const url = link.getAttribute('href');
-      const title = link.querySelector('.file-name')?.textContent || 
-                    link.querySelector('h3')?.textContent || 
-                    link.textContent.trim() || 
-                    url.split('/').pop();
-      
-      openViewer(url, title);
+    if (link && !link.hasAttribute('download')) {
+      // Check if it's a relative URL (not external http/https)
+      const href = link.getAttribute('href');
+      if (!href.startsWith('http://') && !href.startsWith('https://')) {
+        e.preventDefault();
+        
+        const title = link.querySelector('.file-name')?.textContent || 
+                      link.querySelector('h3')?.textContent || 
+                      link.textContent.trim() || 
+                      href.split('/').pop();
+        
+        openViewer(href, title);
+      }
     }
   });
 });
