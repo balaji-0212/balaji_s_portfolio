@@ -458,6 +458,22 @@ document.addEventListener('DOMContentLoaded', () => {
       background: rgba(0, 0, 0, 0.95) !important;
     `;
     
+    // Force container styles
+    viewerContainer.style.cssText = `
+      position: relative !important;
+      width: 95% !important;
+      max-width: 1400px !important;
+      height: 90vh !important;
+      background: #1a1f35 !important;
+      border-radius: 16px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(0) !important;
+      opacity: 1 !important;
+    `;
+    
     document.body.style.overflow = 'hidden';
     
     console.log('Viewer classes after:', viewer.className); // Debug
