@@ -93,7 +93,7 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
+  <header class="header" role="banner">
     <div class="container">
       <div class="header-content">
         <div class="logo">
@@ -102,7 +102,7 @@
           </a>
         </div>
         
-        <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Main navigation">
           <ul class="nav-list">
             <li><a href="index.html" class="nav-link active">Home</a></li>
             <li><a href="about.html" class="nav-link">About</a></li>
@@ -113,7 +113,7 @@
           </ul>
         </nav>
         
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav">
           <span></span>
           <span></span>
           <span></span>
@@ -123,7 +123,7 @@
   </header>
 
   <!-- Main Content -->
-  <main>
+  <main id="main-content">
     <!-- Freelancer Hero Section -->
     <section id="hero" class="hero">
       <div class="hero-background"></div>
@@ -735,7 +735,7 @@
   </main>
 
   <!-- Enhanced Footer -->
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-content">
         <div class="footer-section main">
@@ -840,7 +840,7 @@
         </div>
       </div>
       
-      <div class="footer-bottom">
+        <div class="footer-bottom">
         <div class="footer-bottom-content">
           <div class="copyright">
             <p>&copy; 2025 <strong>Balaji S</strong>. All rights reserved.</p>

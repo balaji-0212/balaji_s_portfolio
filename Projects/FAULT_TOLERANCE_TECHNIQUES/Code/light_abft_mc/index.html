@@ -25,11 +25,11 @@
     </style>
 </head>
 <body>
-    <header class="header">
+    <header class="header" role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo"><a href="../../../../index.html"><span class="logo-text">Balaji<span class="accent">.</span>S</span></a></div>
-                <nav class="nav" id="nav">
+                <nav class="nav" id="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="../../../../index.html" class="nav-link">Home</a></li>
                         <li><a href="../../../../about.html" class="nav-link">About</a></li>
@@ -39,12 +39,12 @@
                         <li><a href="../../../../contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle"><span></span><span></span><span></span></button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
             </div>
         </div>
     </header>
 
-    <section class="section" style="padding-top: 6rem;">
+    <section class="section" style="padding-top: 6rem;" id="main-content">
         <div class="container">
             <div class="breadcrumb">
                 <a href="../../../../projects.html">Projects</a> / 
@@ -72,7 +72,7 @@
         </div>
     </section>
 
-    <footer class="footer"><div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div></footer>
+    <footer class="footer" role="contentinfo"><div class="container"><p>&copy; 2025 Balaji S. All rights reserved.</p></div></footer>
     <script src="../../../../assets/js/scripts.js"></script>
 </body>
 </html>

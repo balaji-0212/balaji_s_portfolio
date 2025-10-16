@@ -147,7 +147,7 @@
     </style>
 </head>
 <body>
-    <header class="header">
+    <header class="header" role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -155,7 +155,7 @@
                         <span class="logo-text">Balaji<span class="accent">.</span>S</span>
                     </a>
                 </div>
-                <nav class="nav" id="nav">
+                <nav class="nav" id="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="../../../index.html" class="nav-link">Home</a></li>
                         <li><a href="../../../about.html" class="nav-link">About</a></li>
@@ -165,7 +165,7 @@
                         <li><a href="../../../contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -173,7 +173,7 @@
             </div>
         </div>
     </header>
-
+    <main id="main-content">
     <section class="section page-header">
         <div class="container">
             <div class="breadcrumb">
@@ -274,8 +274,9 @@
             </div>
         </div>
     </section>
+    </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <p>&copy; 2025 Balaji S. All rights reserved.</p>
         </div>

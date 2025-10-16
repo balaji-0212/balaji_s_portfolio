@@ -32,7 +32,7 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
+  <header class="header" role="banner">
     <div class="container">
       <div class="header-content">
         <div class="logo">
@@ -41,7 +41,7 @@
           </a>
         </div>
         
-        <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Main navigation">
           <ul class="nav-list">
             <li><a href="index.html" class="nav-link">Home</a></li>
             <li><a href="about.html" class="nav-link">About</a></li>
@@ -52,7 +52,7 @@
           </ul>
         </nav>
         
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav">
           <span></span>
           <span></span>
           <span></span>
@@ -62,7 +62,7 @@
   </header>
 
   <!-- Main Content -->
-  <main>
+  <main id="main-content">
     <!-- Page Header -->
   <section class="page-header" style="padding-top: 8rem;">
       <div class="container">
@@ -346,7 +346,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
