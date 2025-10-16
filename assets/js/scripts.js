@@ -533,6 +533,9 @@ function initializeInlineViewer() {
           <h3 class="document-viewer-title-inline"></h3>
         </div>
         <div class="document-viewer-actions">
+          <button class="viewer-btn viewer-focus-toggle" title="Focus mode (X)" aria-label="Focus mode" aria-pressed="false">
+            <i class="fas fa-maximize"></i>
+          </button>
           <button class="viewer-btn viewer-zoom-out" title="Zoom out (-)" aria-label="Zoom out">
             <i class="fas fa-search-minus"></i>
           </button>
@@ -612,6 +615,7 @@ function initializeInlineViewer() {
   const btnFitPage = viewer.querySelector('.viewer-fit-page');
   const btnPrint = viewer.querySelector('.viewer-print');
   const btnCopy = viewer.querySelector('.viewer-copy');
+  const btnFocus = viewer.querySelector('.viewer-focus-toggle');
 
   // State for zoom and url handling
   let __activeUrlBase = '';
@@ -836,6 +840,17 @@ function initializeInlineViewer() {
     viewer.style.transform = 'translateY(-20px)';
     
     setTimeout(() => {
+      // Reset focus mode state
+      try {
+        viewer.classList.remove('focus-mode');
+        if (btnFocus) {
+          btnFocus.setAttribute('aria-pressed', 'false');
+          const icon = btnFocus.querySelector('i');
+          if (icon) icon.className = 'fas fa-maximize';
+          btnFocus.title = 'Focus mode (X)';
+        }
+      } catch(_) {}
+
       viewer.classList.remove('active');
       viewer.style.display = 'none';
       if (viewerEmbed) viewerEmbed.setAttribute('src', '');
@@ -900,6 +915,10 @@ function initializeInlineViewer() {
     if (!viewer.classList.contains('active')) return;
     // Keyboard shortcuts
     const key = e.key.toLowerCase();
+    if (key === 'x') {
+      toggleFocusMode();
+      return;
+    }
     if (__activeIsPdf) {
       if (key === '+' || key === '=') { adjustPdfZoom(10); }
       if (key === '-') { adjustPdfZoom(-10); }
@@ -957,6 +976,28 @@ function initializeInlineViewer() {
       setTimeout(() => btnCopy.setAttribute('title', 'Copy link (C)'), 1200);
     } catch(err) { console.warn('Copy failed', err); }
   });
+
+  // Focus mode toggle
+  function toggleFocusMode(force) {
+    const enable = typeof force === 'boolean' ? force : !viewer.classList.contains('focus-mode');
+    viewer.classList.toggle('focus-mode', enable);
+    if (btnFocus) {
+      btnFocus.setAttribute('aria-pressed', enable ? 'true' : 'false');
+      const icon = btnFocus.querySelector('i');
+      if (icon) icon.className = 'fas ' + (enable ? 'fa-minimize' : 'fa-maximize');
+      btnFocus.title = enable ? 'Exit focus (X)' : 'Focus mode (X)';
+    }
+    // Recompute sizes under focus layout
+    try { viewer.__sizerHandler && viewer.__sizerHandler(); } catch(_) {}
+    // Ensure viewer is brought into view beneath header
+    try {
+      const siteHeader = document.querySelector('.header');
+      const siteHeaderH = siteHeader ? siteHeader.offsetHeight : 80;
+      const y = viewer.getBoundingClientRect().top + window.pageYOffset - siteHeaderH - 8;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    } catch(_) {}
+  }
+  btnFocus?.addEventListener('click', () => toggleFocusMode());
   
   // Shared handler to intercept doc links (click and auxclick)
   function handleDocLinkEvent(e) {

@@ -29,6 +29,28 @@
   transform: translateY(0) !important;
 }
 
+/* Focus Mode: near full-screen under the site header */
+.document-viewer-inline.focus-mode {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--site-header-offset, 80px);
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1100;
+}
+
+.document-viewer-inline.focus-mode .document-viewer-content-inline {
+  height: calc(100vh - var(--site-header-offset, 80px) - var(--viewer-header-height, 88px));
+  max-height: none;
+  padding: 1rem 1rem calc(1rem + var(--viewer-header-height, 88px));
+}
+
+.document-viewer-inline.focus-mode .viewer-frame {
+  border-radius: 12px;
+}
+
 .document-viewer-header-inline {
   background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
   border-bottom: 2px solid rgba(0, 212, 255, 0.3);
