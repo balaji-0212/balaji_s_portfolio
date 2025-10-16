@@ -688,6 +688,42 @@ function initializeInlineViewer() {
   // Intercept PDF/document links
   document.addEventListener('click', handleDocLinkEvent, true);
   document.addEventListener('auxclick', handleDocLinkEvent, true);
+
+  // Preemptive prevention: stop default new-tab behavior early (middle/ctrl clicks)
+  function preemptDocLinkDefault(e) {
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    // Skip special protocols
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+    let absoluteUrl;
+    try { absoluteUrl = new URL(href, window.location.href); } catch(_) { return; }
+    const sameOrigin = absoluteUrl.origin === window.location.origin;
+    if (!sameOrigin) return;
+
+    // Remove target to avoid _blank races for same-origin resources
+    if (link.hasAttribute('target')) {
+      try { link.removeAttribute('target'); } catch(_) {}
+    }
+
+    // For middle-click or modified clicks, prevent default early so browser doesn't open a new tab
+    const isMiddle = (e.button === 1);
+    const isModified = !!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey);
+    if (e.type === 'pointerdown' || e.type === 'mousedown') {
+      // Always prevent default for same-origin doc links; click handler will open inline
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+    }
+  }
+
+  // Use both pointerdown and mousedown for broader browser coverage
+  document.addEventListener('pointerdown', preemptDocLinkDefault, true);
+  document.addEventListener('mousedown', preemptDocLinkDefault, true);
   
   console.log('✅ Inline viewer initialization complete');
 }
