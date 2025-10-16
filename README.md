@@ -2,6 +2,8 @@
 
 A modern, responsive portfolio website showcasing my work as a Data Analyst and Electronics & Communication Engineer. Built with semantic HTML5, CSS3, and vanilla JavaScript with smooth animations and optimal performance.
 
+**Latest Update**: In-page document viewer with modal overlay - no more opening PDFs in new tabs!
+
 ![Portfolio Preview](assets/images/profile-placeholder.svg)
 
 ## 🌟 Features
