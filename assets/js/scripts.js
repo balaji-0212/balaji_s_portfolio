@@ -1073,6 +1073,29 @@ function initializeInlineViewer() {
   // Use both pointerdown and mousedown for broader browser coverage
   document.addEventListener('pointerdown', preemptDocLinkDefault, true);
   document.addEventListener('mousedown', preemptDocLinkDefault, true);
+
+  // Project gallery support: open .gallery-item in inline viewer instead of legacy lightbox
+  document.addEventListener('click', (e) => {
+    const item = e.target.closest('.gallery-item');
+    if (!item) return;
+    // Try to extract URL from <img src> or data attribute or inline onclick
+    let url = item.querySelector('img')?.getAttribute('src') || item.getAttribute('data-src') || '';
+    if (!url) {
+      const onclick = (item.getAttribute('onclick') || '').toString();
+      const m = onclick.match(/openLightbox\(['\"]([^'\"]+)['\"]\)/i);
+      if (m) url = m[1];
+    }
+    if (!url) return;
+    // Prevent legacy lightbox from firing
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+    try { window.__lastDocLink = item; } catch(_) {}
+    const title = item.querySelector('.gallery-item-title')?.textContent?.trim() || item.querySelector('img')?.getAttribute('alt') || url.split('/').pop();
+    if (typeof window.openViewer === 'function') {
+      window.openViewer(url, title);
+    }
+  }, true);
   
   console.log('✅ Inline viewer initialization complete');
 }
