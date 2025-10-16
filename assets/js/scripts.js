@@ -742,6 +742,23 @@ function initializeInlineViewer() {
     }
   }
 
+  // Normalize double-encoded percent sequences (e.g., %2520 -> %20)
+  function collapseDoubleEncoding(href) {
+    try {
+      let out = String(href || '');
+      // Repeatedly unescape %25XX -> %XX without touching other sequences
+      const re = /%25([0-9a-fA-F]{2})/g;
+      let prev;
+      do {
+        prev = out;
+        out = out.replace(re, '%$1');
+      } while (out !== prev);
+      return out;
+    } catch(_) {
+      return href;
+    }
+  }
+
 
   // State for zoom and url handling
   let __activeUrlBase = '';
@@ -812,7 +829,7 @@ function initializeInlineViewer() {
       const cleanUrl = (resolvedPathname || '').toLowerCase();
     const isPDF = cleanUrl.endsWith('.pdf');
     const isImage = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(cleanUrl);
-  __activeUrlBase = resolvedHref;
+  __activeUrlBase = collapseDoubleEncoding(resolvedHref);
       __activeIsPdf = isPDF;
   const isTextLike = cleanUrl.endsWith('.md') || cleanUrl.endsWith('.txt') || cleanUrl.endsWith('.csv');
 
@@ -830,14 +847,15 @@ function initializeInlineViewer() {
         viewerEmbed.setAttribute('type', 'application/pdf');
         // Default fit width for better readability
         __activeZoom = 'page-width';
-        const pdfSrc = encodeURI(__activeUrlBase) + '#zoom=page-width';
-        viewerEmbed.setAttribute('src', pdfSrc);
+        const pdfSrc = __activeUrlBase + '#zoom=page-width';
+        viewerEmbed.setAttribute('src', collapseDoubleEncoding(pdfSrc));
         console.log('📄 Rendering as PDF via <embed>');
       } else if (isImage) {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) viewerIframe.style.display = 'block';
         // Use an HTML wrapper to show a responsive image
-  const html = `<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body,html{margin:0;padding:0;background:#111;color:#fff} .wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px} img{max-width:100%;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:12px}</style></head><body><div class=\"wrap\"><img src=\"${encodeURI(resolvedHref)}\" alt=\"Document image\"></div></body></html>`;
+        const safeSrc = collapseDoubleEncoding(resolvedHref);
+        const html = `<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body,html{margin:0;padding:0;background:#111;color:#fff} .wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px} img{max-width:100%;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:12px}</style></head><body><div class=\"wrap\"><img src=\"${safeSrc}\" alt=\"Document image\"></div></body></html>`;
         const blob = new Blob([html], { type: 'text/html' });
         const iframeUrl = URL.createObjectURL(blob);
         viewerIframe.setAttribute('src', iframeUrl);
@@ -847,7 +865,7 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', encodeURI(resolvedHref));
+          viewerIframe.setAttribute('src', collapseDoubleEncoding(resolvedHref));
           console.log('📝 Rendering as text via <iframe>');
         }
       } else {
@@ -855,16 +873,17 @@ function initializeInlineViewer() {
         if (viewerEmbed) viewerEmbed.style.display = 'none';
         if (viewerIframe) {
           viewerIframe.style.display = 'block';
-          viewerIframe.setAttribute('src', encodeURI(resolvedHref));
+          viewerIframe.setAttribute('src', collapseDoubleEncoding(resolvedHref));
           console.log('🧩 Rendering as generic via <iframe>');
         }
       }
     } catch(err) {
       console.warn('⚠️ Renderer decision failed, defaulting to <embed>', err);
+      const safe = collapseDoubleEncoding(url);
       viewerEmbed.style.display = 'block';
-      viewerEmbed.setAttribute('src', url);
-      viewerDownload.href = url;
-      viewerNewTab.href = url;
+      viewerEmbed.setAttribute('src', safe);
+      viewerDownload.href = safe;
+      viewerNewTab.href = safe;
     }
     
     console.log('✅ Viewer configured');
@@ -1076,7 +1095,7 @@ function initializeInlineViewer() {
     if (!__activeIsPdf || !viewerEmbed) return;
     __activeZoom = mode === 'page-fit' ? 'page-fit' : 'page-width';
     const hash = __activeZoom === 'page-fit' ? '#view=FitV' : '#zoom=page-width';
-    viewerEmbed.setAttribute('src', encodeURI(__activeUrlBase) + hash);
+    viewerEmbed.setAttribute('src', collapseDoubleEncoding(__activeUrlBase + hash));
   }
   function adjustPdfZoom(delta) {
     if (!__activeIsPdf || !viewerEmbed) return;
@@ -1085,7 +1104,7 @@ function initializeInlineViewer() {
     // If coming from a fit mode, start at 100
     let next = Math.min(500, Math.max(25, current + delta));
     __activeZoom = next;
-    viewerEmbed.setAttribute('src', encodeURI(__activeUrlBase) + '#zoom=' + next);
+    viewerEmbed.setAttribute('src', collapseDoubleEncoding(__activeUrlBase + '#zoom=' + next));
   }
 
   // Print utility
