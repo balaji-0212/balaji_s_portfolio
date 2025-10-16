@@ -1,0 +1,190 @@
+/* =================================== 
+   INLINE DOCUMENT VIEWER
+   Modern Same-Page PDF Display
+   =================================== */
+
+.document-viewer-inline {
+  display: none;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background: var(--bg-primary);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 80px;
+  padding: 0;
+}
+
+.document-viewer-inline.active {
+  display: block;
+}
+
+.document-viewer-header-inline {
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+  border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.document-viewer-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 250px;
+}
+
+.document-viewer-back {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.document-viewer-back:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+}
+
+.document-viewer-back i {
+  transition: transform 0.3s ease;
+}
+
+.document-viewer-back:hover i {
+  transform: translateX(-3px);
+}
+
+.document-viewer-title-inline {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.document-viewer-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.document-viewer-download-inline,
+.document-viewer-newtab-inline {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.document-viewer-download-inline:hover {
+  background: var(--success);
+  border-color: var(--success);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.document-viewer-newtab-inline:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.document-viewer-content-inline {
+  width: 100%;
+  height: calc(100vh - 160px);
+  min-height: 600px;
+  padding: 2rem;
+  background: var(--bg-primary);
+}
+
+.document-viewer-embed {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(0, 212, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .document-viewer-header-inline {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    top: 70px;
+  }
+  
+  .document-viewer-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .document-viewer-title-inline {
+    font-size: 1.25rem;
+  }
+  
+  .document-viewer-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .document-viewer-download-inline,
+  .document-viewer-newtab-inline {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .document-viewer-content-inline {
+    padding: 1rem;
+    height: calc(100vh - 220px);
+  }
+}
+
+@media (max-width: 480px) {
+  .document-viewer-back {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .document-viewer-title-inline {
+    font-size: 1.1rem;
+  }
+  
+  .document-viewer-download-inline,
+  .document-viewer-newtab-inline {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}

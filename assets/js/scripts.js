@@ -397,106 +397,100 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===================================
-  // In-Page PDF/Document Viewer
+  // In-Page PDF/Document Viewer (Inline Slide-In Mode)
   // ===================================
   
-  // Create modal viewer HTML
+  // Create inline viewer HTML - slides into page content
   const viewerHTML = `
-    <div id="documentViewer" class="document-viewer">
-      <div class="document-viewer-overlay"></div>
-      <div class="document-viewer-container">
-        <div class="document-viewer-header">
-          <h3 class="document-viewer-title"></h3>
-          <button class="document-viewer-close" aria-label="Close viewer">
-            <i class="fas fa-times"></i>
+    <div id="documentViewer" class="document-viewer-inline">
+      <div class="document-viewer-header-inline">
+        <div class="document-viewer-title-section">
+          <button class="document-viewer-back" aria-label="Back to list">
+            <i class="fas fa-arrow-left"></i> Back
           </button>
+          <h3 class="document-viewer-title-inline"></h3>
         </div>
-        <div class="document-viewer-content">
-          <embed class="document-viewer-iframe" type="application/pdf">
-        </div>
-        <div class="document-viewer-footer">
-          <a class="document-viewer-download" download>
+        <div class="document-viewer-actions">
+          <a class="document-viewer-download-inline" download>
             <i class="fas fa-download"></i> Download
           </a>
-          <a class="document-viewer-open" target="_blank">
-            <i class="fas fa-external-link-alt"></i> Open in New Tab
+          <a class="document-viewer-newtab-inline" target="_blank">
+            <i class="fas fa-external-link-alt"></i> New Tab
           </a>
         </div>
+      </div>
+      <div class="document-viewer-content-inline">
+        <embed class="document-viewer-embed" type="application/pdf">
       </div>
     </div>
   `;
   
-  // Append viewer to body
-  document.body.insertAdjacentHTML('beforeend', viewerHTML);
+  // Insert viewer after header (slides into page flow)
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainElement.insertAdjacentHTML('afterbegin', viewerHTML);
+  } else {
+    document.body.insertAdjacentHTML('beforeend', viewerHTML);
+  }
   
   const viewer = document.getElementById('documentViewer');
-  const viewerOverlay = viewer.querySelector('.document-viewer-overlay');
-  const viewerContainer = viewer.querySelector('.document-viewer-container');
-  const viewerTitle = viewer.querySelector('.document-viewer-title');
-  const viewerEmbed = viewer.querySelector('.document-viewer-iframe');
-  const viewerClose = viewer.querySelector('.document-viewer-close');
-  const viewerDownload = viewer.querySelector('.document-viewer-download');
-  const viewerOpen = viewer.querySelector('.document-viewer-open');
+  const viewerTitle = viewer.querySelector('.document-viewer-title-inline');
+  const viewerEmbed = viewer.querySelector('.document-viewer-embed');
+  const viewerBack = viewer.querySelector('.document-viewer-back');
+  const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
+  const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
   
-  // Function to open viewer
+  // Get the main content area to hide when viewing
+  const mainContent = document.querySelector('.certificates-section, .page-content, section.section');
+  
+  // Function to open inline viewer
   function openViewer(url, title) {
     viewerTitle.textContent = title;
     viewerEmbed.setAttribute('src', url);
     viewerDownload.href = url;
-    viewerOpen.href = url;
+    viewerNewTab.href = url;
+    
+    // Hide main content and show viewer with slide animation
+    if (mainContent) {
+      mainContent.style.display = 'none';
+    }
     
     viewer.classList.add('active');
+    viewer.style.display = 'block';
     
-    // FORCE all styles inline to override CSS conflicts
-    viewer.style.cssText = `
-      display: flex !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      z-index: 999999 !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: rgba(0, 0, 0, 0.9) !important;
-      backdrop-filter: blur(10px) !important;
-    `;
+    // Smooth scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Force container styles with proper design
-    viewerContainer.style.cssText = `
-      position: relative !important;
-      width: 95% !important;
-      max-width: 1400px !important;
-      height: 90vh !important;
-      background: #1a1f35 !important;
-      border-radius: 16px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      overflow: hidden !important;
-    `;
-    
-    document.body.style.overflow = 'hidden';
+    // Trigger slide-in animation
+    setTimeout(() => {
+      viewer.style.opacity = '1';
+      viewer.style.transform = 'translateY(0)';
+    }, 10);
   }
   
-  // Function to close viewer
+  // Function to close inline viewer
   function closeViewer() {
-    viewerContainer.style.transform = 'translateY(-50px)';
-    viewerContainer.style.opacity = '0';
+    // Slide out animation
+    viewer.style.opacity = '0';
+    viewer.style.transform = 'translateY(-20px)';
     
     setTimeout(() => {
       viewer.classList.remove('active');
-      document.body.style.overflow = '';
-      viewerIframe.src = '';
+      viewer.style.display = 'none';
+      viewerEmbed.setAttribute('src', '');
+      
+      // Show main content again
+      if (mainContent) {
+        mainContent.style.display = '';
+      }
+      
+      // Reset transform for next time
+      viewer.style.transform = 'translateY(-20px)';
     }, 300);
   }
   
-  // Close button click
-  viewerClose.addEventListener('click', closeViewer);
-  
-  // Overlay click
-  viewerOverlay.addEventListener('click', closeViewer);
+  // Back button click
+  viewerBack.addEventListener('click', closeViewer);
   
   // ESC key to close
   document.addEventListener('keydown', (e) => {
