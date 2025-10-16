@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Embed Tag</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0a0f1f;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    embed {
+      width: 100%;
+      height: 80vh;
+      border: 2px solid #007BFF;
+      border-radius: 8px;
+      background: white;
+    }
+    h1 {
+      color: #00D4FF;
+      margin-bottom: 20px;
+    }
+    .info {
+      background: #1a1f35;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>Testing Embed Tag for PDF</h1>
+    <div class="info">
+      <p><strong>Testing:</strong> Using &lt;embed&gt; tag instead of &lt;iframe&gt; for better PDF compatibility on GitHub Pages</p>
+      <p><strong>File:</strong> Resume/Balaji_S_Resume.pdf</p>
+    </div>
+    
+    <h2>Method 1: Embed Tag</h2>
+    <embed src="Resume/Balaji_S_Resume.pdf" type="application/pdf">
+    
+    <h2 style="margin-top: 40px;">Method 2: Object Tag (Fallback)</h2>
+    <object data="Resume/Balaji_S_Resume.pdf" type="application/pdf" style="width: 100%; height: 80vh; border: 2px solid #FFC700; border-radius: 8px;">
+      <p>Your browser doesn't support embedded PDFs. <a href="Resume/Balaji_S_Resume.pdf" style="color: #00D4FF;">Download the PDF</a></p>
+    </object>
+  </div>
+</body>
+</html>

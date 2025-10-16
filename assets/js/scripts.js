@@ -516,21 +516,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Intercept PDF/document links
   document.addEventListener('click', (e) => {
     // Check if clicked element or any parent is a PDF link
-    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"]');
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"], a[href$=".csv"], a[href$=".CSV"]');
     
-    if (link && !link.hasAttribute('download')) {
-      // Check if it's a relative URL (not external http/https)
+    if (link) {
       const href = link.getAttribute('href');
       
+      // Check if it's a CSV file with download attribute - allow direct download
+      if (href && (href.toLowerCase().endsWith('.csv')) && link.hasAttribute('download')) {
+        return; // Let CSV files download directly
+      }
+      
+      // Check if it's a relative URL (not external http/https)
       if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('//')) {
         e.preventDefault();
         e.stopPropagation();
         
+        // Get title from various possible sources
         const title = link.querySelector('.file-name')?.textContent || 
                       link.querySelector('h3')?.textContent || 
                       link.querySelector('.file-info h3')?.textContent ||
+                      link.querySelector('.certificate-title')?.textContent ||
                       link.textContent.trim().replace(/\s+/g, ' ') || 
-                      href.split('/').pop().replace(/%20/g, ' ').replace('.pdf', '');
+                      href.split('/').pop().replace(/%20/g, ' ');
         
         openViewer(href, title);
       }
