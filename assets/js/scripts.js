@@ -471,6 +471,14 @@ function initializeInlineViewer() {
     return;
   }
 
+  // Only initialize on pages that actually have document/gallery triggers
+  const triggerSelector = 'a[href$=".pdf"], a[href*=".pdf"], a[href$=".md"], a[href$=".csv"], a[href$=".txt"], .certificate-card[data-href], .gallery-item';
+  const hasTriggers = !!document.querySelector(triggerSelector);
+  if (!hasTriggers) {
+    console.log('ℹ️ No document/gallery triggers found on this page. Skipping viewer setup.');
+    return;
+  }
+
   // Certificate Cards (clickable with data-href)
   const clickableCertificateCards = document.querySelectorAll('.certificate-card[data-href]');
   

@@ -64,7 +64,7 @@
   <!-- Main Content -->
   <main>
     <!-- Page Header -->
-    <section class="page-header">
+  <section class="page-header" style="padding-top: 8rem;">
       <div class="container">
         <div class="page-header-content" data-aos="fade-up">
           <h1 class="page-title">Get In Touch</h1>
@@ -165,7 +165,7 @@
                   <p style="color: var(--text-secondary); font-size: 0.95rem;">I'll get back to you within 24 hours</p>
                 </div>
                 
-                <form id="contactForm" name="contact" method="GET" action="javascript:void(0);" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: flex; flex-direction: column; gap: 1.25rem;">
                   <input type="hidden" name="form-name" value="contact">
                   <p style="display: none;">
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -409,28 +409,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="assets/js/scripts.js"></script>
   
-  <!-- Contact Form Email Handler -->
+  <!-- Contact Form Email Handler (fallback only when Netlify not available) -->
   <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Get form values
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const subject = document.getElementById('subject').value || 'Message from Portfolio Contact Form';
-      const message = document.getElementById('message').value;
-      
-      // Construct email body
-      const emailBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
-      
-      // Open email client with pre-filled data
-      window.location.href = `mailto:balaji022212@gmail.com?subject=${encodeURIComponent(subject)}&body=${emailBody}`;
-      
-      // Optional: Show success message
-      setTimeout(function() {
-        alert('Your email client should now be open. Please send the email from there.');
-      }, 500);
-    });
+    (function(){
+      const form = document.getElementById('contactForm');
+      if (!form || form.hasAttribute('data-netlify')) return; // Netlify will handle submission
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value || 'Message from Portfolio Contact Form';
+        const message = document.getElementById('message').value;
+        const emailBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
+        window.location.href = `mailto:balaji022212@gmail.com?subject=${encodeURIComponent(subject)}&body=${emailBody}`;
+        setTimeout(function() { alert('Your email client should now be open. Please send the email from there.'); }, 500);
+      });
+    })();
   </script>
   
   <style>
