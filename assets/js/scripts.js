@@ -388,3 +388,105 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ===================================
+// In-Page PDF/Document Viewer
+// ===================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Create modal viewer HTML
+  const viewerHTML = `
+    <div id="documentViewer" class="document-viewer">
+      <div class="document-viewer-overlay"></div>
+      <div class="document-viewer-container">
+        <div class="document-viewer-header">
+          <h3 class="document-viewer-title"></h3>
+          <button class="document-viewer-close" aria-label="Close viewer">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="document-viewer-content">
+          <iframe class="document-viewer-iframe" frameborder="0"></iframe>
+        </div>
+        <div class="document-viewer-footer">
+          <a class="document-viewer-download" download>
+            <i class="fas fa-download"></i> Download
+          </a>
+          <a class="document-viewer-open" target="_blank">
+            <i class="fas fa-external-link-alt"></i> Open in New Tab
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Append viewer to body
+  document.body.insertAdjacentHTML('beforeend', viewerHTML);
+  
+  const viewer = document.getElementById('documentViewer');
+  const viewerOverlay = viewer.querySelector('.document-viewer-overlay');
+  const viewerContainer = viewer.querySelector('.document-viewer-container');
+  const viewerTitle = viewer.querySelector('.document-viewer-title');
+  const viewerIframe = viewer.querySelector('.document-viewer-iframe');
+  const viewerClose = viewer.querySelector('.document-viewer-close');
+  const viewerDownload = viewer.querySelector('.document-viewer-download');
+  const viewerOpen = viewer.querySelector('.document-viewer-open');
+  
+  // Function to open viewer
+  function openViewer(url, title) {
+    viewerTitle.textContent = title;
+    viewerIframe.src = url;
+    viewerDownload.href = url;
+    viewerOpen.href = url;
+    
+    viewer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Animate container
+    setTimeout(() => {
+      viewerContainer.style.transform = 'translateY(0)';
+      viewerContainer.style.opacity = '1';
+    }, 10);
+  }
+  
+  // Function to close viewer
+  function closeViewer() {
+    viewerContainer.style.transform = 'translateY(-50px)';
+    viewerContainer.style.opacity = '0';
+    
+    setTimeout(() => {
+      viewer.classList.remove('active');
+      document.body.style.overflow = '';
+      viewerIframe.src = '';
+    }, 300);
+  }
+  
+  // Close button click
+  viewerClose.addEventListener('click', closeViewer);
+  
+  // Overlay click
+  viewerOverlay.addEventListener('click', closeViewer);
+  
+  // ESC key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && viewer.classList.contains('active')) {
+      closeViewer();
+    }
+  });
+  
+  // Intercept PDF/document links
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href$=".pdf"], a[href$=".PDF"], a[href*=".pdf"], a[href$=".md"], a[href$=".MD"]');
+    
+    if (link && !link.hasAttribute('download') && !link.href.includes('http://') && !link.href.includes('https://')) {
+      e.preventDefault();
+      
+      const url = link.getAttribute('href');
+      const title = link.querySelector('.file-name')?.textContent || 
+                    link.querySelector('h3')?.textContent || 
+                    link.textContent.trim() || 
+                    url.split('/').pop();
+      
+      openViewer(url, title);
+    }
+  });
+});
