@@ -375,7 +375,12 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const href = card.getAttribute('data-href');
       if (href) {
-        window.open(href, '_blank');
+        // Extract certificate title from the card
+        const titleElement = card.querySelector('.certificate-title');
+        const title = titleElement ? titleElement.textContent.trim() : 'Certificate';
+        
+        // Open in modal viewer (defined below)
+        openViewer(href, title);
       }
     });
     
@@ -407,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         </div>
         <div class="document-viewer-content">
-          <iframe class="document-viewer-iframe" frameborder="0"></iframe>
+          <embed class="document-viewer-iframe" type="application/pdf">
         </div>
         <div class="document-viewer-footer">
           <a class="document-viewer-download" download>
@@ -428,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewerOverlay = viewer.querySelector('.document-viewer-overlay');
   const viewerContainer = viewer.querySelector('.document-viewer-container');
   const viewerTitle = viewer.querySelector('.document-viewer-title');
-  const viewerIframe = viewer.querySelector('.document-viewer-iframe');
+  const viewerEmbed = viewer.querySelector('.document-viewer-iframe');
   const viewerClose = viewer.querySelector('.document-viewer-close');
   const viewerDownload = viewer.querySelector('.document-viewer-download');
   const viewerOpen = viewer.querySelector('.document-viewer-open');
@@ -436,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to open viewer
   function openViewer(url, title) {
     viewerTitle.textContent = title;
-    viewerIframe.src = url;
+    viewerEmbed.setAttribute('src', url);
     viewerDownload.href = url;
     viewerOpen.href = url;
     
