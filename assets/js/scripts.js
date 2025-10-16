@@ -364,34 +364,26 @@ filterButtons.forEach(button => {
 // Make Certificate Cards Clickable & Document Viewer
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Certificate Cards
-  const certificateCards = document.querySelectorAll('.certificate-card[data-href]');
+  // Certificate Cards (clickable with data-href)
+  const clickableCertificateCards = document.querySelectorAll('.certificate-card[data-href]');
   
-  certificateCards.forEach(card => {
+  clickableCertificateCards.forEach(card => {
     // Add click handler
     card.addEventListener('click', (e) => {
-      console.log('📄 Certificate card clicked');
-      
       // Prevent click if clicking on a link inside the card
       if (e.target.tagName === 'A') {
-        console.log('Ignoring - clicked on link inside card');
         return;
       }
       
       const href = card.getAttribute('data-href');
-      console.log('Certificate href:', href);
       
       if (href) {
         // Extract certificate title from the card
         const titleElement = card.querySelector('.certificate-title');
         const title = titleElement ? titleElement.textContent.trim() : 'Certificate';
         
-        console.log('Calling openViewer with:', { href, title });
-        
-        // Open in modal viewer (defined below)
+        // Open in inline viewer
         openViewer(href, title);
-      } else {
-        console.error('❌ No href found on certificate card');
       }
     });
     
@@ -439,18 +431,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Insert viewer after header (slides into page flow)
   const mainElement = document.querySelector('main');
   if (mainElement) {
-    console.log('✅ Main element found, inserting viewer');
     mainElement.insertAdjacentHTML('afterbegin', viewerHTML);
   } else {
-    console.log('⚠️ No main element, inserting into body');
     document.body.insertAdjacentHTML('beforeend', viewerHTML);
   }
   
   const viewer = document.getElementById('documentViewer');
-  console.log('Viewer element after insertion:', viewer);
   
   if (!viewer) {
-    console.error('❌ CRITICAL: Viewer element not created!');
+    console.error('Viewer element could not be created');
     return;
   }
   
@@ -460,26 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewerDownload = viewer.querySelector('.document-viewer-download-inline');
   const viewerNewTab = viewer.querySelector('.document-viewer-newtab-inline');
   
-  console.log('Viewer components:', {
-    viewerTitle: !!viewerTitle,
-    viewerEmbed: !!viewerEmbed,
-    viewerBack: !!viewerBack,
-    viewerDownload: !!viewerDownload,
-    viewerNewTab: !!viewerNewTab
-  });
-  
   // Get the main content area to hide when viewing
   const mainContent = document.querySelector('.certificates-section, .page-content, section.section');
-  console.log('Main content element found:', !!mainContent);
   
   // Function to open inline viewer
   function openViewer(url, title) {
-    console.log('🚀 openViewer called:', { url, title });
-    console.log('Viewer element exists:', !!viewer);
-    console.log('Main content element:', mainContent);
-    
     if (!viewer) {
-      console.error('❌ Viewer element not found!');
+      console.error('Viewer element not found');
       return;
     }
     
@@ -488,19 +464,13 @@ document.addEventListener('DOMContentLoaded', () => {
     viewerDownload.href = url;
     viewerNewTab.href = url;
     
-    console.log('✅ Viewer configured, hiding main content...');
-    
     // Hide main content and show viewer with slide animation
     if (mainContent) {
       mainContent.style.display = 'none';
-      console.log('Main content hidden');
     }
     
     viewer.classList.add('active');
     viewer.style.display = 'block';
-    
-    console.log('Viewer display:', viewer.style.display);
-    console.log('Viewer classes:', viewer.className);
     
     // Smooth scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -509,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       viewer.style.opacity = '1';
       viewer.style.transform = 'translateY(0)';
-      console.log('✅ Animation triggered');
     }, 10);
   }
   
