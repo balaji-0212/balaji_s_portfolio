@@ -359,9 +359,10 @@ filterButtons.forEach(button => {
 });
 
 // ===================================
-// Make Certificate Cards Clickable
+// Make Certificate Cards Clickable & Document Viewer
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Certificate Cards
   const certificateCards = document.querySelectorAll('.certificate-card[data-href]');
   
   certificateCards.forEach(card => {
@@ -387,12 +388,11 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.boxShadow = '';
     });
   });
-});
 
-// ===================================
-// In-Page PDF/Document Viewer
-// ===================================
-document.addEventListener('DOMContentLoaded', () => {
+  // ===================================
+  // In-Page PDF/Document Viewer
+  // ===================================
+  
   // Create modal viewer HTML
   const viewerHTML = `
     <div id="documentViewer" class="document-viewer">
