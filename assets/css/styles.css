@@ -335,7 +335,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-xl);
-  align-items: center;
+  align-items: start;
 }
 
 .hero-text {
@@ -2766,9 +2766,10 @@ button {
 
 /* Followers / Follow with Google */
 .followers-widget {
-  margin-top: 1.25rem;
+  margin-top: 0.5rem;
   display: grid;
   gap: 0.75rem;
+  max-width: 420px;
 }
 .btn-google {
   display: inline-flex;
