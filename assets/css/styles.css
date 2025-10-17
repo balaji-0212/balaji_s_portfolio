@@ -471,12 +471,13 @@ button {
   position: relative;
   z-index: 1;
   align-self: start;
+  justify-self: end; /* push image column content to the right edge on desktop */
 }
 
 .image-wrapper {
   position: relative;
   max-width: 350px;
-  margin: 0 auto 0;
+  margin: 0 0 0 auto; /* right-align under desktop */
 }
 
 /* Followers inside hero image column */
@@ -1281,10 +1282,12 @@ button {
   
   .hero-image {
     order: -1;
+    justify-self: center; /* center image on smaller screens */
   }
   
   .image-wrapper {
     max-width: 400px;
+    margin: 0 auto; /* center wrapper on smaller screens */
   }
 }
 
