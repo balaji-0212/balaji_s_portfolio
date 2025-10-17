@@ -311,10 +311,10 @@ button {
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   position: relative;
-  padding-top: calc(var(--site-header-offset, 80px) + 1.5rem);
+  padding-top: 8rem;
   padding-bottom: 3rem;
   overflow: visible;
 }
@@ -470,7 +470,7 @@ button {
 .hero-image {
   position: relative;
   z-index: 1;
-  align-self: start;
+  align-self: center;
   justify-self: end; /* push image column content to the right edge on desktop */
 }
 
