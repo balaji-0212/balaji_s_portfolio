@@ -1423,3 +1423,108 @@ window.initializeInlineViewer = initializeInlineViewer;
     }
   });
 })();
+
+// ===================================
+// Followers: Follow with Google (Firebase-ready, degrades gracefully)
+// ===================================
+(function setupFollowersWidget() {
+  try {
+    const followBtn = document.getElementById('followBtn');
+    const followersCountEl = document.getElementById('followersCount');
+    const followersAvatars = document.getElementById('followersAvatars');
+    const followersNote = document.getElementById('followersNote');
+
+    if (!followBtn || !followersCountEl || !followersAvatars) return; // not on this page
+
+    // Detect Firebase (compat v8 or compat v9)
+    const hasFirebase = typeof window.firebase !== 'undefined' && window.firebase?.apps && window.firebase.apps.length > 0;
+    if (!hasFirebase && followersNote) {
+      followersNote.hidden = false;
+    }
+
+    // Load cached meta for instant UI
+    try {
+      const cached = JSON.parse(localStorage.getItem('followers.meta') || 'null');
+      if (cached?.count != null) followersCountEl.textContent = String(cached.count);
+      if (Array.isArray(cached?.avatars)) {
+        followersAvatars.innerHTML = '';
+        cached.avatars.slice(0, 6).forEach(url => {
+          const img = new Image();
+          img.src = url;
+          img.alt = '';
+          img.decoding = 'async';
+          followersAvatars.appendChild(img);
+        });
+      }
+    } catch(_) {}
+
+    // Click handler: Sign in with Google and save follower
+    followBtn.addEventListener('click', async () => {
+      if (!hasFirebase) {
+        alert('Google Sign-In is not configured yet. Add your Firebase config in assets/js/firebase-config.js and include Firebase SDK scripts.');
+        return;
+      }
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await firebase.auth().signInWithPopup(provider);
+        const user = result.user;
+        if (!user) return;
+
+        // Persist follower in Firestore
+        const db = firebase.firestore();
+        await db.collection('followers').doc(user.uid).set({
+          uid: user.uid,
+          name: user.displayName || '',
+          email: user.email || '',
+          photoURL: user.photoURL || '',
+          followedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        // Optimistic UI update
+        const current = parseInt(followersCountEl.textContent || '0', 10) || 0;
+        followersCountEl.textContent = String(current + 1);
+        if (user.photoURL) {
+          const img = new Image();
+          img.src = user.photoURL;
+          img.alt = '';
+          img.decoding = 'async';
+          followersAvatars.prepend(img);
+        }
+        const avatars = Array.from(followersAvatars.querySelectorAll('img')).map(i => i.src).slice(0, 6);
+        localStorage.setItem('followers.meta', JSON.stringify({ count: current + 1, avatars }));
+      } catch (err) {
+        console.error('Follow with Google failed:', err);
+        alert('Failed to sign in. Please try again.');
+      }
+    });
+
+    // Live updates when Firebase present
+    if (hasFirebase) {
+      try {
+        const db = firebase.firestore();
+        db.collection('followers').orderBy('followedAt', 'desc').limit(12).onSnapshot(snap => {
+          const docs = snap.docs || [];
+          const count = typeof snap.size === 'number' ? snap.size : docs.length;
+          followersCountEl.textContent = String(count);
+          followersAvatars.innerHTML = '';
+          docs.slice(0, 6).forEach(d => {
+            const { photoURL } = d.data() || {};
+            if (photoURL) {
+              const img = new Image();
+              img.src = photoURL;
+              img.alt = '';
+              img.decoding = 'async';
+              followersAvatars.appendChild(img);
+            }
+          });
+          const avatars = Array.from(followersAvatars.querySelectorAll('img')).map(i => i.src).slice(0, 6);
+          localStorage.setItem('followers.meta', JSON.stringify({ count, avatars }));
+        });
+      } catch (e) {
+        console.warn('Followers realtime update unavailable:', e);
+      }
+    }
+  } catch (e) {
+    console.error('Followers widget init error:', e);
+  }
+})();

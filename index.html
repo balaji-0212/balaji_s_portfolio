@@ -176,6 +176,19 @@
                 <i class="fas fa-envelope"></i>
               </a>
             </div>
+
+            <!-- Followers / Follow with Google -->
+            <div class="followers-widget" data-aos="fade-up" data-aos-delay="520">
+              <button id="followBtn" class="btn btn-google" type="button">
+                <i class="fab fa-google"></i> Follow with Google
+              </button>
+              <div class="followers-meta">
+                <span class="followers-count"><strong id="followersCount">0</strong> followers</span>
+                <div class="followers-avatars" id="followersAvatars" aria-label="Recent followers"></div>
+              </div>
+              <div class="followers-note" id="followersNote" hidden>Sign-in will be enabled once Firebase is configured.</div>
+            </div>
+            </div>
           </div>
           <div class="hero-image" data-aos="fade-left" data-aos-delay="300">
               <div class="image-wrapper round-avatar">
@@ -896,6 +909,17 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Followers: enable Firebase by adding the scripts below (optional)
+       1) Copy assets/js/firebase-config.example.js to assets/js/firebase-config.js and fill your config
+       2) Uncomment the Firebase SDK and config lines below
+       3) Ensure Firestore rules restrict writes appropriately
+  -->
+  <!--
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  -->
   <script src="assets/js/scripts.js"></script>
 </body>
 </html>
