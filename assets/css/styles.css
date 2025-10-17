@@ -2831,6 +2831,14 @@ button {
   background: #ffffff14;
   border-color: var(--accent-primary);
 }
+/* Disabled state: via disabled attribute or ARIA */
+.btn-google[disabled],
+.btn-google[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(10%);
+}
 .followers-meta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
 .followers-count { font-weight: 600; }
 .followers-avatars {
