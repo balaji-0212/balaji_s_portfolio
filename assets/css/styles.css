@@ -470,7 +470,7 @@ button {
 .hero-image {
   position: relative;
   z-index: 1;
-  align-self: center;
+  align-self: start;
   justify-self: end; /* push image column content to the right edge on desktop */
 }
 
@@ -478,6 +478,32 @@ button {
   position: relative;
   max-width: 350px;
   margin: 0 0 0 auto; /* right-align under desktop */
+}
+
+/* Show photo inside text content by default and hide the right column when hero-inline is active */
+.hero-inline .hero-image { display: none; }
+.hero-inline .hero-inline-photo {
+  display: block;
+  float: right;
+  margin: 0 0 0 1.5rem; /* space from text on the left */
+}
+.hero-inline .hero-inline-photo .image-wrapper {
+  max-width: 260px;
+  margin: 0;
+}
+
+/* Mobile/tablet: place the inline photo above and centered */
+@media (max-width: 1024px) {
+  .hero-inline .hero-inline-photo {
+    float: none;
+    margin: 0 auto var(--spacing-md);
+    display: block;
+    text-align: center;
+  }
+  .hero-inline .hero-inline-photo .image-wrapper {
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
 
 /* Followers inside hero image column */
@@ -1281,8 +1307,13 @@ button {
   }
   
   .hero-image {
-    order: -1;
+    /* Place image above text in single-column layout */
+    grid-row: 1;
     justify-self: center; /* center image on smaller screens */
+    align-self: start;
+  }
+  .hero-text {
+    grid-row: 2;
   }
   
   .image-wrapper {
