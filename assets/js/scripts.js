@@ -1438,8 +1438,14 @@ window.initializeInlineViewer = initializeInlineViewer;
 
     // Detect Firebase (compat v8 or compat v9)
     const hasFirebase = typeof window.firebase !== 'undefined' && window.firebase?.apps && window.firebase.apps.length > 0;
-    if (!hasFirebase && followersNote) {
-      followersNote.hidden = false;
+    if (!hasFirebase) {
+      // Show passive note and disable the button to prevent popup alerts in production
+      try {
+        if (followersNote) followersNote.hidden = false;
+        followBtn.disabled = true;
+        followBtn.setAttribute('aria-disabled', 'true');
+        followBtn.title = 'Coming soon: Sign-in will be enabled once Firebase is configured.';
+      } catch(_) {}
     }
 
     // Load cached meta for instant UI
@@ -1461,7 +1467,7 @@ window.initializeInlineViewer = initializeInlineViewer;
     // Click handler: Sign in with Google and save follower
     followBtn.addEventListener('click', async () => {
       if (!hasFirebase) {
-        alert('Google Sign-In is not configured yet. Add your Firebase config in assets/js/firebase-config.js and include Firebase SDK scripts.');
+        // Silent no-op when not configured
         return;
       }
       try {
