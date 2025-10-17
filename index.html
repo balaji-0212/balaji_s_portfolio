@@ -185,6 +185,17 @@
                 <img src="assets/images/Balaji_Photo.png" alt="Balaji S - Freelance Data Analyst" class="profile-img mask-circle">
               </picture>
             </div>
+            <!-- Followers / Follow with Google (placed under avatar in image column) -->
+            <div class="followers-widget" data-aos="fade-up" data-aos-delay="520">
+              <button id="followBtn" class="btn btn-google" type="button">
+                <i class="fab fa-google"></i> Follow with Google
+              </button>
+              <div class="followers-meta">
+                <span class="followers-count"><strong id="followersCount">0</strong> followers</span>
+                <div class="followers-avatars" id="followersAvatars" aria-label="Recent followers"></div>
+              </div>
+              <div class="followers-note" id="followersNote" hidden>Sign-in will be enabled once Firebase is configured.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -196,21 +207,7 @@
       </div>
     </section>
 
-    <!-- Follow section: moved out of hero to keep avatar aligned -->
-    <section id="follow" class="section">
-      <div class="container">
-        <div class="followers-widget" data-aos="fade-up" data-aos-delay="100">
-          <button id="followBtn" class="btn btn-google" type="button">
-            <i class="fab fa-google"></i> Follow with Google
-          </button>
-          <div class="followers-meta">
-            <span class="followers-count"><strong id="followersCount">0</strong> followers</span>
-            <div class="followers-avatars" id="followersAvatars" aria-label="Recent followers"></div>
-          </div>
-          <div class="followers-note" id="followersNote" hidden>Sign-in will be enabled once Firebase is configured.</div>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- Enhanced Services Section -->
     <section id="services" class="services section section-light">

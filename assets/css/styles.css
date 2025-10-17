@@ -479,6 +479,13 @@ button {
   margin: 0 auto 0;
 }
 
+/* Followers inside hero image column */
+.hero-image .followers-widget {
+  margin: 0.75rem auto 0;
+  justify-items: center;
+}
+.hero-image .followers-meta { justify-content: center; }
+
 /* Embedded avatar (no circle) */
 .embedded-avatar {
   border-radius: 0;
